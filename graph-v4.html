@@ -5,43 +5,21 @@
   <title>Clustered Network</title>
 
 
-  <script src = "https://d3js.org/d3.v3.min.js"></script>
+  <script src = "https://d3js.org/d3.v4.min.js"></script>
   <!--<script src = "d3.js"></script>-->
 
 
   <style type = "text/css">
-  svg {
-    border: 1px solid #ccc;
-  }
+   
   body {
     font: 10px sans-serif;
   }
 
  
   
-
-  .node text {
-    fill:black;
-    font-size:18px;
-    text-anchor:middle; 
-  }
-
-
-  polygon.focus{
-    stroke:black;
-    opacity:1; 
-  }
-
-  polygon.background{
-    stroke:grey;
-    opacity:.2; 
-  }
+ 
+ 
   
-
-  path.hull {
-    fill: lightsteelblue;
-    fill-opacity: 0.3;
-  }
 
 
 
@@ -49,11 +27,14 @@
   </style>
 </head>
 <body> 
+  <div class="chart"></div>
   <script type = "text/javascript">
+var chartDiv = document.getElementsByClassName("chart")[0];
+console.log(chartDiv)
 
   //TO DO:   changer polices, empêcher sortir, passer à D3 v4?, prendre en compte plusieurs parents, ouvrir partiellement un noeud, déterminer la transparence d'un noeud ouvert en fonction de ses liens transversaux (cf agnes buzyn), utiliser hierarchy package
 
-var width = 3*960,     // svg width
+var width =chartDiv.clientWidth*4/5,     // svg width
     height = 3*600,     // svg height 
     marge = 100,    //keep points away from the edges
     bound = true,     //keep points in the box
@@ -62,47 +43,46 @@ var width = 3*960,     // svg width
     nodes = [],
     links=[],
     nodesMap =  {} ,  //"name" -> number
-    focus = "France",
+    focus = "Sphreprive",
     compteur=0,
-    net, force, hullg, hull, linkg, link, linkp,  nodeg, nodeh, nodehg, node, infot, InfoRect, infog
+    net, force, hullg, hull, linkg, link, linkp,  nodeg, nodeh, nodehg, node, infot, InfoRect, infog, prevTgt, msTgt, startTime, endTime
 
-    curve = d3.svg.line()
-    .interpolate("cardinal-closed")
-    .tension(.85),
+    curve = d3.line()
+    .curve(d3.curveCatmullRom.alpha(0));
 
-    fill = d3.scale.category20(); 
+    fill = d3.scaleOrdinal(d3.schemeCategory20); 
 // --------------------------------------------------------
 
 var body = d3.select("body");
 
+ 
 
-//zoom ability
-var zoom = d3.behavior.zoom()
-.scaleExtent( [ .1, 10 ] )
-.on("zoom", zoomed);
 
-//drag ability
-var drag = d3.behavior.drag()
-.origin(d => d)
-.on("dragstart", dragstarted)
-.on("drag", dragged)
-.on("dragend", dragended);
+body.on("click", noInfo);
+ 
 
 var canv = body.append("svg").attr("id","canv")
+.style("border","1px solid #ccc")
 .attr("width", width)
-.attr("height", height).call(zoom);
+.attr("height", height);
 
-focusvis = canv.append("svg").attr("transform","translate(1,1)").attr("id","focusvis");
+console.log("a")
+focusvis = canv.append("svg").attr("transform","translate(1,1)").attr("id","focusvis")
 
-vis = focusvis.append("svg").attr("id","vis");
+vis = focusvis.append("svg").attr("id","vis")
 
+
+
+focusvis.call(d3.zoom()
+    .scaleExtent([1 / 2, 8])
+    .on("zoom", zoomed)); 
+ 
 //info text when cursor is over convex hull
 crsrText = vis.append("text").attr("id","crsrtxt");
 
-
-d3.json("conflicts-file.json", function(json) {
+d3.json("conflicts-file.txt",function(error, json) { if (error) throw error;
   data = json;  
-  console.log(data)
+  //console.log(data)
 
   //extract nodes
   for (var i = 0; i<data.length; ++i) {
@@ -111,16 +91,14 @@ d3.json("conflicts-file.json", function(json) {
       nodesMap [ nodei.id ] = nodes.length;
       nodei.children = [  ] ;
       nodei.expanded=false;
-      nodei.x = width*Math.random()/3;
-      nodei.y = height*Math.random()/3; 
+      nodei.x = 100+width*Math.random();
+      nodei.y = 300*Math.random(); 
       nodei.px = nodei.x
       nodei.py = nodei.y; 
       nodei.prevShow=false;
       nodei.linked=[];
-      //on demarre avec les enfants de world
-      nodei.visibleParent=1;
-      if (nodei.parent == "world") {nodei.show = true;}
-      else {nodei.show = false;} 
+      nodei.show=nodei.initialShow||false;
+      nodei.visibleParent=i;
       nodes.push(nodei)
 
     //on ajoute les liens de parenté
@@ -130,22 +108,23 @@ d3.json("conflicts-file.json", function(json) {
   //world est tjs expanded
   nodes[0].expanded=true;
 
-  console.log(nodesMap)
+  //console.log(nodesMap) 
 
   //extract links
   for (var i=1; i<data.length; i++){
 
       linki=data[i].link||{target:""};
 
-      console.log(links, linki)
+      //console.log(links, linki)
     if (linki.target!=""){
       links.push(linki)
 
       //on verifie que parent existe, ou target Parent
       if (nodesMap[linki.target]){
-        console.log(linki.targetName," existe");}
+        //console.log(linki.targetName," existe");
+      }
       else if (linki.targetParentId) {
-           console.log("création de ",linki.targetName);
+           //console.log("création de ",linki.targetName);
            nodesMap[linki.target]=nodes.length; 
            tgtName=linki.targetName.split(" ");
            nodes.push({
@@ -158,11 +137,12 @@ d3.json("conflicts-file.json", function(json) {
             show:false,
             linked:[],
             params:{},
+            poste:"",
             prevShow:false});
             links.push({source:linki.target,  target:linki.targetParentId, params: {type:"belongsTo"}});
 
         }
-        else {console.log("parent inconnu",linki.parent);
+        else {//console.log("parent inconnu",linki.parent);
               a=bb;
         }
         nodeById(linki.source).linked.push(linki.target);
@@ -189,7 +169,7 @@ d3.json("conflicts-file.json", function(json) {
     if (!linki.target){a=bb}
   }
 
-  console.log("data",nodes,links)
+  //console.log("data",nodes,links)
  
 
 
@@ -200,7 +180,8 @@ d3.json("conflicts-file.json", function(json) {
   linkg = vis.append("g").attr("id","linkg");//liens
   nodeg = vis.append("g").attr("id","nodeg");//nodeuds 
   infoG=focusvis.append("g").attr("id","infog")
-  .on("click",d=> infog.setAttribute("display","none"));
+  .on("click",noInfo);
+
 
 
   infog=document.getElementById("infog")
@@ -220,11 +201,10 @@ d3.json("conflicts-file.json", function(json) {
   .attr("stroke-width",".5px")
   .attr("x",50)
   .attr("y",60) 
- 
+   
 
   //on lance la simulation
   init();
-
   //effet apparition progressive
   vis.attr("opacity", 1e-6)
   .transition()
@@ -234,30 +214,44 @@ d3.json("conflicts-file.json", function(json) {
 
 
 function init() { 
-  compteur=compteur+1;
-  if (force) force.stop();//useful?
-  console.log("------init - focus",focus)
-  console.log("data",nodes,links) 
+  compteur=compteur+1; 
+  //if (force) force.stop();//useful?
+  //console.log("------init - focus",focus)
+  //console.log("data",nodes,links) 
   
   net = network(nodes,links,nodesMap);
-  console.log("net",net) 
 
-  force = d3.layout.force()
+  //console.log("net",net) 
+
+  simulation = d3.forceSimulation()
+  .force('collide',d3.forceCollide().radius(50))
+  .force('center',d3.forceCenter( width/2, height/2   ))
+  .force('charge',d3.forceManyBody().strength(-20))
+  
+
+
+  simulation
   .nodes(net.nodes)
-  .links(net.links)
-  .size( [ width/2, height/2 ] )
+  .on("tick",ticked)
+
+
+  //simulation
+  //.force("link").links(net.links)
+
+ 
+
   //.linkDistance(function(l, i) { return 600; })
-  .linkStrength(function(l, i) { return ((l.source.id==focus) || (l.target.id==focus))? 0.005 : 0.001; })
+  /*.linkStrength(function(l, i) { return ((l.source.id==focus) || (l.target.id==focus))? 0.005 : 0.001; })
   .gravity(0.007)    
   .charge(function(n,i) {  return (n.id == focus?-200:-100);})
   .chargeDistance(600)
   .friction(0.9) 
-  .start();
+  .start();*/
 
 
 
   //A noter: force transforme links: il remplace link.source.id par l'objet source, etc... 
-  console.log("data",nodes,links)
+  //console.log("data",nodes,links)
 
   //convex hull cursor text------------
   vis.on("mouseover",function(){
@@ -280,24 +274,26 @@ function init() {
     crsrText.attr("display","none");
   })
 
-  //hulls display----------------------- 
+  /*hulls display----------------------- 
   hullg.selectAll("path.hull").remove();
   hull = hullg.selectAll("path.hull")
   .data(convexHulls(net.nodes, nodesMap, off))
   .enter().append("path")
   .attr("class", "hull")
+  .style("fill","lightsteelblue")
+  .style("opacity",0.3)
   .attr("d", drawCluster)
   .style("fill", d => fill(nodesMap [ d.parent ] ) )
-  .on("mouseover",d =>   crsrText.text(d.parent))
+  .on("mouseover",d =>   crsrText.text(name(d.parent)))
   .on("click", function(d) {
     if (d.parent!= "world") {
-      console.log("hull click", d, arguments, this); 
+      //console.log("hull click", d, arguments, this); 
       focus = d.parent;  
-      console.log("collaps")
+      //console.log("collaps")
       collapseNode(nodeById(d.parent));
       init(); 
     } 
-  });  
+  });  */
 
 
 
@@ -311,8 +307,36 @@ function init() {
   node.enter()
   .append("g") 
   .attr("class","node")
-  .style("opacity", d=> d.expanded? 0.3:1)
+  .attr("font-size","18px")
+  .attr("text-anchor","middle") 
+  .style("opacity", function(d){
+      var total=0.4+d.linked.length+d.children.length;
+      var score=0.4+d.linked.length;
+      for (i in d.children){
+        score=score+(d.children[i].show?0:1)
+      }
+      return score/total
+  })
   .attr("transform",d => "translate("+d.x+","+d.y+")")
+  .on("mouseover", d=> infoDisp(d,"node"))
+  .on('mousedown', function() { 
+    console.log("down");
+    startTime = new Date(); })
+  .on("mouseup", function(d) { 
+        endTime = new Date(); 
+        if ((endTime - startTime) < 200) { 
+        if (focus==d.id){
+          if (d.expanded) {
+            collapseNode(d);}
+        else{expandNode(d)}
+          d.show=nodeById(d.parent).expanded; 
+        }
+        //on range l'ancien focus, sauf si on clique sur un noeud déballé
+        setFocus(focus,d);
+        focus = d.id;
+        init();
+        }
+      })
 
   nodeh.enter()
   .append("circle") 
@@ -324,7 +348,7 @@ function init() {
   .style("fill",d=>fill(nodesMap [ d.parent ] ))
   .style("opacity",.5)
   .on("click", function(d) {  
-      console.log("node click", d, arguments, this);
+      //console.log("node click", d, arguments, this);
       focus=d.id;
         expandNode(d); 
         init();
@@ -334,36 +358,11 @@ function init() {
 
   node.append("circle") 
   .attr("stroke-width","5px")
-  .attr("stroke",'lightgrey')
+  .attr("stroke",d=>d.children.length>0?"darkgrey":'lightgrey')
   .attr("r", d => dr) //sqrt(size(d)) would be more relevant
   .attr("cx",0) 
   .attr("cy",0) 
   .style("fill", d => fill(nodesMap [ d.parent ] ))
-  .on("click", function(d) { 
-        if (focus==d.id){
-          if (d.expanded) {
-            collapseNode(d);}
-          d.show=nodeById(d.parent).expanded;
-          console.log(d.show) 
-        }
-        //on range l'ancien focus, sauf si on clique sur un noeud déballé
-        focusLinked=nodeById(focus).linked;
-        for (k in focusLinked){
-          nodek=nodeById(focusLinked[k]);
-          nodek.show=nodeById(nodek.parent).expanded? true: d.id==nodek.id? true: false;
-          nodek.prevShow=true;
-          console.log(nodek) 
-        } 
-        //on installe le nouveau focus
-        focus = d.id;
-        focusLinked=nodeById(d.id).linked;
-        for (k in focusLinked){
-          nodek=nodeById(focusLinked[k]);
-          nodek.prevShow=nodek.show;
-          nodek.show=true;
-        } 
-    init();})
-  .on("mouseover", d=> infoDisp(d,"node"))
   //.on("mouseout",d =>  infog.setAttribute("display","none"));
 
   node.append("text") 
@@ -386,7 +385,7 @@ function init() {
 
 
   //links display------------
-  if (link) {link.remove();};//on pourrait aussi n'enlever que certains liens
+  /*if (link) {link.remove();};//on pourrait aussi n'enlever que certains liens
   link = linkg.selectAll("link").data(net.links);
  
 
@@ -394,49 +393,52 @@ function init() {
   .attr("class","link")
   .attr("transform", d => "translate(" + d.source.x + "," + d.source.y + ")")
   .on("mouseover", d =>  d.params.type=="belongsTo"? null : infoDisp(d,"link"))
-  .on("click", d=>infog.setAttribute("display","none"));
+  .on("click", noInfo);
   //.on("mouseout", d  => infog.setAttribute("display","none"));
 
   linkp = link.append("polygon")
   .attr("class",d => ((d.source.id == focus)||(d.target.id == focus))? "focus":"background")
+  .attr("stroke",d=> ((d.source.id == focus)||(d.target.id == focus))? "red":"grey" )
+  .attr("opacity",d=> ((d.source.id == focus)||(d.target.id == focus))? 1:0.2 )
   .attr("points",function(d) {
     var dx = d.target.x-d.source.x;
     var dy = d.target.y-d.source.y;
     return "0 0 "+dx+" "+dy}) 
   .style("stroke-width", d => d.params.type=="belongsTo"?   1 : 10)  
 
-  link.sort(linkSort)
+  link.sort(linkSort)*/
 
 
 
 //Force updates------------------------------
 
-node.call(force.drag);
+//node.call(force.drag);
 
-force.on("tick", function() { 
+function ticked() { 
+  /*hulll
   if (!hull.empty()) {
     hull.data(convexHulls(net.nodes, nodesMap, off))
     .attr("d", drawCluster);
-  }
+  }*/
+  
+  node.attr("transform", d => "translate(" + d.x + "," + d.y + ")" ); 
 
-
-  node.attr("transform", d => "translate(" + boxBoundx(d.x) + "," + boxBoundy(d.y) + ")" ); 
 
   nodeh.attr("cx",d=>d.x).attr("cy",d=>d.y)
 
-
+/*
   link
   .attr("transform", d => "translate(" + boxBoundx(d.source.x )+ "," + boxBoundy(d.source.y) + ")" ) 
 
   linkp.attr("points",function(d) {
     var dx = boxBoundx(d.target.x)-boxBoundx(d.source.x);
     var dy = boxBoundy(d.target.y)-boxBoundy(d.source.y);
-    return "0 0 "+dx+" "+dy}) 
+    return "0 0 "+dx+" "+dy}) */
  
 
 
 
-});
+};
 
 }
 
@@ -460,7 +462,7 @@ function toggleInfo(i,classe,disp){
     rect.setAttribute("width",textWidth+40)
 
   } 
-    //console.log(element.selectAll("rect").setAttribute("height",20))
+    ////console.log(element.selectAll("rect").setAttribute("height",20))
   }
 
 
@@ -486,7 +488,7 @@ function boxBoundy(y){
 
 function network(nodes,links,nodesMap){ //il faudrait prevoir qqch pour que les noeuds qui viennent d'éclore soient répartis près du centre, sinon ils sont mis par défaut en haut à gauche et ça explose
 
-console.log("network data",nodes,links);
+//console.log("network data",nodes,links);
 var displayedNodes = [  ] , link, node,
 displayedNodesMap = [  ] ,
       //linksSynth = [  ] ,   
@@ -500,25 +502,28 @@ displayedNodesMap = [  ] ,
       displayedNodesMap [ k ] = i;
       i++;
     }  
-  } 
+  }  
 
-  console.log(nodes)
+  //console.log(nodes)
   nodes[0].visibleParent=1;
 
   for (var k = 1; k<nodes.length; ++k){ 
+    //console.log(k)
     var looking = true;
     var current = k; 
     nodek=nodes[k];  
-    while (looking ){ 
+    while (looking ){  
       crtNode = nodes [ current ] ; 
       parentIndex = nodesMap [ crtNode.parent ] ;  
       if (crtNode.show == false ) {//si le noeud est caché
       //on l'ajoute au noeud de son parent direct 
-      current = parentIndex; } 
+      current = parentIndex; 
+       } 
       else {
         if (nodek.show!=nodek.prevShow) {
+          //console.log("pop")
         //just popped 
-        console.log("pop",nodek)
+        //console.log("pop",nodek)
         nodek.prevShow=true;  
         nodek.x = nodes [ nodek.visibleParent ] .x+50*Math.random();
         nodek.y = nodes [ nodek.visibleParent ] .y+50*Math.random();
@@ -527,13 +532,13 @@ displayedNodesMap = [  ] ,
         nodek.py=nodek.y;
 
         //if (nodek.id=="EdouardPhilippe"){a=bb} 
-      };
-
-
+      };  
+ 
         looking = false;
         nodek .visibleParent =  current  ;  };
-
-      } 
+         
+ 
+      }  
 
     } 
     //possible amélioration en mettant à jour les parents rencontrés au cours d'une remontée
@@ -558,12 +563,12 @@ displayedNodesMap = [  ] ,
           i = linksMap [ linkid ] ;
           linksSynth [ i ] .liste.push(links[k]);
           linksSynth[i].params={type:"multiple links",poste:""}
-          console.log("multiple")
+          //console.log("multiple")
         }
         else {  
 
           linksMap [ linkid ] = j;  
-          linksSynth [ j ] = {source:visibleSourceIndex,target:visibleTargetIndex,liste: [links[k]  ]};
+          linksSynth [ j ] = {source:visibleSourceIndex,target:visibleTargetIndex,liste: [links[k]  ], poste:""};
           linksSynth [j].params=links[k].params||{};
           j = j+1; };  };
         }     
@@ -572,8 +577,8 @@ displayedNodesMap = [  ] ,
 
       
 
-          console.log("dispnodes",displayedNodes)
-          console.log("linkssynth",linksSynth)
+          //console.log("dispnodes",displayedNodes)
+          //console.log("linkssynth",linksSynth)
           return {links: linksSynth, nodes: displayedNodes}
 
         }
@@ -605,7 +610,7 @@ function convexHulls(nodes, nodesMap, offset) {
   // create convex hulls
   var hullset = [  ] ;
   for (i in hulls) { 
-    hullset.push({parent: hulls [ i ] .parent, path: d3.geom.hull(hulls [ i ] )});
+    hullset.push({parent: hulls [ i ] .parent, path: d3.polygonHull(hulls [ i ] )});
   }
 
   //if (data.nodes [ 23 ] .show) {a = bbb;}//23 4
@@ -622,25 +627,12 @@ function nodeid(n) {
 
 
 
-function zoomed() {
-  vis.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+ 
+
+function noInfo() {
+  infog.setAttribute("display", "none")
 }
-
-
-function dragstarted(d) {
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("dragging", true);
-}
-
-function dragged(d) {
-  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
-}
-
-function dragended(d) {
-  d3.select(this).classed("dragging", false);
-}
-
-
+ 
 
 
 function infoDisp(object,classe) {
@@ -693,7 +685,7 @@ function infoDisp(object,classe) {
   .attr("x",50)
   .attr("dy",object.params.poste==""?0:30)
   .selectAll("tspan")
-  .data(object.params.poste.split(" "))
+  .data(object.poste.split(" "))
   .enter()
   .append("tspan")
   .attr("font-size",15)
@@ -766,7 +758,7 @@ function collapseNode(node){
 //on peut simplifier avec des auto-appels récursifs
 node.expanded=false;
  for (i in node.children) {
-  console.log("close ",node.children[i])
+  //console.log("close ",node.children[i])
     node.children[i].show=false;
     node.children[i].expanded=false;
     collapseNode(node.children[i])
@@ -802,6 +794,30 @@ function name(nodeId) {
 
 function nodeById(id){
   return nodes[nodesMap[id]]
+}
+
+function setFocus(focus,d){
+        focusLinked=nodeById(focus).linked;
+        for (k in focusLinked){
+          nodek=nodeById(focusLinked[k]);
+          nodek.show=nodeById(nodek.parent).expanded? true: d.id==nodek.id? true: false;
+          nodek.prevShow=true; 
+        } 
+        //on installe le nouveau focus
+        
+        focusLinked=nodeById(d.id).linked;
+        for (k in focusLinked){
+          nodek=nodeById(focusLinked[k]);
+          nodek.prevShow=nodek.show;
+          nodek.show=true;
+        }  }
+
+function zoomed() {
+  focusvis.attr("transform", d3.event.transform);
+}
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
 }
  
 </script>
