@@ -129,7 +129,7 @@
     "id" : "Secteurpriv",
     "firstName" : "Secteur",
     "lastName" : "privé",
-    "expanded" : false,
+    "expanded" : null,
     "show" : "",
     "display" : "",
     "parent" : "France",

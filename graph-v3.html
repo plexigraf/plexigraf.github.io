@@ -18,10 +18,10 @@
   }
 
   .boxname{
-      fill: white;  
+    fill: white;  
   }
 
-  text{
+  .type text{
   	font-family:American Typewriter, serif;
   }
 
@@ -41,7 +41,7 @@
   <script type = "text/javascript">
   //var chartDiv=document.getElementsByClassName("wpd3-49-0")
   var chartDiv = document.getElementById("mainchart");
-    
+
 
   //TO DO quand on clique sur une feuille, il faudrait qu'elle se rentre, et enlever l'info
   
@@ -156,7 +156,7 @@ zoomCanvas.on("mouseover",function(){
     links.push({source:nodei.id,  target:nodei.parent, params: {type:"belongsTo"}}); 
   }
 } 
-   
+
 //console.log(nodes) 
   //world est tjs expanded
   nodes[0].expanded=true;
@@ -208,10 +208,10 @@ zoomCanvas.on("mouseover",function(){
 
   //build children lists and links
   for (var i = 1; i<nodes.length; ++i) { 
-    
+
     nodei = nodes[ i ] ;   
     parent = nodeById( nodei.parent )
- 
+
     nodei.show=parent.expanded; 
     parent.children.push(nodei);
 
@@ -338,37 +338,37 @@ function init() {
      lightNodeLinks(d,"on")
    }).on("mouseout", function(d){lightNodeLinks(d,"off")} )
     .on("click", function(d) { 
-        
+
         //si l'info du noeud n'est pas déjà affichée, on l'affiche, avec ses enfants et ses liens
         if (infos[0]!=d) {
-        noInfo();
-        d.showInfo=true;
-        infos=[d]
+          noInfo();
+          d.showInfo=true;
+          infos=[d]
 
-        if (d.children.length>0){
-          infos.push({texte:"Contient","off":10,"showInfo":true})
-          for (i in d.children){ 
-            infos.push(d.children[i])
+          if (d.children.length>0){
+            infos.push({texte:"Contient","off":10,"showInfo":true})
+            for (i in d.children){ 
+              infos.push(d.children[i])
+            }
           }
+
+
+          if (d.links.length>0){
+            infos.push({texte:"Liens","off":10,"showInfo":true})
+
+            infos=infos.concat(d.links)
+          }
+          infoDisp()
         }
+        else if (d.children.length==0){noInfo()}
 
-        
-        if (d.links.length>0){
-        infos.push({texte:"Liens","off":10,"showInfo":true})
-
-        infos=infos.concat(d.links)
-        }
-        infoDisp()
-      }
-      else if (d.children.length==0){noInfo()}
-
-        if (focus==d.id){
-          if (d.expanded) {
-            collapseNode(d);}
-            else if (d.children.length>0)
-              {expandNode(d)}
+          if (focus==d.id){
+            if (d.expanded) {
+              collapseNode(d);}
+              else if (d.children.length>0)
+                {expandNode(d)}
               d.show=nodeById(d.parent).expanded; 
-          }
+            }
 
         //on range l'ancien focus, sauf si on clique sur un noeud déballé
         setFocus(focus,d);
@@ -377,14 +377,14 @@ function init() {
         init();
       })
 
-    nodec=node.append("circle") 
-    .attr("stroke-width","5px")
-    .attr("stroke",d=> stroke(d))
-    .style("fill-opacity", d=>d.expanded? 0:1)
-    .attr("r",d=>dr+ 10+size(d)*0.5)
-    .attr("cx",0) 
-    .attr("cy",0) 
-    .style("fill", d => d.expanded? fill(nodesMap[d.id]) : fill(nodeById(d.parent).visibleParent ))
+nodec=node.append("circle") 
+.attr("stroke-width","5px")
+.attr("stroke",d=> stroke(d))
+.style("fill-opacity", d=>d.expanded? 0:1)
+.attr("r",d=>dr+ 10+size(d)*0.5)
+.attr("cx",0) 
+.attr("cy",0) 
+.style("fill", d => d.expanded? fill(nodesMap[d.id]) : fill(nodeById(d.parent).visibleParent ))
 
 
 
@@ -394,6 +394,7 @@ function init() {
   .attr("class","boxname top") 
 
 
+  //rectangles avec nom sur chaque noeud
   node.append("rect")
   .attr("class","boxname middle") 
 
@@ -415,7 +416,7 @@ function init() {
   .attr("display",d=>d.lastName?"block":"none")
   .attr("width",d=>d.bb1w||10)
   .attr("height",21)
- 
+
 
   node.append("text") 
   .style("font-size","18px")
@@ -791,20 +792,25 @@ function infoDisp() {
 
     //rectangle du cadre titre
     info.append("rect")
-    .data([d]).attr("fill","grey")
+    .data([d]).attr("fill","lightblue")
     .attr("height",30)
     .attr("width",infoWidth)
-    .attr("stroke-width",2)
-    .attr("stroke","black")
+    //.attr("stroke-width",2)
+    //.attr("stroke","black")
     .style("opacity",.4)
     .attr("rx",5)
 
     //rectangle de deploiement
     info.append("text")
+    .attr("fill","lightblue")
     .attr("x",5)
     .attr("y",20)
     .attr("font-size",15)
     .text(d.showInfo?"\u25bc"||"V":"\u25b6"||">")
+    .on("mouseover",function(d){
+    d3.select(this).style("cursor",  "pointer")
+    //crsrText.text(name(d.parent))
+  }  )
     .on("click",function(d){
       d.showInfo=d.showInfo?false:true;
       infoDisp()
@@ -888,12 +894,13 @@ function infoDisp() {
 
     info.append("text")
     .text( id)
+    //.attr("font-family","American Typewriter")
     .attr("font-size",d.source?10:15)
     .attr("x",30)
     .attr("y",20)
 
     bckgrdRect=info.append("rect")
-    .attr("fill","white")
+    .attr("fill","lightblue")
     .attr("y",30)
     .attr("height",0)
     .attr("width",infoWidth)
@@ -1070,16 +1077,16 @@ function expandNode(d)
             if (net.links[i].source.id==d.id) { 
               lightLink(d.id,net.links[i].target.id,p)}
 //console.log(i,net.links[i].target,net.links[i])
-              if (net.links[i].target.id==d.id) { 
-                lightLink(net.links[i].source.id,d.id,p)}
-              }
+if (net.links[i].target.id==d.id) { 
+  lightLink(net.links[i].source.id,d.id,p)}
+}
 
 
-            }
+}
 
 
 
-            function lightNode(id,p){;
+function lightNode(id,p){;
   //console.log(id)
   nodec.filter(d=>(d.id==id)).attr("stroke",p=="on"? "orange": "grey")
 }
