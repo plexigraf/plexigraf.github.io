@@ -334,7 +334,7 @@ function init() {
     .attr("text-anchor","middle") 
     .attr("transform",d => "translate("+d.x+","+d.y+")")
     .on("mouseover", function(d) { 
-     d3.select(this).style("cursor",  d.id==focus? d.expanded?"crosshair":"col-resize":"help")
+     d3.select(this).style("cursor",  d.id==focus? d.expanded?"crosshair":"col-resize":"context-menu")
      lightNodeLinks(d,"on")
    }).on("mouseout", function(d){lightNodeLinks(d,"off")} )
     .on("click", function(d) { 
@@ -822,6 +822,7 @@ function infoDisp() {
     .attr("transform","translate("+infoWidth+",1)")
     .attr("display",firstBlock?"block":"none")
     .on("click",noInfo )
+    .on("mouseover",function(d){ d3.select(this).style("cursor",  "pointer") }  )
 
 
     firstBlock=false;
