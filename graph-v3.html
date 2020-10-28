@@ -29,14 +29,18 @@
   
 
 
-  
-
-
 
 
   </style>
 </head>
 <body> 
+
+  <form name="myform" onSubmit="return handleClick()">
+            <input name="Submit"  type="submit" value="Add to list" >
+            <input type="text" id="myVal" placeholder="Add some text&hellip;">
+        </form>
+
+
   <div class="chart" id="mainchart"></div>
   <script type = "text/javascript">
   //var chartDiv=document.getElementsByClassName("wpd3-49-0")
@@ -132,8 +136,13 @@ zoomCanvas.on("mouseover",function(){
   .attr("fill","lightblue")
   .style("opacity",.9) */
 
-
-
+function handleClick(event){
+                console.log(document.getElementById("myVal").value)
+                draw(document.getElementById("myVal").value)
+                return false;
+            }
+  
+ 
 
 
   d3.json(filename,function(error, json) { 
