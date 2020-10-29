@@ -5,5 +5,39 @@
 	<a href="graph-v3.html">v3</a>
 	<a href="graph-v2.html">v2</a>
 
+<form action="/search/" method="GET">
+        <input required type="search" name="q" />
+        <button type="submit">Search</button>
+    </form>
+
+
+<ol id="search-results"></ol> 
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script type="text/javascript" >
+const json = '{"result":true, "count":42}';
+const obj = JSON.parse(json);
+
+$.getJSON( "conflicts-file-v2.json", function( data ) {
+var idx = lunr(function () {
+  this.ref('id')
+  this.field('lastName')
+
+  documents.forEach(function (data) {
+    this.add(doc)
+  }, this)
+})
+
+});
+
+
+console.log(obj.count);
+// expected output: 42
+
+console.log(obj.result);
+// expected output: true 
+</script>
 </body>
 </html>

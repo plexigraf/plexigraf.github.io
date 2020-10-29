@@ -23,22 +23,38 @@
 
   .type text{
   	font-family:American Typewriter, serif;
-  }
-
-
-  
-
-
-  
-
+  } 
+    
 
 
 
   </style>
 </head>
 <body> 
+
+  <form name="myform" onSubmit="return handleClick()">
+      <p>Focus:</p> <p id="focus_p"></p>
+            <input name="Submit"  type="submit" value="Changer" >
+            <input type="text" id="myVal" placeholder="Entrez du texte&hellip;">
+        </form>
+
+
   <div class="chart" id="mainchart"></div>
   <script type = "text/javascript">
+
+        
+  function handleClick(event){
+      term=document.getElementById("myVal").value
+      console.log(term)
+      focus=term
+
+      document.getElementById("focus_p").innerHTML=focus
+      init()
+      return false;
+  }
+
+
+            
   //var chartDiv=document.getElementsByClassName("wpd3-49-0")
   var chartDiv = document.getElementById("mainchart");
 
@@ -69,6 +85,9 @@ divName="body",
     curve = d3.svg.line()
     .interpolate("cardinal-closed")
     .tension(.85),
+
+
+    document.getElementById("focus_p").innerHTML=focus
 
     fill = d3.scale.category20(); 
 // --------------------------------------------------------
