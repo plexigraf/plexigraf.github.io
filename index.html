@@ -20,24 +20,24 @@
 const json = '{"result":true, "count":42}';
 const obj = JSON.parse(json);
 
+var idx
+
 $.getJSON( "conflicts-file-v2.json", function( data ) {
 var idx = lunr(function () {
   this.ref('id')
-  this.field('lastName')
+  this.field('lastName', { boost: 10 })
+  this.field('body')
 
-  documents.forEach(function (data) {
-    this.add(doc)
+  data.forEach(function (entry) {
+    this.add(entry)
   }, this)
 })
+})
 
-});
 
 
-console.log(obj.count);
-// expected output: 42
-
-console.log(obj.result);
-// expected output: true 
+console.log(idx.search("macron"))
+ 
 </script>
 </body>
 </html>
