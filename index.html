@@ -19,24 +19,26 @@
 <script type="text/javascript" >
 const json = '{"result":true, "count":42}';
 const obj = JSON.parse(json);
-
-var idx
+ 
 
 $.getJSON( "conflicts-file-v2.json", function( data ) {
 var idx = lunr(function () {
   this.ref('id')
   this.field('lastName', { boost: 10 })
-  this.field('body')
+  this.field('firstName')
 
   data.forEach(function (entry) {
     this.add(entry)
   }, this)
 })
+
+
+console.log(idx.search("macron"))
+
 })
 
 
 
-console.log(idx.search("macron"))
  
 </script>
 </body>
