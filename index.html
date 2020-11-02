@@ -11,29 +11,38 @@
     </form>
 
 
-<ol id="search-results"></ol> 
+<ul id="search-results"></ul> 
   <script src="https://unpkg.com/lunr/lunr.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 <script type="text/javascript" >
-const json = '{"result":true, "count":42}';
-const obj = JSON.parse(json);
  
 
-$.getJSON( "conflicts-file-v2.json", function( data ) {
+$.getJSON( "conflicts-file.json", function( data ) {
 var idx = lunr(function () {
   this.ref('id')
   this.field('lastName', { boost: 10 })
   this.field('firstName')
+  this.field('params')
 
   data.forEach(function (entry) {
+    entry.params=JSON.stringify(entry.params)
+    console.log(entry.params)
     this.add(entry)
   }, this)
 })
 
 
-console.log(idx.search("macron"))
+results=idx.search("macron~1")
+var resultdiv = $('#search-results');
+
+  for (var item in results) {
+    var ref = results[item].ref;
+      var searchitem = '<li class="result">'+ref+'</li>';
+      resultdiv.append(searchitem);
+
+}
 
 })
 
