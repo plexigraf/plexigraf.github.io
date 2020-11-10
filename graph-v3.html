@@ -8,6 +8,8 @@
   <script src = "https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3plus.org/js/d3plus.js"></script>
   
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 
@@ -23,11 +25,8 @@
 
   .type text{
   	font-family:American Typewriter, serif;
-  }
-
-
-  
-
+  } 
+    
 
 
 
@@ -35,14 +34,36 @@
 </head>
 <body> 
 
-  <form name="myform" onSubmit="return handleClick()">
-            <input name="Submit"  type="submit" value="Add to list" >
-            <input type="text" id="myVal" placeholder="Add some text&hellip;">
+  <form name="myform" onSubmit="return handleClick()" style="display:none">
+      <p>Focus:</p> <p id="focus_p"></p>
+            <input name="Submit"  type="submit" value="Changer" >
+            <input type="text" id="myVal" placeholder="Entrez du texte&hellip;">
         </form>
 
 
   <div class="chart" id="mainchart"></div>
   <script type = "text/javascript">
+  var idx='idx undef yet';
+  $.getJSON( "conflicts-file.json", function( data ) {
+      idx = lunr(function () {
+        this.ref('id')
+        this.field('lastName', { boost: 10 })
+        this.field('firstName')
+        this.field('params')
+
+        data.forEach(function (entry) {
+          entry.params=JSON.stringify(entry.params)
+          this.add(entry)
+        }, this)
+      })
+
+      console.log('idx done')
+    })
+        
+
+
+
+            
   //var chartDiv=document.getElementsByClassName("wpd3-49-0")
   var chartDiv = document.getElementById("mainchart");
 
@@ -53,7 +74,7 @@
   //TO DO:   changer polices, prendre en compte plusieurs parents, utiliser hierarchy package, bug quand on deploie certains petites feuilles, depth marche pas tres bien, faire drag noeuds et zoom texte sans propagation
 
 //http://transparency-graph.fr/wp-content/uploads/2019/02/conflicts-files.txt
-var filename="conflicts-file.txt",
+var filename="conflicts-file.json",
 divName="body", 
     width =1300,     // svg width
     height = width,     // svg height 
@@ -64,8 +85,7 @@ divName="body",
     nodesMap =  {} ,  //"name" -> number
     focus = "Secteurpriv",
     infos=[],
-    compteur=0,    
-    infoWidth=0,
+    infoWidth=0,//varie:0 si on affiche pas le cadre d'infos, sinon smallWidth
     infoTextSize=14,
     smallWidth=chartDiv.offsetWidth<600,
     net, force, hullg, hull, linkg, link, linkp,  nodeg ,   node,  infog,  infoG;
@@ -73,6 +93,9 @@ divName="body",
     curve = d3.svg.line()
     .interpolate("cardinal-closed")
     .tension(.85),
+
+
+    document.getElementById("focus_p").innerHTML=focus
 
     fill = d3.scale.category20(); 
 // --------------------------------------------------------
@@ -136,13 +159,16 @@ zoomCanvas.on("mouseover",function(){
   .attr("fill","lightblue")
   .style("opacity",.9) */
 
-function handleClick(event){
-                console.log(document.getElementById("myVal").value)
-                draw(document.getElementById("myVal").value)
-                return false;
+
+
+ function name(nodeId) {
+              nodei=nodeById(nodeId);
+              return nodei.firstName+" "+nodei.lastName;
             }
-  
- 
+
+  function nodeById(id){
+    return nodes[nodesMap[id]]
+  }
 
 
   d3.json(filename,function(error, json) { 
@@ -155,8 +181,8 @@ function handleClick(event){
     ////console.log(i)
     nodei = data[ i ] ;
     if (nodei.id!=""&& nodei.display!="no"){
-      nodesMap [ nodei.id ] = nodes.length; 
-      complete(nodei) 
+      nodesMap [ nodei.id ] = nodes.length; //0 au début, grandit au fur et à mesure
+      complete(nodei) //initialise pour l'affichage
       nodei.expanded=nodei.expanded||false;
       nodes.push(nodei)
       ////console.log(nodei,nodei.x)
@@ -239,10 +265,29 @@ function handleClick(event){
 });
 
 
+  function handleClick(event){
+
+    term=document.getElementById("myVal").value;
+    console.log('go')
+    results=idx.search(term);
+    console.log('done')
+    console.log(results);
+    focus=term;
+    noInfo();
+    infos=[nodeById(results[0].ref)];
+    console.log("search",infos)
+    infoDisp();
+    init();
+    document.getElementById("focus_p").innerHTML=focus;
+    return false;
+
+
+  }
+
+
 
 
 function init() { 
-  compteur=compteur+1;
   if (force) force.stop();//useful?
   ////console.log("------init - focus",focus)
   ////console.log("data",nodes,links) 
@@ -343,41 +388,11 @@ function init() {
     .attr("text-anchor","middle") 
     .attr("transform",d => "translate("+d.x+","+d.y+")")
     .on("mouseover", function(d) { 
-     d3.select(this).style("cursor",  d.id==focus? d.expanded?"crosshair":"col-resize":"context-menu")
+     d3.select(this).style("cursor",  d.id==focus? d.expanded?"crosshair":"col-resize":"help")
      lightNodeLinks(d,"on")
    }).on("mouseout", function(d){lightNodeLinks(d,"off")} )
     .on("click", function(d) { 
 
-        //si l'info du noeud n'est pas déjà affichée, on l'affiche, avec ses enfants et ses liens
-        if (infos[0]!=d) {
-          noInfo();
-          d.showInfo=true;
-          infos=[d]
-
-          if (d.children.length>0){
-            infos.push({texte:"Contient","off":10,"showInfo":true})
-            for (i in d.children){ 
-              infos.push(d.children[i])
-            }
-          }
-
-
-          if (d.links.length>0){
-            infos.push({texte:"Liens","off":10,"showInfo":true})
-
-            infos=infos.concat(d.links)
-          }
-          infoDisp()
-        }
-        else if (d.children.length==0){noInfo()}
-
-          if (focus==d.id){
-            if (d.expanded) {
-              collapseNode(d);}
-              else if (d.children.length>0)
-                {expandNode(d)}
-              d.show=nodeById(d.parent).expanded; 
-            }
 
         //on range l'ancien focus, sauf si on clique sur un noeud déballé
         setFocus(focus,d);
@@ -831,7 +846,10 @@ function infoDisp() {
     .attr("transform","translate("+infoWidth+",1)")
     .attr("display",firstBlock?"block":"none")
     .on("click",noInfo )
-    .on("mouseover",function(d){ d3.select(this).style("cursor",  "pointer") }  )
+    .on("mouseover",function(d){
+    d3.select(this).style("cursor",  "pointer")
+    //crsrText.text(name(d.parent))
+  }  )
 
 
     firstBlock=false;
@@ -859,7 +877,7 @@ function infoDisp() {
       .attr("x",31)
       .attr("y",20)
       .attr("font-size",16)
-
+ 
       off=20;
     }
     else if (displaySubBlocks){ 
@@ -908,6 +926,17 @@ function infoDisp() {
     .attr("font-size",d.source?10:15)
     .attr("x",30)
     .attr("y",20)
+    .on("mouseover",function(d){
+    d3.select(this).style("cursor",  "pointer")
+    //crsrText.text(name(d.parent))
+  }  )
+    .on("click",function(d){
+        //on range l'ancien focus, sauf si on clique sur un noeud déballé
+        setFocus(focus,d);
+        //console.log(d)
+        focus = d.id;
+        init();
+    })
 
     bckgrdRect=info.append("rect")
     .attr("fill","lightblue")
@@ -1051,17 +1080,43 @@ function expandNode(d)
                 else if (focus==l2.source||focus==l2.target){return -1}
               }
 
-            function name(nodeId) {
-              nodei=nodeById(nodeId);
-              return nodei.firstName+" "+nodei.lastName;
-            }
-
-            function nodeById(id){
-              return nodes[nodesMap[id]]
-            }
+           
 
             function setFocus(focus,d){
   //console.log("nm",nodesMap)
+
+
+        //si l'info du noeud n'est pas déjà affichée, on l'affiche, avec ses enfants et ses liens
+        if (infos[0]!=d) {
+          noInfo();
+          d.showInfo=true;
+          infos=[d]
+          console.log("in function",infos)
+
+          if (d.children.length>0){
+            infos.push({texte:"Contient","off":10,"showInfo":true})
+            for (i in d.children){ 
+              infos.push(d.children[i])
+            }
+          }
+
+
+          if (d.links.length>0){
+            infos.push({texte:"Liens","off":10,"showInfo":true})
+
+            infos=infos.concat(d.links)
+          }
+          infoDisp()
+        }
+        else if (d.children.length==0){noInfo()}
+
+          if (focus==d.id){
+            if (d.expanded) {
+              collapseNode(d);}
+              else if (d.children.length>0)
+                {expandNode(d)}
+              d.show=nodeById(d.parent).expanded; 
+            }
 
   focusLinked=nodeById(focus).linked;
 
