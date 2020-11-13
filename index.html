@@ -2,7 +2,7 @@
 <html>
 <body>
 
-	<a href="graph-v3.html">v3</a>
+	<a href="graph-v3.html">Gouvernement Philippe II</a>
 	<a href="graph-v2.html">v2</a>
 
 <form action="/search/" method="GET">
@@ -19,32 +19,32 @@
 <script type="text/javascript" >
  
 
-$.getJSON( "conflicts-file.json", function( data ) {
-var idx = lunr(function () {
-  this.ref('id')
-  this.field('lastName', { boost: 10 })
-  this.field('firstName')
-  this.field('params')
+//$.getJSON( "conflicts-file.json", function( data ) {
+// var idx = lunr(function () {
+//   this.ref('id')
+//   this.field('lastName', { boost: 10 })
+//   this.field('firstName')
+//   this.field('params')
 
-  data.forEach(function (entry) {
-    entry.params=JSON.stringify(entry.params)
-    console.log(entry.params)
-    this.add(entry)
-  }, this)
-})
+//   data.forEach(function (entry) {
+//     entry.params=JSON.stringify(entry.params)
+//     console.log(entry.params)
+//     this.add(entry)
+//   }, this)
+// })
 
 
-results=idx.search("macron~1")
-var resultdiv = $('#search-results');
+// results=idx.search("macron~1")
+// var resultdiv = $('#search-results');
 
-  for (var item in results) {
-    var ref = results[item].ref;
-      var searchitem = '<li class="result">'+ref+'</li>';
-      resultdiv.append(searchitem);
+//   for (var item in results) {
+//     var ref = results[item].ref;
+//       var searchitem = '<li class="result">'+ref+'</li>';
+//       resultdiv.append(searchitem);
 
-}
+// }
 
-})
+// })
 
 
 

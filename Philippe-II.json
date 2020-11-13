@@ -1,69 +1,6 @@
 [
   {
     "id" : "world",
-    "firstName" : "world",
-    "lastName" : "",
-    "expanded" : null,
-    "show" : "",
-    "display" : "",
-    "parent" : "world",
-    "otherParents" : "",
-    "params" : {
-      "Poste" : {
-        "texte" : ""
-      },
-      "Info" : {
-        "texte" : "",
-        "source" : "",
-        "url" : ""
-      },
-      "Transparence" : {
-        "texte" : "",
-        "url" : "",
-        "source" : ""
-      }
-    },
-    "link" : {
-      "source" : "world",
-      "targetName" : "some name\n - mandatory",
-      "target" : "",
-      "targetParentId" : "some name\n - mandatory if \nyou don't want to \ndefine the target in the json file. Useful for nodes that will appear only once",
-      "otherParents" : "",
-      "params" : {
-        "Periode" : {
-          "texte" : ""
-        },
-        "Montant" : {
-          "texte" : "",
-          "url" : "",
-          "source" : ""
-        },
-        "Type" : {
-          "texte" : ""
-        },
-        "Poste" : {
-          "texte" : ""
-        },
-        "Info" : {
-          "source" : "",
-          "url" : "",
-          "texte" : ""
-        },
-        "Actions" : {
-          "texte" : "",
-          "url" : "",
-          "source" : ""
-        },
-        "info2" : {
-          "source" : "",
-          "url" : "",
-          "texte" : ""
-        }
-      }
-    }
-  },
-  {
-    "id" : "France",
     "firstName" : "France",
     "lastName" : "",
     "expanded" : true,
@@ -132,7 +69,7 @@
     "expanded" : null,
     "show" : "",
     "display" : "",
-    "parent" : "France",
+    "parent" : "world",
     "otherParents" : "",
     "params" : {
       "Poste" : {
@@ -321,7 +258,7 @@
     "expanded" : true,
     "show" : "",
     "display" : "",
-    "parent" : "France",
+    "parent" : "world",
     "otherParents" : "",
     "params" : {
       "Poste" : {
@@ -384,7 +321,7 @@
     "expanded" : true,
     "show" : "",
     "display" : "",
-    "parent" : "France",
+    "parent" : "world",
     "otherParents" : "",
     "params" : {
       "Poste" : {

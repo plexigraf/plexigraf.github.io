@@ -44,7 +44,7 @@
   <div class="chart" id="mainchart"></div>
   <script type = "text/javascript">
   var idx='idx undef yet';
-  $.getJSON( "conflicts-file.json", function( data ) {
+  $.getJSON( filename, function( data ) {
       idx = lunr(function () {
         this.ref('id')
         this.field('lastName', { boost: 10 })
@@ -74,7 +74,7 @@
   //TO DO:   changer polices, prendre en compte plusieurs parents, utiliser hierarchy package, bug quand on deploie certains petites feuilles, depth marche pas tres bien, faire drag noeuds et zoom texte sans propagation
 
 //http://transparency-graph.fr/wp-content/uploads/2019/02/conflicts-files.txt
-var filename="conflicts-file.json",
+var filename="Philippe-II.json",
 divName="body", 
     width =1300,     // svg width
     height = width,     // svg height 
