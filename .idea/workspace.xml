@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Philippe-II.json" beforeDir="false" afterPath="$PROJECT_DIR$/Philippe-II.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph-v3.html" beforeDir="false" afterPath="$PROJECT_DIR$/graph-v3.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kIOElxFNx9auMjP6HjocEZxxS8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="" />
+      <created>1605384530870</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605384530870</updated>
+      <workItem from="1605384532348" duration="6830000" />
+      <workItem from="1605524452960" duration="9104000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="274" y="79" key="#Inspections" timestamp="1605433064408">
+      <screen x="0" y="23" width="1280" height="740" />
+    </state>
+    <state x="274" y="79" key="#Inspections/0.23.1280.740@0.23.1280.740" timestamp="1605433064408" />
+    <state x="141" y="33" key="SettingsEditor" timestamp="1605543518606">
+      <screen x="0" y="23" width="1280" height="741" />
+    </state>
+    <state x="141" y="33" key="SettingsEditor/0.23.1280.741@0.23.1280.741" timestamp="1605543518606" />
+  </component>
+</project>

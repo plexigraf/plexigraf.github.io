@@ -1,0 +1,1204 @@
+
+
+
+//TO DO quand on clique sur une feuille, il faudrait qu'elle se rentre, et enlever l'info
+
+
+//TO DO:   changer polices, prendre en compte plusieurs parents, utiliser hierarchy package, bug quand on deploie certains petites feuilles, depth marche pas tres bien, faire drag noeuds et zoom texte sans propagation
+//test
+//var chartDiv=document.getElementsByClassName("wpd3-49-0")
+const chartDiv = document.getElementById("mainchart");
+
+const filename = "Philippe-II.json",//xxx.jsonn
+    divName = "body",
+    width = window.screen.width, // svg width
+    height = width, // svg height
+    smallWidth = chartDiv.offsetWidth < 600,
+    dr = 34, // default point radius
+    off = dr;
+    // (pas encore fonctionnel) true: dès qu'un noeud sort tous ses ancetres également
+const alwaysShowParent = false;
+        //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
+let nodes = [];
+    //tous les liens de la DB, y compris parenté, remplacé par linksSynth pour le tracé
+let links = [];
+    //"name" -> number
+let nodesMap = {};
+    //id du node focused par l'user
+let focus = "Secteurpriv";
+    //liste des infos à afficher, de la forme {key:value}
+let infos = [];
+    //varie:0 si on affiche pas le cadre d'infos, sinon smallWidth
+let infoWidth = 0;
+let infoTextSize = 14;
+    //variable contenant nodes et links utilisé par D3 pour tracer
+let net;
+let force, hull,  link, linkp, node, nodec;
+
+curve = d3.svg.line()
+    .interpolate("cardinal-closed")
+    .tension(.85)
+
+
+document.getElementById("focus_p").innerHTML = focus
+
+const fill = d3.scale.category20();
+// --------------------------------------------------------
+
+let idx = 'idx undef yet';
+$.getJSON(filename, function(data) {
+    idx = lunr(function() {
+        this.ref('id')
+        this.field('lastName', {
+            boost: 10
+        })
+        this.field('firstName')
+        this.field('params')
+
+        data.forEach(function(entry) {
+            entry.params = JSON.stringify(entry.params)
+            this.add(entry)
+        }, this)
+    })
+
+    console.log('idx done')
+})
+
+
+
+
+// --------------------------------------------------------
+
+const body = d3.select(divName);
+
+//html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
+const canvas = body.append("svg").attr("id", "canvas")
+    .style("border", "1px solid #ccc")
+    .attr("width", width)
+    .attr("height", height),
+    zoomCanvas = canvas.append("svg").attr("width", width).attr("id", "zoomCanvas")
+    .attr("height", height);
+
+//necessaire pr zoom
+zoomCanvas.append("rect")
+    .attr("width", width)
+    .attr("height", height).attr("opacity", .1);
+
+//html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
+const vis = zoomCanvas.append("g").attr("id", "vis");
+
+//html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
+let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
+     linkg = vis.append("g").attr("id", "linkg"), //liens
+     nodeg = vis.append("g").attr("id", "nodeg"); //nodeuds
+//infoG est une selection D3, infog est un element html
+let infoG = canvas.append("g")
+        .attr("id", "infog").attr("display", smallWidth ? "none" : "block"), //infos
+    infog = document.getElementById("infog") //automatic?
+//zoom ability
+const zoom = d3.behavior.zoom()
+    .scaleExtent([.1, 10])
+    .scale(1)
+    .on("zoom", zoomed);
+
+
+zoomCanvas.on("mouseover", function() {
+        d3.select(this).style("cursor", "move")
+    })
+    //.on("click", noInfo)
+    .call(zoom) // delete this line to disable free zooming
+    .call(zoom.event);
+
+
+//info text when cursor is over convex hull
+//crsrText = vis.append("text").attr("id","crsrtxt");
+
+//return node.firstName + " " + node.lastName;
+function name(nodeId) {
+
+    let node = nodeById(nodeId);
+    return node.firstName + " " + node.lastName;
+}
+//return nodes[nodesMap[id]]
+function nodeById(id) {
+    return nodes[nodesMap[id]]
+}
+
+//construit nodes et links à partir de données json
+function buildNodesLinks(data){
+    //empty children linked links, initial x y random, showinfo prevshow=false
+    function initialise(n) {
+        n.children = [];
+        n.x = 100 + width * Math.random();
+        n.y = 300 * Math.random();
+        n.px = n.x
+        n.py = n.y;
+        n.prevShow = false;
+        n.linked = [];
+        n.links = [];
+        n.showInfo = false;
+        n.visibleParent = nodes.length;
+        n.expanded = n.expanded || false;//pas développé par défaut
+        return n;
+    }
+    //extract nodes
+    for (let i = 0; i < data.length; ++i) {
+        ////console.log(i)
+        nodei = data[i];
+        if (nodei.id != "" && nodei.hide != "yes") { //hide = does not exist in the visualisation
+            nodesMap[nodei.id] = nodes.length; //0 au début, grandit au fur et à mesure
+            nodei=initialise(nodei) //initialise pour l'affichage
+            nodes.push(nodei)
+
+            //on ajoute les liens de parenté
+            links.push({
+                source: nodei.id,
+                target: nodei.parent,
+                params: {
+                    type: "belongsTo"
+                }
+            });
+        }
+    }
+
+    //console.log(nodes)
+    //root est tjs expanded
+    nodes[0].expanded = true;
+
+
+    //extract links
+    for (let i = 1; i < data.length; i++) {
+
+        let linki = data[i].link || { target: "" };
+
+        //target="" veut dire que la ligne de donnees est vide
+        if (linki.target != "") {
+            links.push(linki)
+
+            //on verifie que parent existe, ou target Parent
+            if (nodesMap[linki.target]) {
+                ////console.log(linki.targetName," existe");
+            }
+            //s'il n'existe pas on est censes le creer comme enfant de "targetParentId"
+            else if (linki.targetParentId) {
+                //console.log("création de ",linki.targetName);
+                nodesMap[linki.target] = nodes.length;
+                let tgtName = linki.targetName.split(" ");
+                let nodei = {
+                    id: linki.target,
+                    //il peut y avoir plusieurs last names
+                    firstName: tgtName.shift(),
+                    lastName: tgtName.join(" "),
+                    parent: linki.targetParentId,
+                    expanded: false,
+                    params: {},
+                    poste: ""
+                }
+                nodei=initialise(nodei)
+                nodes.push(nodei);
+                links.push({
+                    source: linki.target,
+                    target: linki.targetParentId,
+                    params: {
+                        type: "belongsTo"
+                    }
+                });
+
+            } else {
+                console.log("parent inconnu", linki.parent);
+                a = bb;
+            }
+
+            //pour chaque noeud on a la liste "linked", qui contient les noeuds avec lesquels il est lié, et une liste "links", qui contient les liens eux-mêmes
+            nodeById(linki.source).linked.push(nodeById(linki.target));
+            nodeById(linki.target).linked.push(nodeById(linki.source));
+            nodeById(linki.source).links.push(linki);
+            nodeById(linki.target).links.push(linki);
+        }
+    }
+
+
+    //build children lists and links
+    for (let i = 1; i < nodes.length; ++i) {
+        let nodei = nodes[i];
+        parent = nodeById(nodei.parent)
+
+        nodei.show = parent.expanded;
+        parent.children.push(nodei);
+    }
+}
+
+//lance la simu
+d3.json(filename, function(error, json) {
+    if (error) throw error;
+    let data = json;
+    ////console.log(data)
+    buildNodesLinks(data)
+
+    //on calcule les liens visibles et on lance la simulation
+
+    init();
+
+    //effet "apparition progressive"
+    vis.attr("opacity", 1e-6)
+        .transition()
+        .duration(2000)
+        .attr("opacity", 1);
+});
+
+
+function handleClick(event) { //pour la fctn de recherche
+
+    let term = document.getElementById("myVal").value;
+    console.log('go')
+    let results = idx.search(term);
+    console.log('done')
+    console.log(results);
+    focus = term;
+    noInfo();
+    infos = [nodeById(results[0].ref)];
+    console.log("search", infos)
+    infoDisp();
+    init();
+    document.getElementById("focus_p").innerHTML = focus;
+    return false;
+
+
+}
+
+
+
+//retourne les nodes pour qui show=true et un seul lien entre chaque paire affichée
+//détermine visibleparent et emplacement des nouveaux
+function network(nodes, links, nodesMap) {
+    let displayedNodes = [],
+        displayedNodesMap = [],
+        i = 0;
+
+    //build nodes maps (except root)
+    for (let k = 1; k < nodes.length; ++k) {
+        let nodek = nodes[k];
+
+        if (nodek.show) {
+            displayedNodes.push(nodek);
+            displayedNodesMap[k] = i;
+            i++;
+        }
+    }
+
+    //ignoré pour l'instant
+    if (alwaysShowParent) {
+
+        for (let k = 1; k < nodes.length; ++k) { //on va systématiquement afficher le parent
+            if (nodes[k].show) {
+                let parentIndex = nodesMap[nodes[k].parent];
+                parentIndex = parentIndex === 0 ? 1 : parentIndex;
+                nodes[k].visibleParent = parentIndex;
+                console.log(k, parentIndex)
+            }
+
+        }
+    } else {
+        nodes[0].visibleParent = 1;
+
+        //on determine le parent visible de chacun
+        for (let k = 1; k < nodes.length; ++k) {
+            let looking = true;
+            let current = k;
+            let nodek = nodes[k];
+            while (looking) {
+                let crtNode = nodes[current];
+                let parentIndex = nodesMap[crtNode.parent];
+                if (crtNode.show === false) { //si le noeud est caché
+                    //on va regarder si son parent est visible
+                    current = parentIndex;
+                } else {
+                    //crtNode est le visibleparent
+                    if (nodek.show != nodek.prevShow) {
+                        //just popped
+                        nodek.prevShow = true;
+                        //console.log(nodek)
+                        //on les fait apparaitre pres de leur visibleparent
+                        nodek.x = nodes[nodek.visibleParent].x + 350 * Math.random();
+                        nodek.y = nodes[nodek.visibleParent].y + 350 * Math.random();
+                        //to put speed at 0: (px=previous x)
+                        nodek.px = nodek.x;
+                        nodek.py = nodek.y;
+                    }
+
+                    looking = false;
+
+                    //cet attribut servira plus tard pour l'affichage des couleurs et des enveloppes
+                    nodek.visibleParent = current;
+
+
+                }
+            }
+
+        }
+    }
+
+
+    //possible amélioration en mettant à jour les parents rencontrés au cours d'une remontée
+
+    //on construit desormais les liens visibles
+    let linksMap = [];
+    //on retournera une liste synthétique sans répétition ou auto-lien, "linksSynth"
+    //chaque lien synth contient la liste de ses sous liens dans link.liste
+    let linksSynth = [],
+        j = 0;
+    for (let k = 0; k < links.length; ++k) {
+        //on modifie les indices des sources pour qu'elles correspondent aux parents visibles
+        let visibleSourceIndex = displayedNodesMap[nodeById(links[k].source).visibleParent];
+        let visibleTargetIndex = displayedNodesMap[nodeById(links[k].target).visibleParent];
+
+        if (visibleSourceIndex != visibleTargetIndex) {
+
+            let linkid = visibleSourceIndex + "|" + visibleTargetIndex;
+
+            //on ajoute a la liste entre ces 2 parents visibles, ou on la créee
+            if (linksMap[linkid]) {
+                let i = linksMap[linkid];
+                linksSynth[i].liste.push(links[k]);
+                linksSynth[i].params = {
+                    type: "Liens multiples",
+                }
+            } else {
+
+                linksMap[linkid] = j;
+                linksSynth[j] = {
+                    source: visibleSourceIndex,
+                    target: visibleTargetIndex,
+                    liste: [links[k]],
+                    params: links[k].params || {}
+                };
+                j = j + 1;
+            }
+        }
+    }
+
+    return {
+        links: linksSynth,
+        nodes: displayedNodes
+    }
+
+}
+
+
+function init() {
+    if (force) force.stop(); //useful?
+
+    //renvoie une liste de noeuds qui ont un id et de liens qui ont une source et une target (entre autres)
+    net = network(nodes, links, nodesMap);
+    adaptZoom();
+
+
+
+
+    force = d3.layout.force()
+        .nodes(net.nodes)
+        .links(net.links)
+        .size([width / 2, height / 2])
+        //.linkDistance(function(l, i) { return 600; })
+        .linkStrength(function(l, i) {
+            return ((l.source.id === focus) || (l.target.id === focus) || (l.params.type === "belongsTo")) ? .3 : 0.1;
+        })
+        .charge(function(n, i) {
+            return (n.id === focus ? -8000 : -6000);
+        })
+        //.gravity(0.1)
+        .chargeDistance(800)
+        .friction(.6)
+        .start();
+
+
+
+    //A noter: force transforme links: il remplace link.source.id par l'objet source, etc...
+
+    //convex hull cursor text------------
+    /*vis.on("mouseover",function(){
+    x = d3.mouse(this) [ 0 ] ;
+    y = d3.mouse(this) [ 1 ] ;
+    crsrText.attr("x",x)
+    .attr("y",y)
+    .attr("display","");
+})
+
+  vis.on("mousemove",function(){
+    x = d3.mouse(this) [ 0 ] ;
+    y = d3.mouse(this) [ 1 ] ;
+    crsrText.attr("x",x)
+    .attr("y",y)
+    .attr("display","");
+  })
+
+  vis.on("mouseout",function(){
+    crsrText.attr("display","none");
+  })*/
+
+    //hulls display-----------------------
+    hullg.selectAll("path.hull").remove();
+    hull = hullg.selectAll("path.hull")
+        .data(convexHulls(net.nodes, nodesMap, off))
+        .enter().append("path")
+        .attr("class", "hull")
+        .style("fill", d => fill(nodeById(d.parent).visibleParent))
+        .style("opacity", d => (3 - depth(nodeById(d.parent))) / 5)
+        //.attr("d", drawCluster)
+        .style("stroke-width", "8px")
+        .style("stroke", "blue")//d => fill(nodeById(d.parent).visibleParent))
+        .on("mouseover", function(d) {
+            d3.select(this).style("cursor", "crosshair")
+            //crsrText.text(name(d.parent))
+        })
+        .on("click", function(d) {
+            if (d.parent != "world") {
+                ////console.log("hull click", d, arguments, this);
+                focus = d.parent;
+                ////console.log("collaps")
+                collapseNode(nodeById(d.parent));
+                init();
+            }
+        });
+
+
+
+    //nodes display-------------------
+    if (node) {
+        node.remove();
+    } //on peut aussi n'enlever que certains noeuds
+    node = nodeg.selectAll(".node").data(net.nodes, d => d.id); //, nodeid);
+
+    //node.exit().remove();
+    node.enter()
+        .append("g")
+        .attr("class", "node")
+        .style("opacity", d => d.expanded ? 1 - depth(d) / 3 : 1)
+        /*
+            const total=d.linked.length+d.children.length;
+            var score=d.linked.length;
+            for (i in d.children){
+              score=score+(d.children[i].show?0:1)
+            }
+
+          }*/
+        .attr("font-size", "18px")
+        .attr("text-anchor", "middle")
+        .attr("transform", d => "translate(" + d.x + "," + d.y + ")")
+        .on("mouseover", function(d) {
+            d3.select(this).style("cursor", d.id === focus ? d.expanded ? "crosshair" : "col-resize" : "help")
+            lightNodeLinks(d, "on")
+        }).on("mouseout", function(d) {
+            lightNodeLinks(d, "off")
+        })
+        .on("click", function(d) {
+            //on range l'ancien focus, sauf si on clique sur un noeud déballé
+            setFocus(focus, d);
+            //console.log(d)
+            focus = d.id;
+            init();
+        })
+
+    nodec = node.append("circle")
+        .attr("stroke-width", "5px")
+        .attr("stroke", d => stroke(d))
+        .style("fill-opacity", d => d.expanded ? 0 : 1)
+        .attr("r", d => dr + 10 + size(d) * 0.5)
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .style("fill", d => d.expanded ? fill(nodesMap[d.id]) : fill(nodeById(d.parent).visibleParent))
+
+
+
+    //.on("mouseout",d =>  infog.setAttribute("display","none"));
+
+    node.append("rect")
+        .attr("class", "boxname top")
+
+
+    //rectangles avec nom sur chaque noeud
+    node.append("rect")
+        .attr("class", "boxname middle")
+
+    node.append("text")
+        .attr("x", 0)
+        .style("font-family", "American Typewriter, serif")
+        .attr("y", d => d.lastName ? "-1.2em" : 0)
+        .text(d => d.firstName)
+        .each(function(d) {
+            let box = this.parentNode.getBBox();
+            d.bb1x = -box.width / 2 - 5;
+            d.bb1w = box.width + 10;
+        })
+
+    node.selectAll(".top")
+        //.attr("rx",10)
+        .attr("x", d => d.bb1x - 2)
+        .attr("y", -37)
+        .attr("display", d => d.lastName ? "block" : "none")
+        .attr("width", d => d.bb1w || 10)
+        .attr("height", 21)
+
+
+    node.append("text")
+        .style("font-size", "18px")
+        .style("font-family", "American Typewriter, serif")
+        .attr("x", 0)
+        .attr("y", 0)
+        .text(d => d.lastName || "")
+        .each(function(d) {
+            let box = this.getBBox();
+            d.bb2x = -box.width / 2 - 5;
+            d.bb2w = box.width + 10;
+        })
+
+
+    node
+        .selectAll(".middle")
+        //.attr("rx",6)
+        .attr("x", d => d.lastName ? d.bb2x + 2 : d.bb1x + 2)
+        .attr("y", -14)
+        .attr("width", d => d.lastName ? d.bb2w : d.bb1w)
+        .attr("height", 23)
+
+    node.append("text")
+        .style("font-size", "10px")
+        .style("font-family", "American Typewriter, serif")
+        .attr("dy", "2em")
+        .text(d => name(d.parent))
+
+    //only for mouseover event
+    node.append("circle")
+        .style("opacity", .001)
+        .attr("r", d => dr + 10 + size(d) * 0.5)
+
+
+
+    node.sort(nodeSort)
+
+
+    //links display------------
+    if (link) {
+        link.remove();
+    } //on pourrait aussi n'enlever que certains liens
+    link = linkg.selectAll("link").data(net.links);
+
+
+    link.enter().append("g")
+        .attr("class", "link")
+        .attr("transform", d => "translate(" + d.source.x + "," + d.source.y + ")")
+        .on("mouseover", function(d) {
+            d3.select(this).style("cursor", "help")
+            lightLink(d.source.id, d.target.id, "on")
+        })
+        .on("mouseout", d => lightLink(d.source.id, d.target.id, "off"));
+
+    linkp = link.append("polygon")
+        .attr("class", d => ((d.source.id === focus) || (d.target.id === focus)) ? "focus" : "background")
+        .attr("stroke", d => ((d.source.id === focus) || (d.target.id === focus)) ? "red" : "grey")
+        .attr("opacity", d => ((d.source.id === focus) || (d.target.id === focus)) ? 1 : 0.2)
+        .attr("points", function(d) {
+            let dx = d.target.x - d.source.x;
+            let dy = d.target.y - d.source.y;
+            return "0 0 " + dx + " " + dy
+        })
+        .attr("display", d => d.params.type === "belongsTo" ? "block" : "block")
+        .style("stroke-width", d => d.params.type === "belongsTo" ? 1 : 10)
+        .on("click", function(d) {
+            focus = d.source.id;
+            noInfo();
+            infos = [d, {
+                texte: "Liens",
+                "off": 10,
+                "showInfo": true
+            }]
+            for (let i in d.liste) {
+                infos.push(d.liste[i])
+            }
+
+            infoDisp();
+        });
+
+    link.sort(linkSort)
+
+
+
+    //Force updates------------------------------
+
+    //node.call(force.drag);
+
+    force.on("tick", function(e) {
+        if (!hull.empty()) {
+            hull.data(convexHulls(net.nodes, nodesMap, off))
+                .attr("d", drawCluster);
+        }
+
+        let minY = net.nodes.reduce((min, p) => p.y < min ? p.y : min, net.nodes[0].y);
+        let maxX = net.nodes.reduce((max, p) => p.x > max ? p.x : max, net.nodes[0].x);
+        let minX = net.nodes.reduce((min, p) => p.x < min ? p.x : min, net.nodes[0].x);
+
+
+        ////console.log(minX)
+        let left = 300;
+        let middle = (width + left) / 2
+
+
+        node.each(function(d) {
+            ////console.log(d.id,d.x)
+            //textw=100+infoTxt.getBBox().width;
+            ////console.log(textw)
+            d.x = minX < 100 ? d.x + 50 * e.alpha : d.x //:d.x>width?d.x-d.x+100*e.alpha:d.x;
+            d.y = minY < 0 ? d.y + 50 * e.alpha : d.y;
+
+            //d.y=d.y<40?d.y+10*(40-d.y)*e.alpha:d.y;
+        })
+
+        node.attr("transform", d => "translate(" + (d.x) + "," + (d.y) + ")");
+
+
+        link
+            .attr("transform", d => "translate(" + (d.source.x) + "," + (d.source.y) + ")")
+
+        linkp.attr("points", function(d) {
+            let dx = (d.target.x) - (d.source.x);
+            let dy = (d.target.y) - (d.source.y);
+            return "0 0 " + dx + " " + dy
+        })
+
+
+
+
+    });
+
+}
+
+
+
+
+/*function linkid(l) {
+  let u = nodeid(l.source),
+  v = nodeid(l.target);
+  return u<v ? u+"|"+v : v+"|"+u;
+}*/
+
+
+
+
+// constructs the network to visualize
+function convexHulls(nodeGrp, nodesMap, offset) {
+    let hulls = {};
+    //console.log(nodeGrp)
+    // create point sets - not for root
+    for (let k = 1; k < nodeGrp.length; ++k) {
+        let n = nodeGrp[k];
+
+        //on rajoute ce noeud dans le visibleparent de son parent (il se peut que seuls le noeud et son grand parent soient visibles)
+        let i = nodeById(n.parent).visibleParent
+        //console.log(i)
+        let l = hulls[i] || (hulls[i] = [
+            [nodes[i].x - offset, nodes[i].y - offset],
+            [nodes[i].x - offset, nodes[i].y + offset],
+            [nodes[i].x + offset, nodes[i].y - offset],
+            [nodes[i].x + offset, nodes[i].y + offset],
+        ]);
+        l.push([n.x - offset, n.y - offset]);
+        l.push([n.x - offset, n.y + offset]);
+        l.push([n.x + offset, n.y - offset]);
+        l.push([n.x + offset, n.y + offset]);
+        l.parent = n.parent;
+        //console.log(hulls)
+
+
+    }
+    //a=bb
+
+    // create convex hulls
+    let hullset = [];
+    for (let i in hulls) {
+        hullset.push({
+            parent: hulls[i].parent,
+            path: d3.geom.hull(hulls[i])
+        });
+    }
+
+    //if (data.nodes [ 23 ] .show) {a = bbb;}//23 4
+
+    return hullset;
+}
+
+function drawCluster(d) {
+    return curve(d.path); // 0.8
+}
+
+
+function zoomed() {
+    /*prevTgt=msTgt;
+    msTgt="root"//d3.event.sourceEvent.target.id||"root";
+    if (msTgt==="canv" && prevTgt==="canv") {*/
+    ////console.log("mvvvvv")
+    vis.attr("transform", "translate(" + d3.event.translate + ")scale(" + (d3.event.scale) + ")")
+    //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
+
+
+}
+
+
+
+
+function adaptZoom() {
+    //calcul du nouveau zoom basé sur le nb de noeuds.
+    let autoZoom = (width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1))/1.5
+
+    //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
+    vis.transition().duration(2000).call(zoom.translate([infoWidth + 100, 100]).scale(autoZoom).event);
+
+}
+
+function noInfo() {
+    //console.log("noinfo")
+    infoWidth = 0;
+    infoG.selectAll(".infoblock").remove();
+    for (let i in infos) {
+        infos[i].showInfo = false;
+    }
+    infos = [];
+    adaptZoom()
+}
+
+function stopped() {
+    if (d3.event.defaultPrevented) d3.event.stopPropagation();
+}
+/*function dragstarted(d) {
+  ////console.log("dstart")
+  a=bb
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+}
+
+function dragged(d) {
+  ////console.log("dd")
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+function dragended(d) {
+  ////console.log("dend")
+  d3.select(this).classed("dragging", false);
+}*/
+
+
+
+
+function infoDisp() {
+    //console.log(object)
+
+    //parametres constants
+    infoWidth = smallWidth ? 0 : 300;
+
+    //on enleve tout
+    infoG.selectAll(".infoblock").remove()
+
+
+
+
+    let off = 10;
+    //sert à mettre la croix de fermeture
+    let firstBlock = true;
+    //sert à savoir si on affiche le prochain subblock
+    let displaySubBlocks = true;
+
+    for (let i in infos) {
+        let d = infos[i]
+        let prevHeight = smallWidth ? 0 : infog.getBBox().height + 5;
+
+        //cadre titre
+        let info = infoG.append("g")
+            .data([d])
+            .attr("class", "infoblock")
+            .attr("transform", "translate(" + (d.off || off) + "," + prevHeight + ")")
+
+        //rectangle du cadre titre
+        info.append("rect")
+            .data([d]).attr("fill", "lightblue")
+            .attr("height", 30)
+            .attr("width", infoWidth)
+            //.attr("stroke-width",2)
+            //.attr("stroke","black")
+            .style("opacity", .4)
+            .attr("rx", 5)
+
+        //rectangle de deploiement
+        info.append("text")
+            .attr("fill", "lightblue")
+            .attr("x", 5)
+            .attr("y", 20)
+            .attr("font-size", 15)
+            .text(d.showInfo ? "\u25bc" || "V" : "\u25b6" || ">")
+            .on("mouseover", function(d) {
+                d3.select(this).style("cursor", "pointer")
+                //crsrText.text(name(d.parent))
+            })
+            .on("click", function(d) {
+                d.showInfo = !d.showInfo;
+                infoDisp()
+            })
+
+
+        //croix de fermeture
+        let closeBox = info.append("g")
+            .attr("transform", "translate(" + infoWidth + ",1)")
+            .attr("display", firstBlock ? "block" : "none")
+            .on("click", noInfo)
+            .on("mouseover", function(d) {
+                d3.select(this).style("cursor", "pointer")
+                //crsrText.text(name(d.parent))
+            })
+
+
+        firstBlock = false;
+
+        closeBox.append("rect")
+            .attr("x", -28)
+            .attr("height", 28)
+            .attr("width", 28)
+            .attr("fill", "white")
+            .attr("rx", 5)
+
+        closeBox.append("text")
+            .attr("x", -27)
+            .attr("y", 23)
+            .attr("font-size", 26)
+            .text("\u2573" || "X")
+
+
+
+        if (d.texte === "Liens" || d.texte === "Contient") {
+            displaySubBlocks = d.showInfo
+
+            info.append("text")
+                .text(d.texte)
+                .attr("x", 31)
+                .attr("y", 20)
+                .attr("font-size", 16)
+
+            off = 20;
+        } else if (displaySubBlocks) {
+            //transform result en key/value
+
+            //textwrap bug et n'affiche pas la 1re info donc je mets une info vide pour contrer ça
+            let result = [
+                ["", ""]
+            ];
+            if (d.source) { //il s'agit d'un lien
+                let fromField = "";
+                let toField = "";
+                for (i in d.liste) {
+                    fromField = fromField + (i == 0 ? "" : ", ") + name(d.liste[i].source);
+                    toField = toField + (i == 0 ? "" : ", ") + name(d.liste[i].target);
+                }
+                result.push(["de", {
+                    "texte": fromField
+                }], ["vers", {
+                    "texte": toField
+                }]);
+            } else { //il s'agit d'un noeud
+                if (d.children.length > 0 && (i > 0)) {
+                    let childrenNames = "";
+                    for (i in d.children) {
+                        childrenNames = childrenNames + (i === 0 ? "" : ", ") + (d.children[i].firstName + " " + (d.children[i].lastName || ""));
+                    }
+                    result.push(["Contient:", {
+                        "texte": childrenNames
+                    }])
+                }
+                if (d.linked.length > 0) {
+                    //maybe problem because linked contains objects now, not just ids
+
+                    result.push(["liens avec", {
+                        "texte": d.linked.map(n => name(n.id)).join()
+                    }])
+                }
+
+            }
+            if (d.params) {
+                result = result.concat(Object.entries(d.params))
+            }
+
+
+
+
+            let id = d.id ? name(d.id) : d.source.id ? name(d.source.id) + (" \u2b0c " || " <-> ") + name(d.target.id) : name(d.source) + (" \u2b0c " || " <-> ") + name(d.target);
+
+            info.append("text")
+                .text(id)
+                //.attr("font-family","American Typewriter")
+                .attr("font-size", d.source ? 10 : 15)
+                .attr("x", 30)
+                .attr("y", 20)
+                .on("mouseover", function(d) {
+                    d3.select(this).style("cursor", "pointer")
+                    //crsrText.text(name(d.parent))
+                })
+                .on("click", function(d) {
+                    //on range l'ancien focus, sauf si on clique sur un noeud déballé
+                    setFocus(focus, d);
+                    //console.log(d)
+                    focus = d.id;
+                    init();
+                })
+
+            let bckgrdRect = info.append("rect")
+                .attr("fill", "lightblue")
+                .attr("y", 30)
+                .attr("height", 0)
+                .attr("width", infoWidth)
+                .style("opacity", .8)
+
+
+            let infoSubBlock = info.append("text")
+                .attr("display", d.showInfo ? "block" : "none")
+                .selectAll(".smalltext")
+                .data(result)
+                .enter()
+
+            //on met a jour la hauteur du bloc au fur et a mesure
+            let blockHeight = 48;
+            //on met les textes avant les titres pour calculer la hauteur du bloc au passage
+            infoSubBlock
+                .append("tspan")
+                .filter(d => d[1].texte)
+                .attr("class", "smalltext")
+                .attr("y", function(d) {
+                    d.height = blockHeight;
+                    //calcul approximatif de la hauteur du texte une fois formatté   
+                    blockHeight = blockHeight + infoTextSize * Math.floor(3 + .55 * d[1].texte.length * infoTextSize / infoWidth);
+                    return d.height
+                })
+                .text(d => d[1].texte)
+                .attr("font-size", infoTextSize)
+                .each(function() {
+                    d3plus.textwrap()
+                        .container(d3.select(this))
+                        .width(infoWidth)
+                        .height(height)
+                        .draw();
+                })
+                //on saute une ligne à la fin
+                .append("tspan")
+                .text("   ")
+                .attr("dy", 20);
+
+            //on place les titres
+            infoSubBlock
+                .append("tspan")
+                .filter(d => d[1].texte)
+                .text(d => d[0])
+                .attr("stroke", "green")
+                .attr("stroke-width", .5)
+                .attr("font-size", 16)
+                .attr("y", d => d.height) //calculé dans le bloc d'avant
+                .attr("x", 0)
+                .append("a")
+                .attr("href", d => d[1].url)
+                .attr("target", "_blank")
+                .text(d => d[1].url ? " (source " + d[1].source + ")" :
+                    "")
+                .attr("font-size", 10)
+                .attr("stroke", "blue")
+
+
+            //on calcule la nouvelle hauteur pour placer le prochain bloc
+            let newHeight = smallWidth ? 0 : infog.getBBox().height - 25 - prevHeight;
+            bckgrdRect.attr("height", newHeight)
+
+        } else {
+            info
+                .style("display", "none")
+        }
+
+    } //end of for loop
+
+    adaptZoom()
+
+} //end of function
+
+
+/*function cutAppendText(d, i) {
+    var a
+    d3.select(this)
+        .attr("stroke", (i === 0) ? "green" : "black")
+        .attr("x", (Number.isInteger((i + 1) / 5)) ? 60 : a)
+        .attr("dy", (Number.isInteger((i + 1) / 5)) ? 20 : a)
+        .text(d => d + " ");
+
+
+}*/
+
+function depth(node) {
+    let d = 0;
+    let children = node.children;
+    while (children.length > 0) {
+        children = children[0].children;
+        d = d + 1
+    }
+    return d;
+}
+
+function size(node) {
+    let r = 1; //node.show? 0:1;
+    for (let i in node.children) {
+        r = r + size(node.children[i]);
+    }
+    return r;
+}
+
+
+function collapseNode(node) {
+    //on peut simplifier avec des auto-appels récursifs
+    node.expanded = false;
+    for (let i in node.children) {
+        ////console.log("close ",node.children[i])
+        node.children[i].show = false;
+        node.children[i].expanded = false;
+        collapseNode(node.children[i])
+    }
+}
+
+function expandNode(d) {
+    d.expanded = true;
+    for (let k in d.children) {
+        d.children[k].prevShow = d.children[k].show;
+        d.children[k].show = true;
+    }
+}
+
+
+function nodeSort(n1, n2) {
+    if (n2.expanded) {
+        return 1
+    } else if (n1.expanded) {
+        return -1
+    } else if (focus === n1.id) {
+        return 1
+    } else if (focus === n2.id) {
+        return -1
+    } else if (n1.parent === n2.id) {
+        return 1
+    } else if (n2.parent === n1.id) {
+        return -1
+    }
+}
+
+function linkSort(l1, l2) {
+    if (focus === l1.source || focus === l1.target) {
+        return 1
+    } else if (focus === l2.source || focus === l2.target) {
+        return -1
+    }
+}
+
+
+
+function setFocus(focus, d) {
+    //console.log("nm",nodesMap)
+
+
+    //si l'info du noeud n'est pas déjà affichée, on l'affiche, avec ses enfants et ses liens
+    if (infos[0] != d) {
+        noInfo();
+        d.showInfo = true;
+        infos = [d]
+        console.log("in function", infos)
+
+        if (d.children.length > 0) {
+            infos.push({
+                texte: "Contient",
+                "off": 10,
+                "showInfo": true
+            })
+            for (let i in d.children) {
+                infos.push(d.children[i])
+            }
+        }
+
+
+        if (d.links.length > 0) {
+            infos.push({
+                texte: "Liens",
+                "off": 10,
+                "showInfo": true
+            })
+
+            infos = infos.concat(d.links)
+        }
+        infoDisp()
+    } else if (d.children.length === 0) {
+        noInfo()
+    }
+
+    if (focus === d.id) {
+        if (d.expanded) {
+            collapseNode(d);
+        } else if (d.children.length > 0) {
+            expandNode(d)
+        }
+        d.show = nodeById(d.parent).expanded;
+    }
+
+    let focusLinked = nodeById(focus).linked;
+
+    for (let k in focusLinked) {
+        let nodek = focusLinked[k];
+        nodek.show = nodeById(nodek.parent).expanded ? true : d.id === !nodek.id;
+        nodek.prevShow = true;
+    }
+    //on installe le nouveau focus
+
+    focusLinked = nodeById(d.id).linked;
+    for (let k in focusLinked) {
+        let nodek = focusLinked[k];
+        nodek.prevShow = nodek.show;
+        nodek.show = true;
+    }
+}
+
+
+function lightNodeLinks(d, p) {
+    lightNode(d.id, "on")
+    for (let i in net.links) {
+
+        if (net.links[i].source.id === d.id) {
+            lightLink(d.id, net.links[i].target.id, p)
+        }
+        //console.log(i,net.links[i].target,net.links[i])
+        if (net.links[i].target.id === d.id) {
+            lightLink(net.links[i].source.id, d.id, p)
+        }
+    }
+
+
+}
+
+
+
+function lightNode(id, p) {
+
+    //console.log(id)
+    nodec.filter(d => (d.id === id)).attr("stroke", p === "on" ? "orange" : "grey")
+}
+
+
+function lightLink(id1, id2, p) {
+    //console.log("hop",id1,id2)
+    linkp.filter(
+            d =>
+            (d.source.id === id1 && d.target.id === id2))
+        .attr("stroke", d => p === "on" ? "orange" : ((d.source.id === focus) || (d.target.id === focus)) ? "red" : "grey")
+        .attr("opacity", d => p === "on" ? 1 : ((d.source.id === focus) || (d.target.id === focus)) ? 1 : 0.2)
+    lightNode(id1, p)
+    lightNode(id2, p)
+}
+
+
+function stroke(d) {
+    return (d.id === focus) ? "red" : d.children.length > 0 ? "darkgrey" : 'lightgrey'
+}
