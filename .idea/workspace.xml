@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Philippe-II.json" beforeDir="false" afterPath="$PROJECT_DIR$/Philippe-II.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graph-v3.html" beforeDir="false" afterPath="$PROJECT_DIR$/graph-v3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grafviz.js" beforeDir="false" afterPath="$PROJECT_DIR$/grafviz.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +36,7 @@
       <option name="presentableId" value="Default" />
       <updated>1605384530870</updated>
       <workItem from="1605384532348" duration="6830000" />
-      <workItem from="1605524452960" duration="9104000" />
+      <workItem from="1605524452960" duration="38986000" />
     </task>
     <servers />
   </component>
@@ -51,5 +52,9 @@
       <screen x="0" y="23" width="1280" height="741" />
     </state>
     <state x="141" y="33" key="SettingsEditor/0.23.1280.741@0.23.1280.741" timestamp="1605543518606" />
+    <state x="149" y="103" width="540" height="587" key="StructurePopup" timestamp="1605715423597">
+      <screen x="0" y="23" width="1280" height="740" />
+    </state>
+    <state x="149" y="103" width="540" height="587" key="StructurePopup/0.23.1280.740@0.23.1280.740" timestamp="1605715423597" />
   </component>
 </project>
