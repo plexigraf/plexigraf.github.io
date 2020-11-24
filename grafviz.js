@@ -712,7 +712,7 @@ function init(adapt) {
         .attr("x", 0)
         .style("font-family", "American Typewriter, serif")
         .attr("y", d => d.lastName ? "-1.2em" : 0)
-        .text(d => d.firstName+d.visibleDepth)//+(maxGen-d.generation))
+        .text(d => d.firstName)//+d.visibleDepth)//+(maxGen-d.generation))
         .each(function(d) {
             let box = this.parentNode.getBBox();
             d.bb1x = -box.width / 2 - 5;
