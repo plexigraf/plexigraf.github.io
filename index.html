@@ -17,38 +17,36 @@
 
 
 <script type="text/javascript" >
- 
-
-//$.getJSON( "conflicts-file.json", function( data ) {
-// var idx = lunr(function () {
-//   this.ref('id')
-//   this.field('lastName', { boost: 10 })
-//   this.field('firstName')
-//   this.field('params')
-
-//   data.forEach(function (entry) {
-//     entry.params=JSON.stringify(entry.params)
-//     console.log(entry.params)
-//     this.add(entry)
-//   }, this)
-// })
-
-
-// results=idx.search("macron~1")
-// var resultdiv = $('#search-results');
-
-//   for (var item in results) {
-//     var ref = results[item].ref;
-//       var searchitem = '<li class="result">'+ref+'</li>';
-//       resultdiv.append(searchitem);
-
-// }
-
-// })
 
 
 
- 
+
+
+    $.getJSON( "Philippe-II.json", function( data ) {
+     var idx = lunr(function () {
+       this.ref('id')
+       this.field('lastName', { boost: 10 })
+       this.field('firstName')
+       this.field('params')
+       data.forEach(function (entry) {
+         entry.params=JSON.stringify(entry.params)
+         this.add(entry)
+       }, this)
+     })
+     results=idx.search("macron~2")
+        console.log(results)
+     var resultdiv = $('#search-results');
+       for (var item in results) {
+         var ref = results[item].ref;
+           var searchitem = '<li class="result">'+ref+'</li>';
+           resultdiv.append(searchitem);
+     }
+     })
+
+
+
+
+
 </script>
 </body>
 </html>
