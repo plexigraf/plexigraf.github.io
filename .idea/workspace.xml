@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Philippe-II.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/grafviz.js" beforeDir="false" afterPath="$PROJECT_DIR$/grafviz.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph-v2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph-v3.html" beforeDir="false" afterPath="$PROJECT_DIR$/graph-v3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taxo-graph.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +24,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -40,7 +46,7 @@
       <workItem from="1605867837607" duration="9000" />
       <workItem from="1605874599416" duration="19921000" />
       <workItem from="1606047283781" duration="14355000" />
-      <workItem from="1606201343814" duration="5367000" />
+      <workItem from="1606201343814" duration="17702000" />
     </task>
     <servers />
   </component>

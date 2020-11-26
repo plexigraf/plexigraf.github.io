@@ -19,7 +19,7 @@
 //       "params" :
 //
 
-
+//TO DO determiner pourquio ca rame sous philippeII et pas animalia
 //TO DO quand on clique sur une feuille, il faudrait qu'elle se rentre, et enlever l'info
 
 
@@ -36,6 +36,8 @@
 //Faire mieux apparaitre nom et contour de noeuds déployés, qu'ils gardent un noyau dur
 //ne pas refaire le zoom a chaque fois
 //faire un zoom sur le focus qui ignore le reste
+//faire dependre linkwidth de la taille, ou autre...
+//pour les positions initiales, faire dans l'ordre ascendant pour pas être trop le bordel
 
 
 
@@ -48,18 +50,21 @@
 const chartDiv = document.getElementById("mainchart");
 
 //const filename = "taxo-graph.json"//"taxo-graph.json"
-const filename = "Philippe-II.json"//"taxo-graph.json"
-    belongsToLinkWidth=1,
+//const filename = "Philippe-II-2018.json"//"taxo-graph.json"
+let params={ belongsToLinkWidth:1,
+            screenRatio:4/5,
+            zoomFactor:1.3,//plus c'est petit plus le graphe apparaitra grand
+            dr : 44, // default point radius
+            alwaysShowParent : true,// dès qu'un noeud sort tous ses ancetres également
+            initialFocus:'',
+            expand_first_n_gens:2,
+            hierarchyInfo: true}
 //const filename = "taxo-graph.json"
     divName = "body",
-    width = 4/5*window.screen.width, // svg width
-    zoomFactor=1.3,//plus c'est petit plus le graphe apparaitra grand
+    width = params.screenRatio*window.screen.width, // svg width
     height = width, // svg height
     largeWidth = chartDiv.offsetWidth > 600,//permet d'afficher les infos
-    dr = 44, // default point radius
-    off = dr;
-    // (pas encore fonctionnel) true: dès qu'un noeud sort tous ses ancetres également
-const alwaysShowParent = true;
+    off = params.dr;
         //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
 let nodes = [];
     //tous les liens de la DB, y compris parenté, remplacé par metaLinks pour le tracé
@@ -82,7 +87,7 @@ curve = d3.svg.line()
     .tension(.85)
 
 
-document.getElementById("focus_p").innerHTML = focus
+//document.getElementById("focus_p").innerHTML = focus
 
 const fill = d3.scale.category20();
 // --------------------------------------------------------
@@ -93,11 +98,9 @@ let idx = 'idx undef yet';
 function makeIndex(entries) {
     idx = lunr(function () {
         this.ref('id')
-        this.field('lastName',
+        this.field('name',
             {boost: 10}
         )
-        this.field('firstName',
-            {boost: 5})
         this.field('strParams')
 
         entries.forEach(function (entry) {
@@ -178,7 +181,7 @@ function zoomed() {
 
 function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
-    let autoZoom = (width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1))/zoomFactor
+    let autoZoom = (width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1))/params.zoomFactor
 
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
     vis.transition().duration(2000).call(zoom.translate([infoWidth + 100, 100]).scale(autoZoom).event);
@@ -206,7 +209,7 @@ function dragended(d) {
 function name(nodeId) {
 
     let node = nodeById(nodeId);
-    return node.firstName + " " + node.lastName;
+    return node.name;
 }
 //return nodes[nodesMap[id]]
 function nodeById(id) {
@@ -219,12 +222,32 @@ function computeGen(n){
         maxGen=Math.max(maxGen,n.generation+1)
         computeGen(n.children[i])
     }
+    if (n.generation<params.expand_first_n_gens) {
+        n.expanded = true
+    }
 }
 
 //construit nodes et links à partir de données json
 function buildNodesLinks(data){
+    keys=Object.keys(data.params)
+    for (let k in keys){
+        params[keys[k]]=data.params[keys[k]]
+    }
+    console.log('data',data)
+
     //empty children linked links, initial x y random, deployedInfos prevshow=false
     function initialise(n) {
+        if (n.name){
+
+            names=n.name.split(' ')
+            n.firstName=names.shift()
+            if (names.length>1){
+                n.lastName=names.join(' ')
+            }
+        }
+        else {
+            n.name=n.firstName+' '+n.lastName || n.firstName || n.lastName
+        }
         n.children = [];
         n.x = 100 + width * Math.random();
         n.y = 300 * Math.random();
@@ -243,8 +266,8 @@ function buildNodesLinks(data){
     }
 
     //extract nodes
-    for (let i = 0; i < data.length; ++i) {
-        let nodei = data[i];
+    for (let i = 0; i < data.nodes.length; ++i) {
+        let nodei = data.nodes[i];
             if (nodei.id != "" && nodei.hide != "yes") { //hide = does not exist in the visualisation
                 nodesMap[nodei.id] = nodes.length; //0 au début, grandit au fur et à mesure
                 nodei = initialise(nodei) //initialise pour l'affichage
@@ -255,7 +278,7 @@ function buildNodesLinks(data){
 
     }
 
-    makeIndex(nodes)
+    makeIndex(nodes)//pour la fonction de recherche
 
     focus=nodes[1].id
     console.log("focus",focus)
@@ -272,7 +295,7 @@ function buildNodesLinks(data){
             source: nodei.id,
             target: nodei.parentId,
             params: {
-                type: "belongsTo"
+                'type': "belongsTo"
             }
 
         });
@@ -280,14 +303,14 @@ function buildNodesLinks(data){
 
     if (createOrphans){
         nodesMap['orphans'] = nodes.length; //0 au début, grandit au fur et à mesure
-        orph = initialise({'id':'orphans','parentId':'root','expanded':false,'firstName':'Orphans'}) //initialise pour l'affichage
+        orph = initialise({'id':'orphans','parentId':'root','expanded':false,'name':'Orphans'}) //initialise pour l'affichage
         nodes.push(orph)
 
         links.push({
             source: 'orphans',
             target: 'root',
             params: {
-                type: "belongsTo"
+                'type': "belongsTo"
             }
 
         });
@@ -313,13 +336,12 @@ function buildNodesLinks(data){
 
 
     //extract links
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.links.length; i++) {
         //il y a des checks a faire ici...
-        let linki = data[i].link || { target: "" };
-        //target="" veut dire que la ligne de donnees est vide
+        let linki = data.links[i] || { target: "" };
+        //target required
         if (linki.target != "") {
             links.push(linki)
-
             //on verifie que parent existe, ou target Parent
             if (nodesMap[linki.target]) {
             }
@@ -327,12 +349,11 @@ function buildNodesLinks(data){
             else if (linki.targetParentId) {
                 //("création de ",linki.targetName);
                 nodesMap[linki.target] = nodes.length;
-                let tgtName = linki.targetName.split(" ");
+                let tgtName = linki.targetName;
                 let nodei = {
                     id: linki.target,
                     //il peut y avoir plusieurs last names
-                    firstName: tgtName.shift(),
-                    lastName: tgtName.join(" "),
+                    name:  tgtName,
                     parentId: linki.targetParentId,
                     expanded: false,
                     params: {},
@@ -344,7 +365,7 @@ function buildNodesLinks(data){
                     source: linki.target,
                     target: linki.targetParentId,
                     params: {
-                        type: "belongsTo"
+                        'type': "belongsTo"
                     }
                 });
 
@@ -364,9 +385,16 @@ function buildNodesLinks(data){
     //on calcule la taille de chacun, y compris noeuds nouvellement créés
 
     for (let i = 0; i < nodes.length; ++i) {
-        nodes[i].radius=dr+size(nodes[i])/2
+        nodes[i].descendants=size(nodes[i])-1
+        nodes[i].radius=params.dr+Math.sqrt(nodes[i].descendants)
         nodes[i].isLeave = (nodes[i].children.length==0)//feuille de l'arbre = pas d'enfants
+        if (params.hierarchyInfo){
+            nodes[i].params['Génération']={'texte':nodes[i].generation.toString()},
+            nodes[i].params['Descendants']={'texte':nodes[i].descendants.toString()}
+        }
     }
+
+    document.getElementById("processing").innerHTML="";
 
 }
 
@@ -395,21 +423,26 @@ function handleClick(event) { //pour la fctn de recherche
     let results = idx.search(term);
     console.log('done')
     console.log("results",results);
-    focus = results[0].ref;
     removeInfos();
-    infos=[]
-    for (let i=0;i<results.length-1;i++) {
-        console.log("result",i,results[i])
-        infos.push(nodeById(results[i].ref))
+    if (results.length>0) {
+        focus = results[0].ref;
+        results.push('useless')
+        for (let i = 0; i < results.length - 1; i++) {
+            console.log("result", i, results[i])
+            infos.push(nodeById(results[i].ref))
+        }
+        //infos.push(nodeById(results[1].ref))
+        //infos = [,nodeById(results[0].ref)];
+        console.log("search", infos)
+        //document.getElementById("focus_p").innerHTML = focus;
+        init(false);
+    } else {
+        console.log('no results')
+        infos=[{'texte':'Pas de résultats','children':[]}]
     }
-    //infos.push(nodeById(results[1].ref))
-    //infos = [,nodeById(results[0].ref)];
-    console.log("search", infos)
-    if (largeWidth) { infoDisp();}
-    document.getElementById("focus_p").innerHTML = focus;
-    init(false);
-    return false;
 
+    if (largeWidth) { infoDisp();}
+    return false;
 
 }
 
@@ -427,7 +460,6 @@ function updateVisibleDepth(n){
     if (n.id=="root"){
         return
     }
-    console.log(n,nodesMap)
     parentIndex=nodesMap[n.parentId]
     if (nodes[parentIndex].visibleDepth <= n.visibleDepth) {
         nodes[parentIndex].visibleDepth = n.visibleDepth+1
@@ -462,12 +494,12 @@ function visibleNetwork() {
 
     focusedNode = nodeById(focus)
     focusedNode.show = true;
-    if (alwaysShowParent) {
+    if (params.alwaysShowParent) {
         showParents(focusedNode)
     }
     for (let k in focusedNode.linked) {
         focusedNode.linked[k].show = true;
-        if (alwaysShowParent) {
+        if (params.alwaysShowParent) {
             showParents(focusedNode.linked[k])
         }
     }
@@ -549,7 +581,7 @@ function visibleNetwork() {
                 let i = linksMap[linkid];
                 metaLinks[i].subLinks.push(links[k]);
                 metaLinks[i].params = {
-                    type: "Liens multiples",
+                    'type': "Liens multiples",
                 }
             } else {
                 linksMap[linkid] = j;
@@ -582,6 +614,8 @@ function init(adapt) {
     //if (adapt) {
         adaptZoom()
     //};
+
+
 
     force = d3.layout.force()
         .nodes(net.nodes)
@@ -788,7 +822,7 @@ function init(adapt) {
             return "0 0 " + dx + " " + dy
         })
         //.attr("display", d => d.params.type === "belongsTo" ? "block" : "block")
-        .style("stroke-width", d => d.params.type === "belongsTo" ? belongsToLinkWidth : 10)
+        .style("stroke-width", d => d.params.type === "belongsTo" ? params.belongsToLinkWidth : 10)
         .on("click", function(d) {
             focus = d.source.id;
             if (largeWidth) {
@@ -966,16 +1000,16 @@ function infoDisp() {
                     "texte": toField
                 }]);
             } else { //il s'agit d'un noeud
-                if (d.children.length > 0 && (i > 0)) {
+                if (d.children && d.children.length > 0 && (i > 0)) {
                     let childrenNames = "";
                     for (i in d.children) {
-                        childrenNames = childrenNames + (i === 0 ? "" : ", ") + (d.children[i].firstName + " " + (d.children[i].lastName || ""));
+                        childrenNames = childrenNames + (i === 0 ? "" : ", ") + (d.children[i].name || "");
                     }
                     result.push(["Contient:", {
                         "texte": childrenNames
                     }])
                 }
-                if (d.linked.length > 0) {
+                if (d.linked && d.linked.length > 0) {
                     //maybe problem because linked contains objects now, not just ids
                     result.push(["liens avec", {
                         "texte": d.linked.map(n => name(n.id)).join()
@@ -989,7 +1023,7 @@ function infoDisp() {
 
             //titre
             info.append("text")
-                .text(d.id ? name(d.id) : d.source.id ? name(d.source.id) + (" \u2b0c " || " <-> ") + name(d.target.id) : name(d.source) + (" \u2b0c " || " <-> ") + name(d.target))
+                .text(d.id ? name(d.id) : d.source? d.source.id ? name(d.source.id) + (" \u2b0c " || " <-> ") + name(d.target.id) : name(d.source) + (" \u2b0c " || " <-> ") + name(d.target):d.texte)
                 //.attr("font-family","American Typewriter")
                 .attr("font-size", d.source ? 10 : 15)
                 .attr("x", 30)

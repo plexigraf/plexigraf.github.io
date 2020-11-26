@@ -1,0 +1,2652 @@
+{"params":{"alwaysShowParent":true},
+    "nodes": [
+        {
+            "id": "root",
+            "firstName": "France",
+            "lastName": "",
+            "expanded": true,
+            "show": "",
+            "hide": "",
+            "parentId": "root",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Secteurpriv",
+            "firstName": "Secteur",
+            "lastName": "priv\u00e9",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "root",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "AmliedeMontchalin",
+            "firstName": "Am\u00e9lie",
+            "lastName": "de Montchalin",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Secr\u00e9taire d'\u00c9tat charg\u00e9e des Affaires europ\u00e9ennes"
+                },
+                "Info": {
+                    "texte": "Elle a \u00e9t\u00e9 \u00e9conomiste junior charg\u00e9e de l'Europe pendant la crise de la zone euro de 2009 \u00e0 2012 chez Exane et directrice de la prospective et du suivi des politiques publiques3 pour le groupe Axa de 2014 \u00e0 20176.",
+                    "source": "https://fr.wikipedia.org/wiki/Am%C3%A9lie_de_Montchalin",
+                    "url": "wikip\u00e9dia"
+                },
+                "Transparence": {
+                    "texte": "Pas de d\u00e9claration HATVP au 6 avril 2019",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Gouvernement",
+            "firstName": "Gouvernement",
+            "lastName": "",
+            "expanded": true,
+            "show": "",
+            "hide": "",
+            "parentId": "root",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "Philippe II - infos \u00e0 partir d'octobre 2018",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Entreprisespubliques",
+            "firstName": "Entreprises",
+            "lastName": "publiques",
+            "expanded": true,
+            "show": "",
+            "hide": "",
+            "parentId": "root",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Elyse",
+            "firstName": "Elys\u00e9e",
+            "lastName": "",
+            "expanded": true,
+            "show": "",
+            "hide": "",
+            "parentId": "Gouvernement",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "ElisabethBorne",
+            "firstName": "Elisabeth",
+            "lastName": "Borne",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Ministre aupr\u00e8s du ministre d'\u00c9tat, ministre de la Transition \u00e9cologique et solidaire, charg\u00e9e des Transports"
+                },
+                "Info": {
+                    "texte": "Directrice de la strat\u00e9gie de la SNCF entre 2002 et 2007. Directrice des concessions chez Eiffage de 2007 \u00e0 2008. PDG de la RATP entre 2015 et 2017. La ministre a \u00e9t\u00e9 accus\u00e9e de conflit d\u2019int\u00e9r\u00eats \u00e0 l\u2019automne 2018 dans deux dossiers : celui de l\u2019attribution du march\u00e9 de la future autoroute A79 auquel candidate son ancien employeur, Eiffage, et celui de l\u2019attribution du march\u00e9 du CDG Express pour lequel candidate un autre ancien employeur, la RATP. \u00c9lisabeth Borne a choisi de \"se d\u00e9porter\" pour le second mais pas pour le premier.",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "SibethNdiaye",
+            "firstName": "Sibeth",
+            "lastName": "Ndiaye",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "secr\u00e9taire d'\u00c9tat aupr\u00e8s du Premier ministre, et porte-parole du Gouvernement."
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "Elle exige des employ\u00e9s de l'\u00c9lys\u00e9e de ne pas se r\u00e9pandre en \nindiscr\u00e9tions, et s'occupe du choix des journalistes accr\u00e9dit\u00e9s \ndans les d\u00e9placements.\n\nEn juillet 2017, selon \nL'Express, elle n'h\u00e9site pas \u00e0 \u00ab [appeler] les m\u00e9dias \nquotidiennement quand on a des divergences d'interpr\u00e9tation \u00bb si un \narticle d\u00e9pla\u00eet20. La presse la d\u00e9crit comme exer\u00e7ant des pressions sur \nles journalistes dont les articles lui d\u00e9plaisent (\u00ab C\u2019est pas du \ntravail de journaliste, c\u2019est du travail de sagouin ! \u00bb \nl'entend-on dire \u00e0 un journaliste dans le documentaire Emmanuel \nMacron, les coulisses d'une victoire), jusqu'\u00e0 les mettre \nsur liste noire. Enfin, pour \u00ab prot\u00e9ger le pr\u00e9sident \u00bb, elle\n d\u00e9clare : \u00ab j\u2019assume parfaitement de mentir.\n\n\nLors des r\u00e9v\u00e9lations de l'Affaire Benalla, Sibeth Ndiaye fait \ndiffuser massivement sur Twitter deux vid\u00e9os obtenues ill\u00e9galement \naupr\u00e8s de la police30 et dont une est sans rapport avec l'affaire mais \npr\u00e9sent\u00e9e faussement comme telle. Elle invite ensuite les journalistes \u00e0\n consulter ces vid\u00e9os dans le but de disculper Alexandre Benalla des \nviolences commises. Un des principaux conseillers d\u2019Emmanuel Macron, \nIsma\u00ebl Emelien, est \u00e9galement impliqu\u00e931. Selon diff\u00e9rents \ncommentateurs, il s'agit de fake news32,33. Selon le journaliste Albert \nZennou du Figaro, c'est m\u00eame une \u00ab fabrique de la fake news \u00bb32. ",
+                    "url": "https://fr.wikipedia.org/wiki/Sibeth_Ndiaye",
+                    "source": "wikip\u00e9dia"
+                }
+            }
+        },
+        {
+            "id": "BenjaminGriveaux",
+            "firstName": "Benjamin",
+            "lastName": "Griveaux",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Secr\u00e9taire d'\u00c9tat aupr\u00e8s du Premier ministre, Porte-parole du gouvernement"
+                },
+                "Info": {
+                    "texte": "Directeur de la communication et des affaires publiques (donc en charge du lobbying) chez le leader mondial de l\u2019immobilier commercial Unibail-Rodamco entre 2014 et 2016. Selon l\u2019enqu\u00eate de Vincent Jauvert, \"Les Intouchables d\u2019\u00c9tat\", sa mission consiste alors essentiellement \u00e0 \"contr\u00f4ler que personne au minist\u00e8re des Finances ou au Parlement ne propose d\u2019abolir\" une niche fiscale favorable \u00e0 l\u2019entreprise. \n\nD\u00e9missionne en mars 2019 pour concourrir \u00e0 la mairie de Paris.\n\n",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "EmmanuelMacron",
+            "firstName": "Emmanuel",
+            "lastName": "Macron",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Elyse",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Pr\u00e9sident de la R\u00e9publique Fran\u00e7aise"
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "EdouardPhilippe",
+            "firstName": "Edouard",
+            "lastName": "Philippe",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Premier ministre"
+                },
+                "Info": {
+                    "texte": "Directeur des affaires publiques (donc en charge du lobbying) du g\u00e9ant du nucl\u00e9aire Areva de 2007 \u00e0 2010. Selon L\u2019Observatoire du nucl\u00e9aire, le Premier ministre participe alors \u00e0 \"l\u2019accord sign\u00e9 entre Areva et le pouvoir du Niger concernant l\u2019exploitation de l\u2019uranium, accord imm\u00e9diatement contest\u00e9 par le Mouvement des Nig\u00e9riens pour la justice\". Cette accusation est r\u00e9fut\u00e9e par Matignon.",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "diffuser massivement sur Twitter deux vid\u00e9os obtenues ill\u00e9galement",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "FranoisdeRugy",
+            "firstName": "Fran\u00e7ois",
+            "lastName": "de Rugy",
+            "expanded": null,
+            "show": "",
+            "hide": "yes",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Minist\u00e8re de la Transition \u00e9cologique et solidaire"
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "pr\u00e9sent\u00e9e faussement comme telle. Elle invite ensuite les journalistes \u00e0",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "BrunePoirson",
+            "firstName": "Brune",
+            "lastName": "Poirson",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Secr\u00e9taire d'\u00c9tat aupr\u00e8s du ministre d'\u00c9tat, ministre de la Transition \u00e9cologique et solidaire"
+                },
+                "Info": {
+                    "texte": "Directrice du d\u00e9veloppement durable pour l\u2019Asie du Sud-Est chez Veolia entre 2012 et 2014. La secr\u00e9taire d\u2019\u00c9tat est notamment en charge du projet de privatisation de l\u2019eau \u00e0 Nagpur, en Inde, pour lequel Veolia a re\u00e7u en 2013 le prix Pinocchio de l\u2019association Les Amis de la Terre (destin\u00e9 \u00e0 d\u00e9noncer le pire greenwashing de l\u2019ann\u00e9e) dans la cat\u00e9gorie \"Une pour tous, tout pour moi\".",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "consulter ces vid\u00e9os dans le but de disculper Alexandre Benalla des",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "EmmanuelleWargon",
+            "firstName": "Emmanuelle",
+            "lastName": "Wargon",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Secr\u00e9taire d\u2019\u00c9tat aupr\u00e8s du ministre d\u2019\u00c9tat, ministre de la Transition \u00e9cologique et solidaire"
+                },
+                "Info": {
+                    "texte": "cette \u00e9narque, camarade de promotion d'\u00c9douard Philippe, a pass\u00e9 plus de vingt ans dans le public. Elle a fait des allers-retours entre son corps d'origine \u2013 la Cour des comptes \u2013 et les cabinets minist\u00e9riels\n\nDirectrice de la communication et des affaires publiques (donc en charge du lobbying) de Danone\n entre 2015 et 2018. Sa nomination en octobre 2018 a aussit\u00f4t \u00e9t\u00e9 suivie\n de la diffusion d\u2019une vid\u00e9o dans laquelle la secr\u00e9taire d\u2019\u00c9tat, alors \nemploy\u00e9e de Danone, d\u00e9fend l\u2019utilisation de l\u2019huile de palme pour les \nlaits infantiles, cr\u00e9ant la pol\u00e9mique.",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "violences commises. Un des principaux conseillers d\u2019Emmanuel Macron,",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "FlorenceParly",
+            "firstName": "Florence",
+            "lastName": "Parly",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Ministre des Arm\u00e9\u00e9s"
+                },
+                "Info": {
+                    "texte": "Directrice de la strat\u00e9gie des investissements chez Air France entre 2006 et 2009 puis directrice g\u00e9n\u00e9rale adjointe chez Air France Cargo entre 2009 et 2013. Directrice g\u00e9n\u00e9rale d\u00e9l\u00e9gu\u00e9e de la SNCF entre 2014 et 2017. Administratrice ind\u00e9pendante et pr\u00e9sidente du Comit\u00e9 des nominations et des r\u00e9mun\u00e9rations chez Altran de 2012 \u00e0 2017. A si\u00e9g\u00e9 au conseil de surveillance de l\u2019entreprise Zodiac Aerospace et aux conseils d\u2019administration d\u2019Altran et d\u2019Ingenico entre 2016 et 2017. Son mari, Martin Vial, est le patron de l\u2019Agence des participations de l\u2019\u00c9tat. Il d\u00e9cide de \"se d\u00e9porter\" sur les sujets li\u00e9s aux entreprises du secteur de la d\u00e9fense pour couper court aux accusations de conflit d\u2019int\u00e9r\u00eats visant le couple.",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "Isma\u00ebl Emelien, est \u00e9galement impliqu\u00e931. Selon diff\u00e9rents",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "AgnsBuzyn",
+            "firstName": "Agn\u00e8s",
+            "lastName": "Buzyn",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Ministre des Solidarit\u00e9s et de la Sant\u00e9"
+                },
+                "Info": {
+                    "texte": "Ces derni\u00e8res ann\u00e9es, Agn\u00e8s Buzyn a fustig\u00e9 le poids des lobbies de l'alcool et du tabac. Mais sa position sur la questions des liens d\u2019int\u00e9r\u00eats des experts institutionnels avec les laboratoires pharmaceutiques est beaucoup plus souple.",
+                    "source": "",
+                    "url": "https://www.latribune.fr/entreprises-finance/industrie/chimie-pharmacie/agnes-buzyn-une-ministre-de-la-sante-proche-de-certains-lobbies-715755.html"
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "BrunoLeMaire",
+            "firstName": "Bruno",
+            "lastName": "Le Maire",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Minist\u00e8re de l'\u00c9conomie et des Finances"
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "MounirMahjoubi",
+            "firstName": "Mounir",
+            "lastName": "Mahjoubi",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Secr\u00e9taire d'\u00c9tat aupr\u00e8s du ministre de l\u2019\u00c9conomie et des Finances et du ministre de l\u2019Action et des Comptes publics, charg\u00e9 du Num\u00e9rique"
+                },
+                "Info": {
+                    "texte": "\nD\u00e9missionne en mars 2019 pour concourrir \u00e0 la mairie de Paris.",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "AgnsPannierRunnacher",
+            "firstName": "Agn\u00e8s",
+            "lastName": "Pannier-Runnacher",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Secr\u00e9taire d\u2019\u00c9tat aupr\u00e8s du ministre de l\u2019\u00c9conomie et des Finances"
+                },
+                "Info": {
+                    "texte": "Directrice de la division clients Recherche et D\u00e9veloppement de Faurecia Interior Systems entre 2011 et 2013. Directrice g\u00e9n\u00e9rale d\u00e9l\u00e9gu\u00e9e de la Compagnie des Alpes entre 2013 et 2018. A \u00e9t\u00e9 administratrice ind\u00e9pendante et pr\u00e9sidente du comit\u00e9 d\u2019audit du groupe Elis et du groupe Bourbon. A \u00e9t\u00e9 membre de l\u2019advisory board d\u2019Ashoka France, de la Fondation Grameen Cr\u00e9dit Agricole et de l\u2019Observatoire de l\u2019Immat\u00e9riel. Son mari, Marc Pannier, est un haut cadre du groupe Engie.",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "MurielPnicaud",
+            "firstName": "Muriel",
+            "lastName": "P\u00e9nicaud",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Ministre du travail"
+                },
+                "Info": {
+                    "texte": "Muriel P\u00e9nicaud a occup\u00e9 des postes importants dans plusieurs grandes entreprises fran\u00e7aises tr\u00e8s controvers\u00e9es, ce qui inqui\u00e8te certains commentateurs quant \u00e0 son impartialit\u00e9 en tant que ministre vis-\u00e0-vis de ces entreprises. L'inqui\u00e9tude est encore plus grande si l'on consid\u00e8re que sur les 9 conseillers de son cabinet minist\u00e9riel, sont d'\u00ab anciens \u00bb lobbyistes professionnels\n\nDirectrice g\u00e9n\u00e9rale adjointe de Dassault Syst\u00e8mes entre 2002 et 2008. \nDirectrice g\u00e9n\u00e9rale des ressources humaines de Danone entre 2008 et \n2014. Patronne de Business France entre 2014 et 2017. A \u00e9t\u00e9 membre du conseil d\u2019administration de la SNCF et d\u2019AgroParisTech et administratrice d\u2019A\u00e9roports de Paris.",
+                    "source": "France 24",
+                    "url": "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "JeanMichelBlanquer",
+            "firstName": "Jean-Michel",
+            "lastName": "Blanquer",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Ministre de l'\u00c9ducation nationale et de la Jeunesse"
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "JacquelineGourault",
+            "firstName": "Jacqueline",
+            "lastName": "Gourault",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Ministre de la Coh\u00e9sion des territoires et des Relations avec les collectivit\u00e9s territoriales"
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "FrankRiester",
+            "firstName": "Frank",
+            "lastName": "Riester",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Ministre de la Culture"
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "Janvier 2019: pas de d\u00e9claration sur https://www.hatvp.fr/",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "AlexisKohler",
+            "firstName": "Alexis",
+            "lastName": "Kohler",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Elyse",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Secr\u00e9taire g\u00e9n\u00e9ral de l'\u00c9lys\u00e9e"
+                },
+                "Info": {
+                    "texte": "D'apr\u00e8s Le Monde, \u00ab le pr\u00e9sident de la R\u00e9publique, son secr\u00e9taire g\u00e9n\u00e9ral et son conseiller sp\u00e9cial (Isma\u00ebl Emelien) concentrent tous les pouvoirs. \u00c0 trois, ils dirigent la France. Il supervise notamment les nominations des directeurs d'administration centrale les plus cruciales , d'apr\u00e8s Lib\u00e9ration, \u00ab Alexis Kohler a la main haute et forte sur les nominations \u00e0 Bercy. \u00bb\n\nl\u2019affaire Benalla a r\u00e9v\u00e9l\u00e9 au grand public l\u2019existence de charg\u00e9s de \nmission qui, bien qu\u2019affect\u00e9s au cabinet du Pr\u00e9sident de la R\u00e9publique, \nne figuraient pas dans l\u2019arr\u00eat\u00e9 du 18 septembre 2017 relatif \u00e0 la composition du cabinet du Pr\u00e9sident de la R\u00e9publique.\n Le directeur de cabinet, Patrick Strzoda, a annonc\u00e9, le 24 juillet \n2018, lors de son audition devant la commission d\u2019enqu\u00eate de l\u2019Assembl\u00e9e\n nationale, qu\u2019ils \u00e9taient \u00ab une dizaine \u00bb. Le secr\u00e9taire \ng\u00e9n\u00e9ral de l\u2019\u00c9lys\u00e9e, Alexis Kohler, a d\u00e9clar\u00e9, le 26 juillet 2018, lors \nde son audition devant la commission d\u2019enqu\u00eate du S\u00e9nat, qu\u2019ils \u00e9taient \nhuit, dont deux pour lesquels il ne sait pas s\u2019ils doivent transmettre \nleurs d\u00e9clarations \u00e0 la HATVP \u00ab au regard de la d\u00e9finition d\u2019un collaborateur du pr\u00e9sident de la R\u00e9publique \u00bb.\n Dans ce contexte n\u00e9buleux, le secr\u00e9taire g\u00e9n\u00e9ral de l\u2019\u00c9lys\u00e9e a \nn\u00e9anmoins clairement reconnu que ces charg\u00e9s de mission n\u2019avaient pas \nrespect\u00e9 les obligations figurant \u00e0 l\u2019article 11.\n\nIl est incontestable que ces charg\u00e9s de mission sont, en r\u00e9alit\u00e9, des \ncollaborateurs du Pr\u00e9sident de la R\u00e9publique, soumis aux m\u00eames \nobligations que ces derniers. Les d\u00e9bats parlementaires sont clairs sur ce sujet. La HATVP a elle-m\u00eame d\u00e9plor\u00e9 l\u2019existence de ces \u00ab conseillers officieux \u00bb, dans son rapport d\u2019activit\u00e9 2016.\n\n",
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/Alexis_Kohler"
+                },
+                "Transparence": {
+                    "texte": "L'association a donc demand\u00e9 aujourd'hui \u00e0 la HATVP de solliciter aupr\u00e8s du secr\u00e9taire g\u00e9n\u00e9ral de l'\u00c9lys\u00e9e Alexis Kohler \"la liste exhaustive\" des charg\u00e9s de mission affect\u00e9s au cabinet pr\u00e9sidentiel, d'enjoindre ces derniers \u00e0 transmettre leur d\u00e9claration et de saisir le parquet des manquements aux obligations de d\u00e9claration, punissables de trois ans d'emprisonnement et de 45.000 euros d'amende.",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "IsmalEmelien",
+            "firstName": "Isma\u00ebl",
+            "lastName": "Emelien",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Elyse",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "Conseiller sp\u00e9cial au palais de l'\u00c9lys\u00e9e."
+                },
+                "Info": {
+                    "texte": "il est d\u00e9crit par le quotidien Le Monde comme faisant partie, avec le pr\u00e9sident de la R\u00e9publique et le secr\u00e9taire g\u00e9n\u00e9ral de l'Elys\u00e9e Alexis Kohler, des trois hommes qui \u00ab dirigent la France \u00bb. Le Figaro indique qu'\u00ab il travaille p\u00eale-m\u00eale sur la strat\u00e9gie du pr\u00e9sident, la communication num\u00e9rique, la gestion de crise, livrant des \u00ab \u00e9l\u00e9ments de langage \u00bb aux communicants du gouvernement par le biais d'une boucle Telegram. Il relit les interviews minist\u00e9rielles, y rajoute des mots-cl\u00e9s (le \u00ab wording \u00bb, dans le jargon des communicants) \u00bb. Il invente le slogan \u00ab Make Our Planet Great Again \u00bb, en r\u00e9action \u00e0 la d\u00e9cision du pr\u00e9sident am\u00e9ricain Donald Trump de quitter l'accord de Paris sur le climat, en r\u00e9f\u00e9rence \u00e0 son propre slogan de campagne \u00ab Make America Great Again \u00bb",
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/Isma%C3%ABl_Emelien"
+                },
+                "Transparence": {
+                    "texte": "Anticor a d\u00e9cid\u00e9 de saisir la HATVP sur \"plusieurs cas de violation\" de la loi du 11 octobre 2013 relative \u00e0 la transparence de la vie publique, qui oblige \"les collaborateurs du pr\u00e9sident de la R\u00e9publique\" \u00e0 transmettre \u00e0 la Haute autorit\u00e9 \"une d\u00e9claration de situation patrimoniale et une d\u00e9claration d'int\u00e9r\u00eats\", selon ce courrier adress\u00e9 au pr\u00e9sident du gendarme de la transparence Jean-Louis Nadal. Pour Anticor, l'affaire Benalla a r\u00e9v\u00e9l\u00e9 \"l'existence de charg\u00e9s de mission qui, bien qu'affect\u00e9s au cabinet du pr\u00e9sident de la R\u00e9publique, ne figuraient pas dans l'arr\u00eat\u00e9 du 18 septembre 2017 relatif \u00e0 la composition du cabinet du pr\u00e9sident de la R\u00e9publique\", et donc \u00e9chappaient \u00e0 tout contr\u00f4le sur le respect de ces obligations.",
+                    "url": "http://www.lefigaro.fr/flash-actu/2018/07/31/97001-20180731FILWWW00175-affaire-benalla-anticor-demande-la-transparence-pour-les-collaborateurs-officieux-de-l-elysee.php",
+                    "source": "Le Figaro"
+                }
+            }
+        },
+        {
+            "id": "CdricO",
+            "firstName": "C\u00e9dric",
+            "lastName": "O",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Ministres",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": "secr\u00e9taire d'\u00c9tat charg\u00e9 du Num\u00e9rique, aupr\u00e8s du ministre de l'\u00c9conomie et des Finances"
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "HavasEuroRSCG",
+            "firstName": "Havas/",
+            "lastName": "Euro RSCG",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "ConseilCommunication",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Ministres",
+            "firstName": "Ministres",
+            "lastName": "",
+            "expanded": true,
+            "show": "",
+            "hide": "",
+            "parentId": "Gouvernement",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "ConseilCommunication",
+            "firstName": "Conseil/",
+            "lastName": "Communication",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Transport",
+            "firstName": "Transport",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Danone",
+            "firstName": "Danone",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Agroalimentaire",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "ArospatialArmement",
+            "firstName": "A\u00e9rospatial/",
+            "lastName": "Armement",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "GrandesFortunes",
+            "firstName": "Grandes",
+            "lastName": "Fortunes",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "AirFrance",
+            "firstName": "Air France",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Transport",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Numrique",
+            "firstName": "Num\u00e9rique",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Agroalimentaire",
+            "firstName": "Agro-",
+            "lastName": "alimentaire",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Infrastructure",
+            "firstName": "Infrastructure",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Cabinetsdavocats",
+            "firstName": "Cabinets",
+            "lastName": "d'avocats",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "BanqueFinanceAssurances",
+            "firstName": "Banque/Finance/",
+            "lastName": "Assurances",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "SNCF",
+            "firstName": "SNCF",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Entreprisespubliques",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Energie",
+            "firstName": "Energie",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        },
+        {
+            "id": "Automobile",
+            "firstName": "Automobile",
+            "lastName": "",
+            "expanded": null,
+            "show": "",
+            "hide": "",
+            "parentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "texte": "",
+                    "source": "",
+                    "url": ""
+                },
+                "Transparence": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                }
+            }
+        }
+    ],
+    "links": [
+        {
+            "source": "AmliedeMontchalin",
+            "targetName": "Axa",
+            "target": "Axa",
+            "targetParentId": "BanqueFinanceAssurances",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": "directrice de la prospective et du suivi des politiques publiques"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/Am%C3%A9lie_de_Montchalin",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AmliedeMontchalin",
+            "targetName": "BNP Paribas",
+            "target": "BNPParibas",
+            "targetParentId": "BanqueFinanceAssurances",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2009-2012"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": "\u00e9conomiste junior chez Exane"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/Am%C3%A9lie_de_Montchalin",
+                    "texte": "Elle a \u00e9t\u00e9 \u00e9conomiste junior charg\u00e9e de l'Europe pendant la crise de la zone euro de 2009 \u00e0 2012 chez Exane (BNP Paribas)"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "ElisabethBorne",
+            "targetName": "SNCF",
+            "target": "SNCF",
+            "targetParentId": "",
+            "otherParents": "transports",
+            "params": {
+                "Periode": {
+                    "texte": "2002-2007"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Directrice Strat\u00e9gie SNCF"
+                },
+                "Info": {
+                    "source": "Interview dans le journal du Dimanche",
+                    "url": "https://www.lejdd.fr/Politique/elisabeth-borne-sur-la-sncf-le-statu-quo-nest-pas-possible-3577457",
+                    "texte": "Apr\u00e8s avoir \u00e9t\u00e9 directrice strat\u00e9gie, en 2018, E. Borne juge la situation de la SNCF alarmante:Trois jours apr\u00e8s la publication du d\u00e9capant rapport Spinetta, la ministre des Transports Elisabeth Borne revient sur ce texte qui pr\u00e9conise de profondes r\u00e9formes de la SNCF : Il pose un diagnostic, s\u00e9v\u00e8re mais malheureusement tr\u00e8s juste. Ce qui est dit sur les difficult\u00e9s de notre service public ferroviaire est largement partag\u00e9. Ensuite, en ce qui concerne les propositions, nous n\u2019avons pas d\u2019a priori, tous les sujets sont sur la table en toute transparence, explique-t-elle dans une interview au JDD."
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "ElisabethBorne",
+            "targetName": "Eiffage",
+            "target": "Eiffage",
+            "targetParentId": "Secteurpriv",
+            "otherParents": "batiment, infrastructure",
+            "params": {
+                "Periode": {
+                    "texte": "2008-"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Directrice des concessions"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "SibethNdiaye",
+            "targetName": "Autres agences",
+            "target": "AutresAgences",
+            "targetParentId": "ConseilCommunication",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2011-2013"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": "consultante en communication en agence"
+                },
+                "Info": {
+                    "source": "gouvernement.fr",
+                    "url": "https://www.gouvernement.fr/ministre/sibeth-ndiaye",
+                    "texte": "source"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "BenjaminGriveaux",
+            "targetName": "M\u00e9diane Conseil",
+            "target": "MdianeConseil",
+            "targetParentId": "ConseilCommunication",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2003-2013"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "fondateur"
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "BenjaminGriveaux",
+            "targetName": "Unibail-Rodamco",
+            "target": "UnibailRodamco",
+            "targetParentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2014 - Octobre 2016"
+                },
+                "Montant": {
+                    "texte": "327,000\u20ac",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=griveaux-benjamin",
+                    "source": "HATVP"
+                },
+                "Type": {
+                    "texte": "lobyyiste"
+                },
+                "Poste": {
+                    "texte": "directeur de la communication et des affaires publiqiues"
+                },
+                "Info": {
+                    "source": "leparisien.fr, livre de V. Joubert: \u00ables intouchables d'\u00e9tat\u00bb",
+                    "url": "http://www.leparisien.fr/politique/le-livre-choc-sur-la-vie-de-reve-des-elites-de-l-etat-17-01-2018-7506825.php",
+                    "texte": "Sa mission consiste, selon le journaliste Vincent Jauvert, pour un revenu de 17 000 \u20ac mensuels, \u00e0 \u00ab contr\u00f4ler que personne au minist\u00e8re des Finances ou au Parlement ne propose d\u2019abolir \u00bb une niche fiscale favorable \u00e0 l'entreprise"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "EmmanuelMacron",
+            "targetName": "Rotschild & Cie",
+            "target": "RotschildCie",
+            "targetParentId": "GrandesFortunes",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2008-"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "Associ\u00e9"
+                },
+                "Poste": {
+                    "texte": "Banquier d'affaire"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "EmmanuelMacron",
+            "targetName": "Alain Minc",
+            "target": "AlainMinc",
+            "targetParentId": "GrandesFortunes",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "Le Monde, Mediapart",
+                    "url": "https://www.streetpress.com/sujet/1486723160-macron-le-monde",
+                    "texte": "En 2010, Emmanuel Macron offre son aide b\u00e9n\u00e9vole \u00e0 la \u00ab Soci\u00e9t\u00e9 des r\u00e9dacteurs du Monde \u00bb (SRM85), dans le contexte de la revente du journal Le Monde. Mais il est aussi en relation secr\u00e8te avec Alain Minc, alors que celui-ci soutient une offre Perdriel-Prisa-Orange, et alors que cette offre paraissait \u00e0 la SRM \u00ab particuli\u00e8rement dangereuse \u00bb. Apr\u00e8s une sc\u00e8ne romanesque de cahe-cahe racont\u00e9e par le vice-pr\u00e9sident de la SRM Adrien de Tricornot, il est mis fin \u00e0 ce double jeu"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "EmmanuelMacron",
+            "targetName": "GrandesFortunes",
+            "target": "GrandesFortunes",
+            "targetParentId": "",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "6300000",
+                    "url": "https://www.marianne.net/politique/candidat-des-premiers-de-cordee-la-campagne-presidentielle-d-emmanuel-macron-ete-financee",
+                    "source": "Marianne"
+                },
+                "Type": {
+                    "texte": "financement de campagne"
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "JDD",
+                    "url": "https://www.lejdd.fr/Politique/info-jdd-ce-que-dit-la-liste-des-donateurs-de-macron-3811772",
+                    "texte": "En mai 2017, les \u00e9quipes d\u2019En Marche assuraient en effet \u00e0 Lib\u00e9ration que la proportion de dons de plus de 5.000 euros par rapport \u00e0 la collecte totale \u00e9tait d\u2019\u00ab un tiers \u00bb. C\u2019est en fait la moiti\u00e9, comme le documente aujourd'hui l\u2019enqu\u00eate du JDD. Saisissant, rapport\u00e9 \u00e0 l\u2019\u00e9tude de l\u2019Institut des politiques publiques publi\u00e9e en octobre dernier, qui r\u00e9v\u00e8le que les grands gagnants de la politique fiscale d\u2019Emmanuel Macron sont\u2026 les ultrariches. Les 1% les plus riches voient leurs revenus augmenter de 6%, quand les m\u00e9nages les plus modestes perdent 1% de pouvoir d\u2019achat. la suppression de l'ISF sur les valeurs mobili\u00e8res a permis aux 1000 m\u00e9nages les plus fortun\u00e9s d'\u00e9conomiser environ 400 millions d'euros d\u2019imp\u00f4ts par an, soit 400 000 euros par m\u00e9nage et par an."
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "EdouardPhilippe",
+            "targetName": "Areva",
+            "target": "Areva",
+            "targetParentId": "Entreprisespubliques",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": " 2007 \u00e0 2010."
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "lobyyiste"
+                },
+                "Poste": {
+                    "texte": "Directeur des affaires publiques"
+                },
+                "Info": {
+                    "source": "wikipedia",
+                    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Philippe#Parcours_professionnel",
+                    "texte": "Selon l'Observatoire du nucl\u00e9aire, \u00ab son activit\u00e9 principale est alors de s\u2019assurer de la collaboration de parlementaires acquis au lobby de l\u2019atome \u00bb. C'est de cettep\u00e9riode que date sa r\u00e9putation d'anti-\u00e9cologiste, confirm\u00e9e par son opposition \u00e0 la Loi relative \u00e0 la transition \u00e9nerg\u00e9tique pour la croissance verte puis \u00e0 la Loi pour la reconqu\u00eate de la biodiversit\u00e9, de la nature et des paysages, ainsi qu'\u00e0 son soutien au projet d'a\u00e9roport Notre-Dame-des-Landes ou \u00e0 l'utilisation d'une centrale \u00e0 charbon au Havre. "
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "EdouardPhilippe",
+            "targetName": "Debevoise & Plimpton LLP",
+            "target": "DebevoisePlimptonLLP",
+            "targetParentId": "Cabinetsdavocats",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2007-2010"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "BrunePoirson",
+            "targetName": "Veolia",
+            "target": "Veolia",
+            "targetParentId": "Infrastructure",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2011-2014"
+                },
+                "Montant": {
+                    "texte": "179,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": "HATVP"
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "directrice du d\u00e9veloppement durable et de la responsabilit\u00e9 sociale d\u2019une de ses filiales, Veolia Water India"
+                },
+                "Info": {
+                    "source": "wikipedia",
+                    "url": "https://www.hatvp.fr/",
+                    "texte": "Elle est recrut\u00e9e par Veolia en tant que directrice du d\u00e9veloppement durable et de la responsabilit\u00e9 sociale d\u2019une de ses filiales, Veolia Water India, \u00e0 Delhi. Dans ce cadre, elle travaille sur des projets de distribution d\u2019eau potable dans les bidonvilles de grandes m\u00e9gapoles indiennes, notamment dans le Karnataka et \u00e0 Nagpur. Reporterre et Lib\u00e9ration soulignent que Veolia a re\u00e7u pour ces projets qui rel\u00e8veraient de la privatisation de l'eau, en particulier \u00e0 Nagpur, le \u00ab prix Pinocchio du d\u00e9veloppement durable \u00bb de l'association Les Amis de la Terre dans la cat\u00e9gorie \u00ab Une pour tous, tout pour moi \u00bb. Lib\u00e9ration ajoute qu'\u00ab un long reportage en 2017 de The Hindu, grand quotidien anglophone, montre que dans cette ville [Nagpur] la distribution s\u2019est peu am\u00e9lior\u00e9e et les prix ont augment\u00e9, provoquant une fronde des habitants et des politiques de tous bords. \u00bb. "
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "EmmanuelleWargon",
+            "targetName": "Danone",
+            "target": "Danone",
+            "targetParentId": "",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2015 - Octobre 2018 (Remaniement Philippe II)"
+                },
+                "Montant": {
+                    "texte": "1,113,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": "HATVP"
+                },
+                "Type": {
+                    "texte": "lobyyiste"
+                },
+                "Poste": {
+                    "texte": "Directrice de la communication et des affaires publiques, c'est-\u00e0-dire lobbyiste charg\u00e9e des relations du groupe agroalimentaire avec les pouvoirs publics et de la \u00ab sustainability \u00bb "
+                },
+                "Info": {
+                    "source": "twitter, Le Parisien",
+                    "url": "https://twitter.com/nicolascori/status/1052182924513169413?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1052182924513169413&ref_url=http%3A%2F%2Fwww.leparisien.fr%2Fsociete%2Femmanuelle-wargon-une-lobbyiste-a-l-ecologie-17-10-2018-7921281.php",
+                    "texte": "Quand Emmanuelle Wargon (notre nouvelle secr\u00e9taire d'Etat \u00e0 l'Ecologie) expliquait qu'on ne peut pas se passer d'huile de palme pour fabriquer du lait pour b\u00e9b\u00e9s (aux Rencontres \u00e9conomiques d'Aix-en-Provence, en juillet 2018)"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "FlorenceParly",
+            "targetName": "Air France",
+            "target": "AirFrance",
+            "targetParentId": "Transport",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2006-2014"
+                },
+                "Montant": {
+                    "texte": "657 976\u20ac en tout",
+                    "url": "https://www.liberation.fr/france/2017/10/26/combien-a-reellement-touche-florence-parly-a-la-sncf_1605999",
+                    "source": "liberation"
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "devient en juin 2006 directrice de la strat\u00e9gie des investissements \u00e0 la direction financi\u00e8re d'Air France, jusqu'\u00e0 sa nomination comme directrice g\u00e9n\u00e9rale adjointe d'Air France Cargo en janvier 2009. Le 1er janvier 2013, elle devient directrice g\u00e9n\u00e9rale adjointe de l\u2019activit\u00e9 \u00ab Passage Point \u00bb \u00e0 Point Orly et Escales France, charg\u00e9e du redressement du court courrier dans le cadre du plan TransForm 2015. \u00c0 ce titre, elle est membre du comit\u00e9 ex\u00e9cutif du groupe Air France. Elle est membre des conseils d'administration d'Air France et d'Ingenico Group. Elle quitte ses fonctions chez Air France fin ao\u00fbt 2014."
+                },
+                "Info": {
+                    "source": "",
+                    "url": "wikipedia.fr",
+                    "texte": "en partie via SERVAIR"
+                },
+                "Actions": {
+                    "texte": "54,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "FlorenceParly",
+            "targetName": "SNCF",
+            "target": "SNCF",
+            "targetParentId": "",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2014-2017"
+                },
+                "Montant": {
+                    "texte": "52000\u20ac sur le premier semestre 2007",
+                    "url": "https://www.liberation.fr/france/2017/10/26/combien-a-reellement-touche-florence-parly-a-la-sncf_1605999",
+                    "source": "liberation"
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "directrice g\u00e9n\u00e9rale d\u00e9l\u00e9gu\u00e9e, puis directrice g\u00e9n\u00e9rale"
+                },
+                "Info": {
+                    "source": "HATVP",
+                    "url": "https://www.hatvp.fr//",
+                    "texte": "Cette r\u00e9mun\u00e9ration au vu de son poste \u00e0 la SNCF exc\u00e8de les plafonds pr\u00e9vus et choque, compte tenu de la situation financi\u00e8re d\u00e9grad\u00e9e de l'entreprise publique de transport ferroviaire"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "FlorenceParly",
+            "targetName": "Altran",
+            "target": "Altran",
+            "targetParentId": "ConseilCommunication",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2012-2017"
+                },
+                "Montant": {
+                    "texte": "284,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": "HATVP"
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Administratrice ind\u00e9pendante et pr\u00e9sidente du Comit\u00e9 des nominations et des r\u00e9mun\u00e9rations"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "FlorenceParly",
+            "targetName": "Ingenico",
+            "target": "Ingenico",
+            "targetParentId": "Numrique",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2014-2017"
+                },
+                "Montant": {
+                    "texte": "186,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": "HATVP"
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Membre du conseil d'administration"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "88,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsBuzyn",
+            "targetName": "Yves L\u00e9vy",
+            "target": "YvesLvy",
+            "targetParentId": "AgnsBuzyn",
+            "otherParents": "conseil d'\u00e9tat",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "entre 1500 et 6000\u20ac/mois",
+                    "url": "https://www.ouest-france.fr/politique/gouvernement/le-mari-d-agnes-buzyn-nomme-au-conseil-d-etat-alors-qu-il-est-medecin-6012813",
+                    "source": "ouest france"
+                },
+                "Type": {
+                    "texte": "\u00e9poux/\u00e9pouse"
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "mediapart",
+                    "url": "https://blogs.mediapart.fr/thierry-paul-valette/blog/121018/agnes-buzyn-renforce-la-macronie-des-conflits-dinterets",
+                    "texte": "Yves Levy, mari d'Agn\u00e8s Buzyn, a \u00e9t\u00e9 nomm\u00e9 \"conseiller d\u2019\u00c9tat en service\n extraordinaire\" par le gouvernement. Il devra d\u00e9sormais \u00e9tudier (entre autres) les \ntextes propos\u00e9s par sa femme. Cette nomination est tr\u00e8s surprenante. Yves Levy a une formation d\u2019immunologiste. Il est sp\u00e9cialiste du syst\u00e8me immunitaire. Or le poste de conseiller d\u2019\u00c9tat, poste tr\u00e8s convoit\u00e9, n\u00e9cessite des comp\u00e9tences juridiques fortes. La v\u00e9rification de la conformit\u00e9 des projets de loi qui sont port\u00e9s par le gouvernement avec la Constitution fran\u00e7aise et le droit de l\u2019Union europ\u00e9enne n'est pas une mince affaire."
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsBuzyn",
+            "targetName": "Industrie Pharmaceutique",
+            "target": "IndustriePharmaceutique",
+            "targetParentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "\"pendant 14 ans\""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "http://www.libreactu.fr/agnes-buzyn-a-ete-remuneree-par-les-labos-pendant-au-moins-14-ans/",
+                    "source": "libre actu (sources en bas de l'article)"
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "BrunoLeMaire",
+            "targetName": "Pauline Doussau de Bazignan",
+            "target": "PaulineDoussaudeBazignan",
+            "targetParentId": "BrunoLeMaire",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2007-2013"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "\u00e9poux/\u00e9pouse"
+                },
+                "Poste": {
+                    "texte": "Assistante parlementaire"
+                },
+                "Info": {
+                    "source": "Paris Match",
+                    "url": "https://fr.wikipedia.org/wiki/Bruno_Le_Maire",
+                    "texte": "pr\u00e9sent\u00e9e par Paris Match comme \u00ab artiste-peintre, petite-fille et ni\u00e8ce d\u2019agriculteurs du Gers\u00ab"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "MounirMahjoubi",
+            "targetName": "BETC Digital",
+            "target": "BETCDigital",
+            "targetParentId": "Numrique",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2012-2016"
+                },
+                "Montant": {
+                    "texte": "320,640\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": "HATVP"
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Directeur du D\u00e9veloppement, Directeur G\u00e9n\u00e9ral Adjoint. Conseil en transformation num\u00e9rique et communication."
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "MounirMahjoubi",
+            "targetName": "La Ruche qui dit oui!",
+            "target": "LaRuchequiditoui",
+            "targetParentId": "Agroalimentaire",
+            "otherParents": "Num\u00e9rique",
+            "params": {
+                "Periode": {
+                    "texte": "2010-2013"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "fondateur"
+                },
+                "Poste": {
+                    "texte": "Directeur G\u00e9n\u00e9ral"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "405,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "MounirMahjoubi",
+            "targetName": "Fundvisory",
+            "target": "Fundvisory",
+            "targetParentId": "BanqueFinanceAssurances",
+            "otherParents": "Num\u00e9rique",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "actionnaire"
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "70,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsPannierRunnacher",
+            "targetName": "Groupe Bourbon",
+            "target": "GroupeBourbon",
+            "targetParentId": "Energie",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2012-2018"
+                },
+                "Montant": {
+                    "texte": "212,000\u20ac",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Administrateur + membre puis pr\u00e9sidente du Comit\u00e9 d'audit"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsPannierRunnacher",
+            "targetName": "Compagnie des Alpes",
+            "target": "CompagniedesAlpes",
+            "targetParentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2013-2018"
+                },
+                "Montant": {
+                    "texte": "2,000,000\u20ac",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Directrice g\u00e9n\u00e9rale d\u00e9l\u00e9gu\u00e9e"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsPannierRunnacher",
+            "targetName": "Faurecia interior systems",
+            "target": "Faureciainteriorsystems",
+            "targetParentId": "Automobile",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "f\u00e9vrier 2013"
+                },
+                "Montant": {
+                    "texte": "40000\u20ac en un mois",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsPannierRunnacher",
+            "targetName": "Elis",
+            "target": "Elis",
+            "targetParentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2014-2018"
+                },
+                "Montant": {
+                    "texte": "113,000\u20ac",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Administrateur et pr\u00e9sidente du Comit\u00e9 d'audit"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsPannierRunnacher",
+            "targetName": "MAF",
+            "target": "MAF",
+            "targetParentId": "BanqueFinanceAssurances",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2017-2018"
+                },
+                "Montant": {
+                    "texte": "66,000\u20ac",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "Administrateur de MAF + Financi\u00e8re Eiffarie, Eiffarie, Adelac"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AgnsPannierRunnacher",
+            "targetName": "ENGIE",
+            "target": "ENGIE",
+            "targetParentId": "Energie",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "\u00e9poux/\u00e9pouse"
+                },
+                "Poste": {
+                    "texte": "femme de Marc Pannier, directeur des op\u00e9rations de Global Energy Management, entit\u00e9 du groupe ENGIE"
+                },
+                "Info": {
+                    "source": "wikipedia",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "MurielPnicaud",
+            "targetName": "Danone",
+            "target": "Danone",
+            "targetParentId": "",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2012-2014"
+                },
+                "Montant": {
+                    "texte": "4700000 de remuneration+1300000 de plus-value lors de la revente de stock option",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=penicaud-muriel",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "DGRH"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/Muriel_P%C3%A9nicaud#Impartialit%C3%A9_dans_la_fonction",
+                    "texte": "En 2013, Muriel P\u00e9nicaud, alors directrice des ressources humaines du groupe Danone, revend ses stock options re\u00e7ues en 2009, r\u00e9alisant ainsi une plus-value de 1,13 million d'euros, dont 280 000 \u20ac environ sont concomitants \u00e0 la hausse, d\u00e9but 2013, de la valeur des actions du groupe au moment de l\u2019annonce de 900 suppressions d\u2019emplois de cadres en Europe"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "MurielPnicaud",
+            "targetName": "Orange",
+            "target": "Orange",
+            "targetParentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2012-2014"
+                },
+                "Montant": {
+                    "texte": "128,000\u20ac",
+                    "url": "https://www.hatvp.fr//fiche-nominative/?declarant=penicaud-muriel",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "MurielPnicaud",
+            "targetName": "HavasEuroRSCG",
+            "target": "HavasEuroRSCG",
+            "targetParentId": "",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "favoritisme"
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": "L'affaire Business France concerne la signature par Business France, dont Muriel P\u00e9nicaud \u00e9tait la directrice g\u00e9n\u00e9rale \u00e0 l'\u00e9poque des faits, sans appel d\u2019offres pr\u00e9alable, d'un contrat d'un montant de 381 759 euros, dont 100 000 euros de frais d'h\u00f4tel, avec la soci\u00e9t\u00e9 Havas, pour organiser une soir\u00e9e le 6 janvier 201615, \u00e0 l'h\u00f4tel The Linq \u00e0 Las Vegas, avec 500 personnalit\u00e9s et dirigeants de start-ups fran\u00e7aises \u00e0 laquelle ont particip\u00e9 Emmanuel Macron (\u00e0 l'\u00e9poque ministre des Finances), Pierre Gattaz, Fr\u00e9d\u00e9ric Lefebvre, Henri Seydoux, Guillaume Sarkozy et \u00c9ric Carreel \u00ab autour d\u2019un fastueux banquet \u00bb, en marge du Consumer Electronics Show. Or, \u00ab selon le code des march\u00e9s publics, un appel d'offres est obligatoire pour l'attribution de march\u00e9s publics dont le montant est sup\u00e9rieur \u00e0 25 000 euros \u00bb. En juillet 2018, des magistrats demandent au procureur l'ouverture d'une information judiciaire concernant le dossier \u00ab Creative France \u00bb dans lequel ils soup\u00e7onnent  Muriel P\u00e9nicaud de favoritisme au profit, encore une fois, d'Havas. Le contrat ainsi octroy\u00e9 aurait rapport\u00e9 13,2 millions d'euros \u00e0 l'entreprise charg\u00e9e de r\u00e9aliser des spots publicitaires vantant l'attractivit\u00e9 de la France \u00e0 l'\u00e9tranger. Muriel P\u00e9nicaud a affirm\u00e9 devant les juges qu'elle ne connaissait \u00ab personne d'Havas \u00bb et donc surtout pas St\u00e9phane Fouks, vice-pr\u00e9sident de l'entreprise, ce que contredit l'enqu\u00eate qui a eu \nacc\u00e8s \u00e0 des courriels o\u00f9 ils se tutoient et o\u00f9 elle \u00e9crit \u00e0 sa secr\u00e9taire \u00ab J'ai rendez vous avec Fouks, cela ne doit pas figurer \u00e0 mon agenda, et cela ne doit pas se savoir \u00bb. Dans l'abondante correspondance (notamment nocturne) r\u00e9v\u00e9l\u00e9e par l'enqu\u00eate, figure par exemple un courriel dat\u00e9 du 3 juin 2015 (veille de l'audition des candidats retenus pour Creative France), disant \u00ab St\u00e9phane, appelle-moi sur mon portable, c'est urgent ! \u00bb. Quelques mois apr\u00e8s la victoire, P\u00e9nicaud sollicite aupr\u00e8s de St\u00e9phane Fouks un poste chez Havas pour son neveu"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "https://fr.wikipedia.org/wiki/Affaire_Business_France",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "MurielPnicaud",
+            "targetName": "Dassault",
+            "target": "Dassault",
+            "targetParentId": "ArospatialArmement",
+            "otherParents": "Aviation[commma] Aerospatial",
+            "params": {
+                "Periode": {
+                    "texte": "2002-2008"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "d\u00e9cideur"
+                },
+                "Poste": {
+                    "texte": "directrice g\u00e9n\u00e9rale adjointe de Dassault Syst\u00e8mes, charg\u00e9e de l\u2019organisation, des ressources humaines et du d\u00e9veloppement durable"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "JeanMichelBlanquer",
+            "targetName": "ESSEC",
+            "target": "ESSEC",
+            "targetParentId": "Secteurpriv",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2013-2017"
+                },
+                "Montant": {
+                    "texte": "1,000,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "JacquelineGourault",
+            "targetName": "SARL Elevage du Loir",
+            "target": "SARLElevageduLoir",
+            "targetParentId": "Agroalimentaire",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": ""
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "60,000\u20ac",
+                    "url": "https://www.hatvp.fr/",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "FrankRiester",
+            "targetName": "BanqueFinanceAssurances",
+            "target": "BanqueFinanceAssurances",
+            "targetParentId": "",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "employ\u00e9"
+                },
+                "Poste": {
+                    "texte": "a travaill\u00e9 pour des grands groupes d'audit"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "FrankRiester",
+            "targetName": "Peugeot",
+            "target": "Peugeot",
+            "targetParentId": "Automobile",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": ""
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": "poss\u00e8de des concessions"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "AlexisKohler",
+            "targetName": "Mediterranean Shipping Company",
+            "target": "MediterraneanShippingCompany",
+            "targetParentId": "Transport",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2012-"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": "dirigeant"
+                },
+                "Poste": {
+                    "texte": "directeur financier"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/Alexis_Kohler",
+                    "texte": "Il avait d\u00e9j\u00e0 demand\u00e9 \u00e0 rejoindre MSC apr\u00e8s le d\u00e9part de Pierre Moscovici du minist\u00e8re de l'\u00c9conomie en avril 2014, mais s'\u00e9tait vu opposer un avis d\u00e9favorable de la commission de d\u00e9ontologie de la fonction publique. Celle-ci arguait alors qu'Alexis Kohler \u00e9tait intervenu en 2010 aupr\u00e8s de STX France en donnant son avis sur un contrat conclu avec MSC, alors qu'il travaillait pour l'Agence des participations de l'\u00c9tat, un \u00e9tablissement public. Lib\u00e9ration indique que Pierre Moscovici avait \u00e9t\u00e9 \u00ab averti de ses liens familiaux \u00bb et avait \u00ab [pris] soin de l\u2019\u00e9carter de tout dossier relatif \u00e0 MSC \u00bb, mais que la commission de d\u00e9ontologie n'en avait pas \u00e9t\u00e9 inform\u00e9e. L'Express indique qu'apr\u00e8s ce refus, comme directeur de cabinet d'Emmanuel Macron, \u00ab Kohler d\u00e9cide de ne pas traiter des sujets concernant STX, puisqu'il a \u00e9t\u00e9 en pourparlers avec MSC et qu'il ne perd pas de vue une future embauche \u00bb.\n\nEn ao\u00fbt 2016, la commission de d\u00e9ontologie rend cette fois un avis favorable \u00e0 sa nouvelle demande, Emmanuel Macron se portant garant qu\u2019Alexis Kohler n\u2019avait jamais trait\u00e9 du dossier MSC lorsqu\u2019il \u00e9tait son directeur de cabinet et directeur de cabinet adjoint de Pierre Moscovici. Selon Lib\u00e9ration, la commission de d\u00e9ontologie donne cette fois son autorisation car \u00ab ses liens avec MSC nou\u00e9s aux temps de l\u2019APE remont[ent] d\u00e9sormais \u00e0 plus de trois ans \u00bb. Selon les informations de Martine Orange pour Mediapart, la commission de d\u00e9ontologie \u00ab n\u2019a pos\u00e9 qu\u2019un nombre tr\u00e8s restreint d\u2019interdictions : elle aurait limit\u00e9 les interdictions de contact d\u2019Alexis Kohler aux seuls anciens membres du cabinet d\u2019Emmanuel Macron et encore sur les sujets concernant STX \u00bb.\n\nFin mars 2017, il participe \u00e0 une r\u00e9union \u00e0 Bercy en tant que repr\u00e9sentant de MSC au sujet du rachat de STX France, MSC \u00e9tant oppos\u00e9 \u00e0 une reprise par le groupe public italien Fincantieri. Martine Orange s'\u00e9tonne de l'absence d'application du devoir de r\u00e9serve, d'autant plus en tant que proche d'Emmanuel Macron qui figure alors parmi les favoris de l'\u00e9lection pr\u00e9sidentielle : \u00ab En se pr\u00e9sentant devant ses anciens coll\u00e8gues et amis, Alexis Kohler ne peut pas ignorer que sa voix a plus de poids que celui d\u2019un simple repr\u00e9sentant d\u2019un transporteur maritime \u00bb. Lib\u00e9ration souligne de son c\u00f4t\u00e9 que \u00ab la Commission de d\u00e9ontologie avait pourtant assorti son feu vert d\u2019une  \u00ab r\u00e9serve \u00bb, usuelle pour les anciens membres de cabinets minist\u00e9riels :  interdiction pendant trois ans de rencontrer leurs ex-coll\u00e8gues \u00e0 titre professionnel. Or, dans celui de Sirugue [alors ministre] figurent deux anciens du cabinet Macron, le m\u00eame  directeur adjoint ayant \u00e9t\u00e9 reconduit. Bercy dit avoir alors sond\u00e9 la Commission de d\u00e9ontologie, laquelle r\u00e9torque que le respect de ses  \u00abr\u00e9serves\u00bb rel\u00e8ve de Bercy\u2026 \u00bb\n\nApr\u00e8s sa nomination comme secr\u00e9taire g\u00e9n\u00e9ral de l'\u00c9lys\u00e9e, il annonce qu'il se d\u00e9portera pour toutes les questions qui pourraient concerner MSC , Martine Orange indique que \u00ab pourtant, selon [ses] informations, il semble que le secr\u00e9taire g\u00e9n\u00e9ral de  l\u2019\u00c9lys\u00e9e, m\u00eame s\u2019il est rest\u00e9 en coulisses, ait gard\u00e9 un \u0153il tr\u00e8s vigilant sur le dossier \u00bb. Alexis Kohler assure qu'il \u00ab ne traite plus du sujet : c'est Anne de Bayser, secr\u00e9taire g\u00e9n\u00e9rale adjointe, qui s'en charge \u00bb. Martine Orange rel\u00e8ve notamment que la position de MSC sur le dossier  STX, d\u00e9fendue \u00e0 Bercy par Alexis Kohler en mars 2017, est celle du \nnouveau gouvernement. En mai 2018, Martine Orange r\u00e9v\u00e8le dans Mediapart son lien de parent\u00e9 avec Rafaela Aponte, cofondatrice de MSC, et met en cause \u00ab un conflit d\u2019int\u00e9r\u00eats majeur \u00bb compte tenu des responsabilit\u00e9s qu'il a exerc\u00e9es jusqu'alors sans que ce lien soit connu ni signal\u00e9 selon elle3. \u00c0 l'appui des proc\u00e8s-verbaux du conseil de surveillance du Grand port maritime du Havre (GPMH), Martine Orange et Laurent Mauduit assurent notamment que \u00ab lorsqu\u2019il si\u00e9geait comme administrateur au conseil de surveillance du port du  Havre, Alexis Kohler n\u2019a jamais inform\u00e9 les autres membres du conseil de ses liens familiaux avec MSC \u00bb et \u00ab ne s\u2019est jamais d\u00e9port\u00e9 quand MSC \u00e9tait concern\u00e9 \u00bb, contrairement \u00e0 ce qu'affirme alors le palais de l'\u00c9lys\u00e9e.  Anticor, association de lutte anticorruption, d\u00e9pose plainte contre Alexis Kohler le 1er juin 2018 pour \u00ab prise ill\u00e9gale d\u2019int\u00e9r\u00eats \u00bb, \u00ab trafic d\u2019influence \u00bb et \u00ab corruption passive \u00bb  pour sa pr\u00e9sence pass\u00e9e au conseil d'administration de STX France, dont MSC est le client principal, sans faire \u00e9tat de ses liens familiaux  avec l\u2019armateur, ainsi que pour la rencontre de mars 2017. Le Parquet national financier indique avoir ouvert une enqu\u00eate avant m\u00eame cette plainte , le palais de l\u2019\u00c9lys\u00e9e annonce qu\u2019il rejette \u00ab des soup\u00e7ons totalement infond\u00e9s \u00bb. Une nouvelle plainte est d\u00e9pos\u00e9e par Anticor le 8 ao\u00fbt 2018, pour \u00ab prise ill\u00e9gale d\u2019int\u00e9r\u00eat \u00bb :  celle-ci se fonde sur des votes d\u2019Alexis Kohler pour des contrats en  faveur d\u2019une filiale fran\u00e7aise de MSC concernant l'exploitation d'un  terminal du Grand port maritime du Havre (GPMH), alors qu\u2019il si\u00e9geait en 2010-2012 au conseil de surveillance de cet \u00e9tablissement public (EPIC), en tant que repr\u00e9sentant de l\u2019Agence des participations de l'\u00c9tat (APE), aux c\u00f4t\u00e9s du maire du Havre, l\u2019actuel Premier ministre \u00c9douard Philippe"
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "IsmalEmelien",
+            "targetName": "HavasEuroRSCG",
+            "target": "HavasEuroRSCG",
+            "targetParentId": "",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2009-2013"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": "consultant senior puis directeur-conseil de l'agence"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "CdricO",
+            "targetName": "Op\u00e9rationelle",
+            "target": "Oprationelle",
+            "targetParentId": "ConseilCommunication",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2007-?"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": "communicant"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/C%C3%A9dric_O",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        },
+        {
+            "source": "CdricO",
+            "targetName": "Safran",
+            "target": "Safran",
+            "targetParentId": "ArospatialArmement",
+            "otherParents": "",
+            "params": {
+                "Periode": {
+                    "texte": "2014-2017"
+                },
+                "Montant": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "Type": {
+                    "texte": ""
+                },
+                "Poste": {
+                    "texte": "charg\u00e9 de mission aupr\u00e8s du directeur industriel groupe puis comme responsable de production"
+                },
+                "Info": {
+                    "source": "",
+                    "url": "https://fr.wikipedia.org/wiki/C%C3%A9dric_O",
+                    "texte": ""
+                },
+                "Actions": {
+                    "texte": "",
+                    "url": "",
+                    "source": ""
+                },
+                "info2": {
+                    "source": "",
+                    "url": "",
+                    "texte": ""
+                }
+            }
+        }
+    ]
+}

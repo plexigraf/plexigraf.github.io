@@ -35,11 +35,19 @@
 <body>
 
 <form name="myform" onSubmit="return handleClick()" style="display:block">
-    <p>Focus:</p> <p id="focus_p"></p>
-    <input name="Submit"  type="submit" value="Changer" >
     <input type="text" id="myVal" placeholder="Entrez du texte&hellip;">
+    <input name="Submit"  type="submit" value="Chercher" >
 </form>
 
+<p id="processing">Processing DB:<tspan id="dbname"></tspan>, please wait...</p>
+
+<script type="text/javascript">
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const filename = urlParams.get('filename')
+    document.getElementById("dbname").innerHTML=filename;
+    console.log(queryString,urlParams,filename)
+</script>
 
   <div class="chart" id="mainchart"></div>
   <script type="text/javascript" src="grafviz.js">
