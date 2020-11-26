@@ -9,6 +9,7 @@
       <change beforePath="$PROJECT_DIR$/graph-v3.html" beforeDir="false" afterPath="$PROJECT_DIR$/graph-v3.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taxo-graph.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/taxo-samples/taxo_complete_params-mammals-25K.json" beforeDir="false" afterPath="$PROJECT_DIR$/taxo-samples/taxo_complete_params-mammals-25K.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +47,7 @@
       <workItem from="1605867837607" duration="9000" />
       <workItem from="1605874599416" duration="19921000" />
       <workItem from="1606047283781" duration="14355000" />
-      <workItem from="1606201343814" duration="17702000" />
+      <workItem from="1606201343814" duration="19047000" />
     </task>
     <servers />
   </component>

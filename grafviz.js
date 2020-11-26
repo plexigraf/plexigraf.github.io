@@ -241,7 +241,7 @@ function buildNodesLinks(data){
 
             names=n.name.split(' ')
             n.firstName=names.shift()
-            if (names.length>1){
+            if (names.length>0){
                 n.lastName=names.join(' ')
             }
         }
@@ -389,7 +389,7 @@ function buildNodesLinks(data){
         nodes[i].radius=params.dr+Math.sqrt(nodes[i].descendants)
         nodes[i].isLeave = (nodes[i].children.length==0)//feuille de l'arbre = pas d'enfants
         if (params.hierarchyInfo){
-            nodes[i].params['Génération']={'texte':nodes[i].generation.toString()},
+            nodes[i].params['Layer']={'texte':nodes[i].generation.toString()},
             nodes[i].params['Descendants']={'texte':nodes[i].descendants.toString()}
         }
     }

@@ -2,7 +2,7 @@
 <meta charset = "utf-8">
 <html>
 <head>
-  <title>Gouvernement Philippe II</title>
+  <title>Graph exploration</title>
 
   <!--D3v3, textbox, hierarchy-->
   <script src = "https://d3js.org/d3.v3.min.js"></script>
@@ -33,10 +33,13 @@
   </style>
 </head>
 <body>
+<p><strong>1 click</strong>: Info</p>
+<p><strong>Dbl click</strong>: Expand</p>
+<p><strong>Zoom in/out</strong>: Scroll up/down</p>
 
 <form name="myform" onSubmit="return handleClick()" style="display:block">
-    <input type="text" id="myVal" placeholder="Entrez du texte&hellip;">
-    <input name="Submit"  type="submit" value="Chercher" >
+    <input type="text" id="myVal" placeholder="Text">
+    <input name="Submit"  type="submit" value="Search in graph (Beta)" >
 </form>
 
 <p id="processing">Processing DB:<tspan id="dbname"></tspan>, please wait...</p>
