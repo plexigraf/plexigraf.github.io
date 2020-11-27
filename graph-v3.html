@@ -47,7 +47,11 @@
 <script type="text/javascript">
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const filename = urlParams.get('filename')
+    let filename = urlParams.get('filename')
+    console.log('file',filename)
+    if (filename == null){
+        filename='political/Philippe-II-2018.json'
+    }
     document.getElementById("dbname").innerHTML=filename;
     console.log(queryString,urlParams,filename)
 </script>

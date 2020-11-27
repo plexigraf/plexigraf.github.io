@@ -2,19 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/redirect.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Philippe-II.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grafviz.js" beforeDir="false" afterPath="$PROJECT_DIR$/grafviz.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grafviz copie.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/graph-v2.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/graph-v3.html" beforeDir="false" afterPath="$PROJECT_DIR$/graph-v3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taxo-graph.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taxo-samples/taxo_complete_params-mammals-25K.json" beforeDir="false" afterPath="$PROJECT_DIR$/taxo-samples/taxo_complete_params-mammals-25K.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -27,6 +33,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -47,7 +54,7 @@
       <workItem from="1605867837607" duration="9000" />
       <workItem from="1605874599416" duration="19921000" />
       <workItem from="1606047283781" duration="14355000" />
-      <workItem from="1606201343814" duration="19047000" />
+      <workItem from="1606201343814" duration="19603000" />
     </task>
     <servers />
   </component>
