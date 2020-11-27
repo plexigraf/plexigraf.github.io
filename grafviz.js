@@ -21,7 +21,7 @@
 
 //TO DO determiner pourquio ca rame sous philippeII et pas animalia
 //TO DO quand on clique sur une feuille, il faudrait qu'elle se rentre, et enlever l'info
-
+//remettre le focus en rouge
 
 //TO DO:   changer polices, prendre en compte plusieurs parents, utiliser hierarchy package,
 //
@@ -58,8 +58,11 @@ let params={ belongsToLinkWidth:1,
             alwaysShowParent : true,// dès qu'un noeud sort tous ses ancetres également
             initialFocus:'',
             expand_first_n_gens:2,
-            hierarchyInfo: true}
+            hierarchyInfo: true
+            //initialFocus;undef by default
+    },
 //const filename = "taxo-graph.json"
+    focus,
     divName = "body",
     width = params.screenRatio*window.screen.width, // svg width
     height = width, // svg height
@@ -71,8 +74,6 @@ let nodes = [];
 let links = [];
     //"name" -> number
 let nodesMap = {};
-    //id du node focused par l'user
-let focus = '';
     //liste des infos à afficher, de la forme {key:value}
 let infos = [];
 let infoWidth = 0;//varie en fonction de info/removeInfos
@@ -280,7 +281,7 @@ function buildNodesLinks(data){
 
     makeIndex(nodes)//pour la fonction de recherche
 
-    focus=nodes[1].id
+    focus=params.initialFocus//nodes[1].id
     console.log("focus",focus)
     let createOrphans=false;
     //on met les orphelins a la DASS on calcule les tailles au passage
@@ -387,6 +388,7 @@ function buildNodesLinks(data){
     for (let i = 0; i < nodes.length; ++i) {
         nodes[i].descendants=size(nodes[i])-1
         nodes[i].radius=params.dr+Math.sqrt(nodes[i].descendants)
+        nodes[i].depth=depth(nodes[i])
         nodes[i].isLeave = (nodes[i].children.length==0)//feuille de l'arbre = pas d'enfants
         if (params.hierarchyInfo){
             nodes[i].params['Layer']={'texte':nodes[i].generation.toString()},
@@ -456,7 +458,7 @@ function showParents(n){
     }
 }
 
-function updateVisibleDepth(n){
+function updateVisibleDepth(n){//used for transparency
     if (n.id=="root"){
         return
     }
@@ -491,16 +493,17 @@ function visibleNetwork() {
     }
 
     //on montre le focuses et ses liens, et leurs parents
-
-    focusedNode = nodeById(focus)
-    focusedNode.show = true;
-    if (params.alwaysShowParent) {
-        showParents(focusedNode)
-    }
-    for (let k in focusedNode.linked) {
-        focusedNode.linked[k].show = true;
+    if (focus) {
+        focusedNode = nodeById(focus)
+        focusedNode.show = true;
         if (params.alwaysShowParent) {
-            showParents(focusedNode.linked[k])
+            showParents(focusedNode)
+        }
+        for (let k in focusedNode.linked) {
+            focusedNode.linked[k].show = true;
+            if (params.alwaysShowParent) {
+                showParents(focusedNode.linked[k])
+            }
         }
     }
     nodes[0].visibleParentIndex = 0;
@@ -721,9 +724,9 @@ function init(adapt) {
         })
 
     nodec = node.append("circle")
-        .attr("stroke-width", d=>d.isLeave? "1px" : 5*(maxGen-d.generation))
+        .attr("stroke-width", d=>d.isLeave? d.id==focus? 10 : "1px" : 5*(d.depth))
         .style("opacity", d =>  d.id=="root"? 0:  Math.max(0.1,1 - d.visibleDepth / 3))
-        .attr("stroke", d => stroke(d))
+        .attr("stroke", d =>(d.id === focus) ? "red" :  'lightgrey')
         //.style("fill-opacity", d => d.expanded ? 0 : 1)
         .attr("r", d => d.radius)
         .attr("cx", 0)
@@ -1173,7 +1176,7 @@ function infosFocus(focus, d) {
 
 
 function lightNode(id, p) {
-    nodec.filter(d => (d.id === id)).attr("stroke", p === "on" ? "orange" : "grey")
+    nodec.filter(d => (d.id === id)).attr("stroke",d=> d.id==focus? "red" : p === "on" ? "orange" : "grey")
 }
 
 
@@ -1224,7 +1227,6 @@ function depth(d) {
         max=0
         for (let i in d.children){
             let dp=depth(d.children[i])
-            console.log(dp)
             if (dp>max){
                 max=dp
             }
@@ -1325,6 +1327,3 @@ function drawCluster(d) {
     return curve(d.path); // 0.8
 }
 
-function stroke(d) {
-    return (d.id === focus) ? "red" : d.children.length > 0 ? "darkgrey" : 'lightgrey'
-}
