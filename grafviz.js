@@ -19,7 +19,8 @@
 //       "params" :
 //
 
-//TO DO determiner pourquio ca rame sous philippeII et pas animalia
+//probleme popup location (visible parent?)
+//TO DO determiner pourquio ca rame sous philippeII et pas animalia. Links?
 //TO DO quand on clique sur une feuille, il faudrait qu'elle se rentre, et enlever l'info
 //remettre le focus en rouge
 

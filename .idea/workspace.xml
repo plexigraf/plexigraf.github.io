@@ -4,7 +4,10 @@
     <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grafviz.js" beforeDir="false" afterPath="$PROJECT_DIR$/grafviz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/political/Philippe-II-2018.json" beforeDir="false" afterPath="$PROJECT_DIR$/political/Philippe-II-2018.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph-v3.html" beforeDir="false" afterPath="$PROJECT_DIR$/graph-v3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/subDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/subDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taxo-samples/taxo_complete_params-spiders-80K.json" beforeDir="false" afterPath="$PROJECT_DIR$/taxo-samples/taxo_complete_params-spiders-80K.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +53,7 @@
       <workItem from="1605867837607" duration="9000" />
       <workItem from="1605874599416" duration="19921000" />
       <workItem from="1606047283781" duration="14355000" />
-      <workItem from="1606201343814" duration="30075000" />
+      <workItem from="1606201343814" duration="30922000" />
     </task>
     <servers />
   </component>

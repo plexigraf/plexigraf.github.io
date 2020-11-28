@@ -4,11 +4,11 @@ import sys
 import time
 
 
-root="179913"
-maxGen=100
-limit=80000#max number of entries
+root="1117840"
+maxGen=10
+limit=4000#max number of entries
 file='/Users/raphael/Desktop/animals/taxo_complete_params'
-output=file+"-"+root+"-"+str(maxGen)
+output='subDb'+"-"+root+"-"+str(maxGen)
 
 
 print('import',file+'.json')
