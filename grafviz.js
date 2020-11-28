@@ -58,7 +58,7 @@ let params={ belongsToLinkWidth:1,
             dr : 44, // default point radius
             alwaysShowParent : true,// dès qu'un noeud sort tous ses ancetres également
             initialFocus:'',
-            expand_first_n_gens:1,
+            expand_first_n_gens:2,
             hierarchyInfo: true,
             simultImg: 50,//max number img to display
             imgHeights:100
