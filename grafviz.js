@@ -57,8 +57,10 @@ let params={ belongsToLinkWidth:1,
             dr : 44, // default point radius
             alwaysShowParent : true,// dès qu'un noeud sort tous ses ancetres également
             initialFocus:'',
-            expand_first_n_gens:2,
-            hierarchyInfo: true
+            expand_first_n_gens:1,
+            hierarchyInfo: true,
+            simultImg: 50,//max number img to display
+            imgHeights:100
             //initialFocus;undef by default
     },
 //const filename = "taxo-graph.json"
@@ -263,6 +265,7 @@ function buildNodesLinks(data){
         n.isLeave=false//feuilles de l'arbre = pas d'enfant
         n.generation=0
         n.visibleDepth=0
+        n.imgHeight=n.img?params.imgHeights:0
         return n;
     }
 
@@ -486,10 +489,17 @@ function visibleNetwork() {
     //noeuds à afficher. Correspond à show=true?
 
     //on montre les noeuds expanded ou dont le parent expanded
+    imgCounter=0;
     for (let k = 0; k < nodes.length; ++k) {
         nodes[k].prevShow = nodes[k].show;//pour faire popper au bon endroit éventuellement
         nodes[k].show = nodes[k].expanded || nodeById(nodes[k].parentId).expanded || false;
         nodes[k].visibleDepth=0;
+        nodes[k].imgDisp=false;
+        if (nodes[k].img && imgCounter<params.simultImg)
+        {
+            imgCounter ++;
+            nodes[k].imgDisp =  true
+        }
     }
 
     //on montre le focuses et ses liens, et leurs parents
@@ -734,6 +744,12 @@ function init(adapt) {
         .style("fill", d => d.expanded ? fill(nodesMap[d.id]) : fill(nodeById(d.parentId).visibleParentIndex))
 
 
+    node.append("svg:image")
+        .attr("xlink:href", d=>d.imgDisp?d.img:null)//?d.img:"") //function(d) { return d.img;})
+        .attr("x",d=>-d.radius)// function(d) { return -25;})
+        .attr("y", d=>-d.radius)//function(d) { return -25;})
+        .attr("height", d=>2*d.radius)
+        .attr("width",d=>2*d.radius);
 
     //.on("mouseout",d =>  infog.setAttribute("display","none"));
 
@@ -748,7 +764,7 @@ function init(adapt) {
     node.append("text")
         .attr("x", 0)
         .style("font-family", "American Typewriter, serif")
-        .attr("y", d => d.lastName ? "-1.2em" : 0)
+        .attr("y", d => d.lastName ?d.imgDisp? "2em": "-1.2em" : d.imgDisp? "3em":0)
         .text(d => d.firstName)//+d.visibleDepth)//+(maxGen-d.generation))
         .each(function(d) {
             let box = this.parentNode.getBBox();
@@ -759,7 +775,7 @@ function init(adapt) {
     node.selectAll(".top")
         //.attr("rx",10)
         .attr("x", d => d.bb1x - 2)
-        .attr("y", -37)
+        .attr("y",d=>d.imgDisp?"1em":"-2em")// -37)
         .attr("display", d => d.lastName ? "block" : "none")
         .attr("width", d => d.bb1w || 10)
         .attr("height", 21)
@@ -769,7 +785,7 @@ function init(adapt) {
         .style("font-size", "18px")
         .style("font-family", "American Typewriter, serif")
         .attr("x", 0)
-        .attr("y", 0)
+        .attr("y", d=>d.imgDisp?"3em":0)
         .text(d => d.lastName || "")
         .each(function(d) {
             let box = this.getBBox();
@@ -782,15 +798,16 @@ function init(adapt) {
         .selectAll(".middle")
         //.attr("rx",6)
         .attr("x", d => d.lastName ? d.bb2x + 2 : d.bb1x + 2)
-        .attr("y", -14)
+        .attr("y", d=>d.imgDisp? "2em":"-1em")
         .attr("width", d => d.lastName ? d.bb2w : d.bb1w)
         .attr("height", 23)
 
     node.append("text")
         .style("font-size", "10px")
         .style("font-family", "American Typewriter, serif")
-        .attr("dy", "2em")
+        .attr("dy", d=>d.imgDisp?"3.8em":"1.3em")
         .text(d => name(d.parentId))
+        .attr("y",d=>d.imgDisp?"3em":0)
 
     //only for mouseover event
     node.append("circle")
@@ -902,6 +919,7 @@ function init(adapt) {
 
 
 function infoDisp() {
+    console.log(infos)
     //lit l'info de d et affiche les infos correspondantes
     infoWidth=300;
     //on enleve tout
@@ -986,6 +1004,7 @@ function infoDisp() {
         } else if (displaySubBlocks) {
             //transform result en [key,value]
 
+
             //textwrap bug et n'affiche pas la 1re info donc je mets une info vide pour contrer ça
             let result = [
                 ["", ""]
@@ -1024,6 +1043,7 @@ function infoDisp() {
                 result = result.concat(Object.entries(d.params))
             }
 
+
             //titre
             info.append("text")
                 .text(d.id ? name(d.id) : d.source? d.source.id ? name(d.source.id) + (" \u2b0c " || " <-> ") + name(d.target.id) : name(d.source) + (" \u2b0c " || " <-> ") + name(d.target):d.texte)
@@ -1044,17 +1064,30 @@ function infoDisp() {
 
             let bckgrdRect = info.append("rect")
                 .attr("fill", "lightblue")
-                .attr("y", 30)
+                .attr("y",  30)
                 .attr("height", 0)
                 .attr("width", infoWidth)
                 .style("opacity", .8)
 
 
+
             let infoSubBlock = info.append("text")
                 .attr("display", d.deployedInfos ? "block" : "none")
+                //.attr("y",100)
+                .attr("transform", d=>"translate(0,"+d.imgHeight+")")
                 .selectAll(".smalltext")
                 .data(result)
                 .enter()
+
+
+            //img eventuelle
+            let imgInfo=info.append("svg:image")
+                .attr("display",d=>(d.imgHeight && d.deployedInfos)?"block":"none")
+                .attr("xlink:href", d=>d.img)//?d.img:"") //function(d) { return d.img;})
+                .attr("x",30)//infoWidth/2-50)//d=>-d.radius)// function(d) { return -25;})
+                .attr("y", "3em")//d=>-d.radius)//function(d) { return -25;})
+                .attr("height", 100)
+            //.attr("width",100);
 
             //on met a jour la hauteur du bloc au fur et a mesure
             let blockHeight = 48;
