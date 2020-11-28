@@ -1,6 +1,7 @@
 {
     "params": {
-        "belongsToLinkWidth": 10
+        "belongsToLinkWidth": 10,
+	"expand_first_n_gens":2
     },
     "nodes": [
         {
