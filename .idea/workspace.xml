@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="" />
+    <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taxo-samples/spiders-4k-old.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/taxo-samples/spiders-4k.json" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +50,7 @@
       <workItem from="1605867837607" duration="9000" />
       <workItem from="1605874599416" duration="19921000" />
       <workItem from="1606047283781" duration="14355000" />
-      <workItem from="1606201343814" duration="31748000" />
+      <workItem from="1606201343814" duration="31995000" />
     </task>
     <servers />
   </component>
