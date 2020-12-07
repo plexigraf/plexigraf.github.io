@@ -9,7 +9,6 @@
   <script src="https://d3plus.org/js/d3plus.js"></script>
   
   <script src="https://unpkg.com/lunr/lunr.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 
@@ -42,18 +41,18 @@
     <input name="Submit"  type="submit" value="Search in graph (Beta)" >
 </form>
 
-<h2 id="processing">Processing DB:<tspan id="dbname"></tspan>, please wait...</h2>
+<h2 id="processing"><tspan id="dbname"></tspan>, please wait...</h2>
 
 <script type="text/javascript">
-  console.log('go')
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     let filename = urlParams.get('filename')
+    let load_from_WD = urlParams.get('load_from_WD')=='true'? true:false
     console.log('file',filename)
-    if (filename == null){
+    if (filename == null && !load_from_WD){
         filename='political/Philippe-II-2018.json'
     }
-    document.getElementById("dbname").innerHTML=filename;
+    document.getElementById("dbname").innerHTML=load_from_WD? 'Querying DB' : 'Processing DB '+filename;
     console.log(queryString,urlParams,filename)
 </script>
 
