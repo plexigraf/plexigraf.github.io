@@ -170,25 +170,24 @@ if (load_from_WD) {
 }
 
 if (wdjs){
-    console.log('wdjs')
+    console.log('wdjs, loading file')
     $.getJSON("maths/"+wdKey+".json", launch)
 }
 
 function launch(result) {
     console.log(JSON.stringify(result, null, 2))
     console.log('launch', load_from_WD,wdjs)
-
-    const nodesWD = [{'id': 'root', 'name': 'Pays', 'parentId': 'root', 'hasFeaturedDesc':true, 'params': {}}];
+    let rootName=''
+    let nodesWD={'root': {'id': 'root', 'name': rootName, 'parentId': 'root', 'hasFeaturedDesc':true, 'params': {}}};
     const entries = result.results.bindings;
     console.log(result, result.results, result.results.bindings, result.results.bindings[0])
     for (let r in entries) {
         let uri = entries[r].id.value;
-        let id = uri.split('/').slice(-1)[0];
+        let id = uri.split('/').slice(-1)[0];//QXXXX
         let parentId;
         if ('parentId' in entries[r]) {
-            parentId = entries[r].parentId.value.split('/').slice(-1)[0]
+            parentId = entries[r].parentId.value.split('/').slice(-1)[0]//QXXXX
             //console.log(id,'parent',parentId)
-
         } else {
             //console.log(id,entries[r],Object.keys(entries[r]),entries[r].parentId,parentId in entries[r],entries[r].parentId)
             try {country = entries[r].countryLabel.value
@@ -204,19 +203,19 @@ function launch(result) {
                 console.log(error,'nocontinent',id,continent)}
             parentId = country;
             if (!(country in nodesWD)) {
-                nodesWD.push({
+                nodesWD[country]={
                     "id": country,
                     "parentId": continent, // == "Q7377" ? "root" : parentUri,
                     "params": []
-                })
+                }
 
             }
             if (!(continent in nodesWD)) {
-                nodesWD.push({
+                nodesWD[continent]={
                     "id": continent,
                     "parentId": 'root', // == "Q7377" ? "root" : parentUri,
                     "params": []
-                })
+                }
 
             }
         }
@@ -247,7 +246,7 @@ function launch(result) {
         let name=entries[r].idLabel.value;
         //console.log(entries[r].childLabel.value,id,entries[r].pic,entries[r].linkTo.value.split('/').slice(-1)[0]);
         id=uri.split("/").slice(-1)[0]
-        nodesWD[id]={
+        nodesWD[r]={
             "id": id,
             "name": name,
             "hasFeaturedDesc": ('achievement' in entries[r]) && ('student' in entries[r]),
@@ -256,7 +255,7 @@ function launch(result) {
             "otherParents": [],
             "params": entryParams
         }
-        console.log(id,entries[r], ('achievement' in entries[r]),('student' in entries[r]),nodesWD[id])
+        console.log(id,entries[r],nodesWD[r])
     }
     json_WD = {'params': {'belongsToLinkWidth': 10,
                             'cleanNonFeatured': true,
@@ -514,8 +513,10 @@ function buildNodesLinks(data) {
 
     let dataMap={}//id->node, temporary
     let dataChildren={}//id->list of children,temp?
+    console.log(data.nodes,data.nodes[0])
     for (let i in data.nodes) {
         let n=data.nodes[i]
+        console.log('add to parent?',i,n.parentId,n.id in dataMap,n.parentId in dataChildren)
         if (n.id != 'root') {//sinon bcle infinie
             if (n.parentId in dataChildren) {
                 dataChildren[n.parentId].push(n.id)
@@ -561,6 +562,7 @@ function buildNodesLinks(data) {
     let pendingParents=new Set()
     function createDesc(p,id){
         if (id in nodes){//noeud existe deja comme enfant de qqn d'autre
+            console.log(id,'already in nodes',p)
             //test si le nouveau parent a une generation plus basse
             if (crtGen>nodes[id].generation){//on va plutot le mettre ici
                 nodes[id].parentId=p
@@ -570,7 +572,7 @@ function buildNodesLinks(data) {
                 return
             }
         } else {
-            //console.log('add',id,'parent',p)
+            console.log('add',id,'parent',p)
             let n = initialise(dataMap[id])
             n.parentId=p
             n.generation = crtGen;
