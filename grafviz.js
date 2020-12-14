@@ -1,3 +1,93 @@
+let wdQuery={}
+
+idealMathsQuery=`
+    select ?id ?idLabel ?parentId  ?country ?countryLabel  ?continent ?continentLabel  ?achievement ?achievementLabel  ?enArticle (SAMPLE(?student) as ?student) (SAMPLE(?pic) as ?pic)
+where {
+        ?id wdt:P106 wd:Q170790.#subject is mathematician
+        ?id wdt:P549 ?mathGen.#is in MG database
+    {
+        select ?id ?parentId   ?country ?countryLabel   ?continent ?continentLabel ?achievement ?enArticle ?student  ?pic where {
+
+            OPTIONAL{ ?enArticle schema:about ?id;   schema:isPartOf <https://en.wikipedia.org/>.}#has EN WP page
+            ?id wdt:P27 ?country .
+        {
+            select ?id ?country  ?continent where {
+                ?country  wdt:P30 ?continent.
+
+        }
+    }
+
+        OPTIONAL { ?id wdt:P18 ?pic. }
+        OPTIONAL{ ?id wdt:P800|wdt:P166 ?achievement.}
+        OPTIONAL {?id wdt:P802|wdt:P184 ?student.
+        ?id wdt:P106 wd:Q170790.}#has student mathematician
+        OPTIONAL {  ?id (wdt:P1066|wdt:P184) ?parentId.#has advisor mathematician who also has entry in MG
+        ?parentId wdt:P106 wd:Q170790.
+        ?parentId wdt:P549 ?parentMathGen.
+    }
+
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    }
+    }
+        #?id rdfs:label ?idLabel. FILTER( LANG(?idLabel)="en" )
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    }
+    GROUP BY ?id ?idLabel ?parentId  ?country ?countryLabel   ?continent ?continentLabel ?achievement  ?achievementLabel  ?enArticle
+        `
+
+wdQuery['maths']=`
+select ?id ?idLabel ?parentId  ?country ?countryLabel  ?continent ?continentLabel  ?achievement ?achievementLabel  ?enArticle (SAMPLE(?student) as ?student) (SAMPLE(?pic) as ?pic)
+where {
+   ?id wdt:P106 wd:Q170790.
+  {
+    select ?id ?parentId   ?country ?countryLabel   ?continent ?continentLabel ?achievement ?enArticle ?student  ?pic where {
+      
+       ?id wdt:P27 ?country .
+      {
+        select ?id ?country  ?continent where {
+          ?country  wdt:P30 ?continent.
+        }
+        }
+      
+      OPTIONAL { ?id wdt:P18 ?pic. }
+       OPTIONAL{ ?id wdt:P800|wdt:P166 ?achievement.}
+       OPTIONAL {?id wdt:P802|wdt:P184 ?student.
+                ?id wdt:P106 wd:Q170790.}
+      { ?enArticle schema:about ?id;
+                schema:isPartOf <https://en.wikipedia.org/>.}
+       OPTIONAL {  ?id (wdt:P1066|wdt:P184) ?parentId.
+                    ?parentId wdt:P106 wd:Q170790.
+                  #?parentId (wdt:P800|wdt:P166) ?parentAchievement.
+                }
+          
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    }
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+GROUP BY ?id ?idLabel ?parentId  ?country ?countryLabel   ?continent ?continentLabel ?achievement  ?achievementLabel  ?enArticle
+
+`
+
+wdQuery['mammals']=`
+SELECT ?id ?idLabel ?parent ?frArticle ?enArticle (SAMPLE(?pic) as ?pic)#random pic
+WHERE
+{
+  ?id wdt:P171* wd:Q7377.  #id en dessous de mammifères 
+  OPTIONAL { ?id wdt:P171 ?parent.}
+           #too slow ?parent wdt:P171* wd:Q7377.}#lien de filiation a un parent lui meme descendant de mammifères
+  OPTIONAL { ?id wdt:P18 ?pic }#on prend une image
+  
+  OPTIONAL{   ?enArticle schema:about ?id .
+            ?enArticle schema:isPartOf <https://en.wikipedia.org/>}
+  OPTIONAL{   ?frArticle schema:about ?id .
+            ?frArticle schema:isPartOf <https://fr.wikipedia.org/>}
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }#en anglais
+}
+GROUP BY ?id ?idLabel ?enArticle ?frArticle ?parent #pour results qui ont la meme image`
+
+
+
 
 //Data instructions
 //params:
@@ -25,14 +115,17 @@
 
 //TO DO
 //calcule pas bien depth?
-
+//Zoom ok, l'idéal serait de le calculer une fois que la dynamique s'est un peu stabilisée (attendre 1 seconde)
+//quand un noeud est déployé d'un coup, le faire en plusieurs petites étapes, c'est joli
+//et ça empêche aux liens de s'emmêler
 //idealement il  faudrait enlever les keys du json pour la recherche
 //mettre image dans rond
 
 //faire une priorité d'affichage sur les node.params, mettre langage
 
 //TO DO quand on clique sur une feuille, il faudrait qu'elle se rentre, et enlever l'info
-
+// sur le graphe (mais on devrait pouvoir le faire dans les infos)
+//implementer 'visibleDescendants'?
 
 //idees taxo:
 //force pas trs bien centrée...
@@ -49,8 +142,8 @@
 //rajouter filiation dans les infos
 //possibilité de naviger dans les infos des briques, sous briques etc...
 
-//1ere partie: retrieve json from wikidata si load_from_WD=true
 
+//1e partie: WD
 
 
 let json_WD;
@@ -70,70 +163,115 @@ class SPARQLQueryDispatcher {
 
 if (load_from_WD) {
     const endpointUrl = 'https://query.wikidata.org/sparql';
-    const sparqlQuery = `
-SELECT ?taxon ?taxonLabel ?parent ?frArticle ?enArticle (SAMPLE(?pic) as ?pic)#random pic
-WHERE
-{
-  ?taxon wdt:P171* wd:Q7377.  #taxon en dessous de mammifères 
-  OPTIONAL { ?taxon wdt:P171 ?parent.}
-           #too slow ?parent wdt:P171* wd:Q7377.}#lien de filiation a un parent lui meme descendant de mammifères
-  OPTIONAL { ?taxon wdt:P18 ?pic }#on prend une image
-  
-  OPTIONAL{   ?enArticle schema:about ?taxon .
-            ?enArticle schema:isPartOf <https://en.wikipedia.org/>}
-  OPTIONAL{   ?frArticle schema:about ?taxon .
-            ?frArticle schema:isPartOf <https://fr.wikipedia.org/>}
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }#en anglais
-}
-GROUP BY ?taxon ?taxonLabel ?enArticle ?frArticle ?parent #pour results qui ont la meme image`;
-
+    const sparqlQuery = wdQuery[wdKey];
+    console.log('querying...')
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
     queryDispatcher.query(sparqlQuery).then(launch);
-} else {
-    launch([])
+}
+
+if (wdjs){
+    console.log('wdjs')
+    $.getJSON("maths/"+wdKey+".json", launch)
 }
 
 function launch(result) {
-    console.log('launch',load_from_WD)
-    if (load_from_WD) {
-        const nodesWD = [{'id': 'root', 'name': 'Mammifères', 'parentId': 'root', 'params': {}}];
-        const entries = result.results.bindings;
-        console.log(result, result.results, result.results.bindings, result.results.bindings[0]);
-        for (let r in entries) {
-            let uri = entries[r].taxon.value;
-            let id = uri.split('/').slice(-1)[0];
-            let parentUri = entries[r].parent.value.split('/').slice(-1)[0];
-            let entryParams = {
-                "WikiData": {
-                    "texte": "Wikidata",
-                    "source": "WikiData",
-                    "url": uri
-                },
-            }
-            let img = entries[r].pic ? entries[r].pic.value : undefined;
-            if (entries[r].frArticle) {
-                entryParams['Wikipedia FR'] = {'texte': 'lien', 'url': entries[r].frArticle.value}
-            }
-            if (entries[r].enArticle) {
-                entryParams['Wikipedia EN'] = {'texte': 'lien', 'url': entries[r].enArticle.value}
-            }
-            //console.log(entries[r].childLabel.value,id,entries[r].pic,entries[r].linkTo.value.split('/').slice(-1)[0]);
-            nodesWD.push({
-                "id": uri.split("/").slice(-1)[0],
-                "name": entries[r].taxonLabel.value,
-                "img": img,
-                "parentId": parentUri == "Q7377" ? "root" : parentUri,
-                "otherParents": [],
-                "params": entryParams
-            })
-        }
-        json_WD = {'params': {'belongsToLinkWidth':10}, 'nodes': nodesWD, 'links': {}};
-        //if (error) throw error;
-        buildNodesLinks(json_WD)
+    console.log(JSON.stringify(result, null, 2))
+    console.log('launch', load_from_WD,wdjs)
 
-        //on calcule les liens visibles et on lance la simulation
-        init(true);
+    const nodesWD = [{'id': 'root', 'name': 'Pays', 'parentId': 'root', 'hasFeaturedDesc':true, 'params': {}}];
+    const entries = result.results.bindings;
+    console.log(result, result.results, result.results.bindings, result.results.bindings[0])
+    for (let r in entries) {
+        let uri = entries[r].id.value;
+        let id = uri.split('/').slice(-1)[0];
+        let parentId;
+        if ('parentId' in entries[r]) {
+            parentId = entries[r].parentId.value.split('/').slice(-1)[0]
+            //console.log(id,'parent',parentId)
+
+        } else {
+            //console.log(id,entries[r],Object.keys(entries[r]),entries[r].parentId,parentId in entries[r],entries[r].parentId)
+            try {country = entries[r].countryLabel.value
+            }
+            catch (error){
+                country=entries[r].country.value.split('/').slice(-1)[0]
+                console.log(error,'nocountry',id,country)}
+            //console.log(id,entries[r].idLabel.value,'orphan',country)
+            try {continent = entries[r].continentLabel.value
+            }
+            catch (error){
+                continent=entries[r].continent.value.split('/').slice(-1)[0]
+                console.log(error,'nocontinent',id,continent)}
+            parentId = country;
+            if (!(country in nodesWD)) {
+                nodesWD.push({
+                    "id": country,
+                    "parentId": continent, // == "Q7377" ? "root" : parentUri,
+                    "params": []
+                })
+
+            }
+            if (!(continent in nodesWD)) {
+                nodesWD.push({
+                    "id": continent,
+                    "parentId": 'root', // == "Q7377" ? "root" : parentUri,
+                    "params": []
+                })
+
+            }
+        }
+        let entryParams = {
+            "WikiData": {
+                "texte": "Wikidata",
+                "source": "WikiData",
+                "url": uri
+            },
+        }
+        let achievementLabel;
+        if ('achievement' in entries[r]){
+            //console.log(entries[r])
+            //achievementLabel=entries[r].achievementLabel.value;
+            entryParams['Achievement']={
+                "texte": entries[r].achievement.value.split('/').slice(-1)[0],
+                "source": 'WikiData',
+                "url": uri
+            }
+        }
+        let img = entries[r].pic ? entries[r].pic.value : undefined;
+        if (entries[r].frArticle) {
+            entryParams['Wikipedia FR'] = {'texte': 'lien', 'url': entries[r].frArticle.value}
+        }
+        if (entries[r].enArticle) {
+            entryParams['Wikipedia EN'] = {'texte': 'lien', 'url': entries[r].enArticle.value}
+        }
+        let name=entries[r].idLabel.value;
+        //console.log(entries[r].childLabel.value,id,entries[r].pic,entries[r].linkTo.value.split('/').slice(-1)[0]);
+        id=uri.split("/").slice(-1)[0]
+        nodesWD[id]={
+            "id": id,
+            "name": name,
+            "hasFeaturedDesc": ('achievement' in entries[r]) && ('student' in entries[r]),
+            "img": img,
+            "parentId": parentId, // == "Q7377" ? "root" : parentUri,
+            "otherParents": [],
+            "params": entryParams
+        }
+        console.log(id,entries[r], ('achievement' in entries[r]),('student' in entries[r]),nodesWD[id])
     }
+    json_WD = {'params': {'belongsToLinkWidth': 10,
+                            'cleanNonFeatured': true,
+                            'simultImg':0
+                                },
+                'nodes': nodesWD,
+                'links': {}};
+    //if (error) throw error;
+    buildNodesLinks(json_WD)
+
+
+    //on calcule les liens visibles et on lance la simulation
+    init(true);
+
+
 }
 
 //2e partie: paramètres globaux
@@ -143,7 +281,7 @@ const chartDiv = document.getElementById("mainchart");
 let params = {
         belongsToLinkWidth: 1,
         screenRatio: 4 / 5,
-        zoomFactor: 1.3,//plus c'est petit plus le graphe apparaitra grand
+        zoomFactor: 2,//plus c'est petit plus le graphe apparaitra grand
         dr: 44, // default point radius
         alwaysShowParent: true,// dès qu'un noeud sort tous ses ancetres également
         initialFocus: 'root',
@@ -151,7 +289,8 @@ let params = {
         hierarchyInfo: true,
         simultImg: 150,//max number img to display
         imgHeights: 100,
-        inheritPicFromChild: true
+        inheritPicFromChild: true,
+        cleanNonFeatured: false,
         //initialFocus;undef by default
     },
 //const filename = "taxo-graph.json"
@@ -159,7 +298,7 @@ let params = {
     divName = "body",
     width = params.screenRatio * window.screen.width, // svg width
     height = width, // svg height
-    largeWidth = chartDiv.offsetWidth > 600,//permet d'afficher les infos
+    largeWidth = true,//chartDiv.offsetWidth > 600,//permet d'afficher les infos
     off = params.dr;
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
 let nodes = [];
@@ -169,10 +308,14 @@ let links = [];
 let infos = [];
 let infoWidth = 0;//varie en fonction de info/removeInfos
 let infoTextSize = 14;
+let oldFocusX=0;
+let oldFocusY=0;
+let oldNodesNumber=2.5;
+let scaleFactor=1;
 //variable contenant nodes et links utilisé par D3 pour tracer
 let maxGen = 0;
 let net;
-let force, link, linkp, node, nodec;
+let force, link, linkp, node, nodec, focusedNode, focusX,focusY;
 
 const curve = d3.svg.line()
     .interpolate("cardinal-closed")
@@ -185,7 +328,6 @@ const fill = d3.scale.category20();
 // --------------------------------------------------------
 
 let idx = 'idx undef yet';
-let initialZoom=true;
 
 
 //3eme partie: on fait l'index pour la recherche
@@ -280,12 +422,21 @@ function zoomed() {
 
 function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
-    let scaleFactor = (width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
-
-    console.log('scale',scaleFactor)
+    newNodesNumber=net.nodes.length
+    scaleFactor =  zoom.scale()*Math.sqrt(oldNodesNumber/newNodesNumber)//(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
+    focusX=nodes[focus].x || 0
+    focusY=nodes[focus].y || 0
+    console.log('adapt',oldNodesNumber,newNodesNumber,scaleFactor)
+    //console.log('scale',scaleFactor,focusX,focusY,oldFocusX,oldFocusY)
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
-    vis.transition().duration(2000).call(zoom.translate([ width/2-(  nodes[focus].x)*scaleFactor, 150-(  nodes[focus].y)*scaleFactor]).scale(scaleFactor).event);
-    initialZoom=false
+    vis.transition()
+        //.duration(2000)
+        .call(zoom
+            .scale(scaleFactor)
+            .translate([width/2-focusX*scaleFactor,width/4-focusY*scaleFactor])// width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
+            //.translate([width/2-focusX*scaleFactor,width/4-focusY*scaleFactor])// width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
+            .event);
+    oldNodesNumber=newNodesNumber
 }
 
 /*
@@ -329,15 +480,10 @@ function buildNodesLinks(data) {
 
     //empty children linked links, initial x y random, deployedInfos prevshow=false
     function initialise(n) {
-        if (n.name) {
-            let names = n.name.split(' ')
-            n.firstName = names.shift()
-            if (names.length > 0) {
-                n.lastName = names.join(' ')
-            }
-        } else {
-            n.name = n.firstName + ' ' + n.lastName || n.firstName || n.lastName || n.id
-        }
+        n.name=n.name||n.id
+        names=n.name.split(' ')
+        n.firstName=n.firstName || names.shift()
+        n.lastName=n.lastName|| names.join(' ')
         n.children = [];
         n.x = 100 + width * Math.random();
         n.y = 300 * Math.random();
@@ -355,6 +501,7 @@ function buildNodesLinks(data) {
         n.descendants=0
         n.depth=0
         n.depthGuy=''
+        n.hasFeaturedDesc=n.hasFeaturedDesc||false
         return n;
     }
 
@@ -367,7 +514,7 @@ function buildNodesLinks(data) {
 
     let dataMap={}//id->node, temporary
     let dataChildren={}//id->list of children,temp?
-    for (let i = 0; i < data.nodes.length; ++i) {
+    for (let i in data.nodes) {
         let n=data.nodes[i]
         if (n.id != 'root') {//sinon bcle infinie
             if (n.parentId in dataChildren) {
@@ -389,7 +536,7 @@ function buildNodesLinks(data) {
 
     //checker si il n'y a pas des noeuds a créer via des target de liens
     //déplacer?
-    for (let i=0;i<data.links.length;i++){
+    for (let i in data.links){
         let l=data.links[i];
         if (dataMap[l.target]){
             //tout va bien, target existe
@@ -411,35 +558,52 @@ function buildNodesLinks(data) {
     }
 
     let crtGen=0;
+    let pendingParents=new Set()
     function createDesc(p,id){
         if (id in nodes){//noeud existe deja comme enfant de qqn d'autre
             //test si le nouveau parent a une generation plus basse
             if (crtGen>nodes[id].generation){//on va plutot le mettre ici
                 nodes[id].parentId=p
                 nodes[id].generation=crtGen
+                console.log('change',id,p)
             }else{
                 return
             }
         } else {
+            //console.log('add',id,'parent',p)
             let n = initialise(dataMap[id])
+            n.parentId=p
             n.generation = crtGen;
             nodes[n.id]=n
         }
         let kids = dataChildren[id] || []
         crtGen++;
+        pendingParents.add(id)
         for (let c = 0; c < kids.length; c++) {
-            createDesc(id, kids[c])
+            kidId=kids[c]
+            if (pendingParents.has(kidId) ){
+                dataChildren[id].splice(c, 1)
+                window.alert('error')
+                console.log('then', kidId,id,'own descendant, removed',dataChildren[id])
+                continue//skip this one
+            }
+            try{
+                createDesc(id, kidId)
+            } catch(error){
+                console.log(id,kidId,error)
+            }
             /*if (n.img == undefined){
                 n.img=nodes[kids[c]].img
             }*/
         }
+        pendingParents.delete(id)
         crtGen--;
         //nodes[id].descendants=n.descendants//ne semble pas marcher avec le rayon
         //return n.descendants
 
     }
 
-    createDesc("whatever","root")
+    createDesc("root","root")
     //console.log(x,'au total')
 
 
@@ -448,20 +612,6 @@ function buildNodesLinks(data) {
     focus = params.initialFocus//nodes[1].id
     console.log("focus", focus)
 
-    //remove orphans stuff
-    //let createOrphans = false;
-    //on met les orphelins a la DASS on calcule les tailles au passage
-    for (let i in nodes) {
-        //on ajoute les liens de parenté
-        links.push({
-            source: i,
-            target: nodes[i].parentId,
-            params: {
-                'type': "belongsTo"
-            }
-
-        });
-    }
 
     /*if (createOrphans) {
         nodesMap['orphans'] = nodes.length; //0 au début, grandit au fur et à mesure
@@ -500,31 +650,46 @@ function buildNodesLinks(data) {
 
     function computeDesc(id){
         let n=nodes[id]
-        crtDesc=0
-        let max=0,guy=null,img=n.img
+        let max=0,guy=null,img=n.img, desc=0, hasFeaturedDesc=n.hasFeaturedDesc;
         for (let c in n.children){
-            let [desc,dp,g,descImg]=computeDesc(n.children[c].id)
+            let [kidDesc,dp,g,descImg,kidHasFD]=computeDesc(n.children[c].id)
             if (dp>max){
                 max=dp
                 guy=n.children[c].name
-                if (img==null && params.inheritPicFromChild && id!='root'){
-                    nodes[id].inheritedPic=true
-                    img=descImg
-                }
             }
-            nodes[id].descendants+=1+desc
-            nodes[id].depth=max
-            nodes[id].depthGuy=guy
-            nodes[id].img=img
+            if (img==null && params.inheritPicFromChild && id!='root'){
+                nodes[id].inheritedPic=true
+                img=descImg
+            }
+            desc+=kidDesc
+            hasFeaturedDesc=hasFeaturedDesc||kidHasFD
+
         }
-        return [nodes[id].descendants,max+1,guy,img]
+        nodes[id].hasFeaturedDesc=hasFeaturedDesc
+        nodes[id].descendants = desc
+        nodes[id].depth = max
+        nodes[id].depthGuy = guy
+        nodes[id].img = img
+
+        return [1 + desc,max+1,guy,img,hasFeaturedDesc]
 
     }
     console.log(total,"total")
 
 
+    for (let i in nodes) {
+        //on ajoute les liens de parenté
+        links.push({
+            source: i,
+            target: nodes[i].parentId,
+            params: {
+                'type': "belongsTo"
+            }
+
+        });
+    }
     //extract links
-    for (let i = 0; i < data.links.length; i++) {
+    for (let i in data.links) {
         //il y a des checks a faire ici...
         let linki = data.links[i] || {target: ""};
         //target required
@@ -564,7 +729,7 @@ function buildNodesLinks(data) {
 
 }
 
-if (!load_from_WD)  {
+if (!load_from_WD && !wdjs)  {
 //lance la simu
     d3.json(filename, function (error, json) {
         //if (error) throw error;
@@ -589,7 +754,7 @@ function handleClick(event) { //pour la fctn de recherche
     let term = document.getElementById("myVal").value;
     console.log('go', term)
     normTerm=term.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    let results = idx.search(term);
+    let results = idx.search(term+'~1');
     console.log('done')
     console.log("results", results);
     removeInfos();
@@ -619,7 +784,7 @@ function handleClick(event) { //pour la fctn de recherche
 
 function showParents(n) {
     let parentId = n.parentId
-    if (!nodes[parentId].show && n.parentId != "root")   {
+    if (!nodes[parentId].show)   {
         nodes[parentId].show = true;
         showParents(nodes[parentId])
     }
@@ -676,10 +841,13 @@ function visibleNetwork() {
         }
     }
 
-    for (let k in nodes) {
-        if ((nodes[k].img != undefined) && (nodes[k].show) && imgCounter < params.simultImg) {
+    for (let id in nodes) {
+        if (!nodes[id].hasFeaturedDesc && params.cleanNonFeatured){
+            nodes[id].show=false
+        }
+        if ((nodes[id].img != undefined) && (nodes[id].show) && imgCounter < params.simultImg) {
             imgCounter++;
-            nodes[k].imgDisp = true
+            nodes[id].imgDisp = true
         }
     }
 
@@ -721,6 +889,7 @@ function visibleNetwork() {
 
                     //cet attribut servira plus tard pour l'affichage des couleurs et des enveloppes
                     nodek.visibleParentId = current;
+
 
 
                 }
@@ -788,10 +957,11 @@ function init(adapt) {
     console.log('init',nodes)
     //renvoie une liste de noeuds qui ont un id et de liens qui ont une source et une target (entre autres)
     net = visibleNetwork();
+
+    console.log('done',net)
     //removeInfos()?
     //if (adapt) {
-        console.log('adapt')
-    adaptZoom()
+
     //};
 
 
@@ -1059,6 +1229,10 @@ function init(adapt) {
 
     });
 
+    console.log('adapt')
+    setTimeout(adaptZoom, 1000);
+
+
 }
 
 
@@ -1093,7 +1267,7 @@ function infoDisp() {
 
         //rectangle du cadre titre
         info.append("rect")
-            .data([d]).attr("fill", "lightblue")
+            .data([d]).attr("fill",d => fill(d.id)||'lightblue')
             .attr("height", 30)
             .attr("width", infoWidth)
             //.attr("stroke-width",2)
@@ -1214,7 +1388,7 @@ function infoDisp() {
                 })
 
             let bckgrdRect = info.append("rect")
-                .attr("fill", "lightblue")
+                .attr("fill", d=> fill(d.id)||'lightblue')
                 .attr("y", 30)
                 .attr("height", 0)
                 .attr("width", infoWidth)
@@ -1307,7 +1481,7 @@ function removeInfos() {
         infos[i].deployedInfos = false;
     }
     infos = [];
-    adaptZoom()
+    //adaptZoom()
 }
 
 

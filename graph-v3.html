@@ -2,13 +2,15 @@
 <meta charset = "utf-8">
 <html>
 <head>
+
   <title>Graph exploration</title>
 
   <!--D3v3, textbox, hierarchy-->
   <script src = "https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3plus.org/js/d3plus.js"></script>
-  
-  <script src="https://unpkg.com/lunr/lunr.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
 
 
 
@@ -48,16 +50,20 @@
     const urlParams = new URLSearchParams(queryString);
     let filename = urlParams.get('filename')
     let load_from_WD = urlParams.get('load_from_WD')=='true'? true:false
-    console.log('file',filename)
-    if (filename == null && !load_from_WD){
+    let wdjs = urlParams.get('wdjs')=='true'? true:false
+    let wdKey=urlParams.get('wdKey')
+    if (filename == null && !load_from_WD && !wdjs){
         filename='political/Philippe-II-2018.json'
     }
     document.getElementById("dbname").innerHTML=load_from_WD? 'Querying DB' : 'Processing DB '+filename;
-    console.log(queryString,urlParams,filename)
+    console.log(queryString,load_from_WD,wdjs,filename)
 </script>
 
   <div class="chart" id="mainchart"></div>
-  <script type="text/javascript" src="grafviz.js">
+
+
+
+<script type="text/javascript" src="grafviz.js">
  
 </script>
 </body>
