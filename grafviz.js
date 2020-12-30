@@ -1,5 +1,3 @@
-function console.log(){
-}
 
 start()
 
