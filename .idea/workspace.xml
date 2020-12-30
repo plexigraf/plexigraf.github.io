@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7a1e5564-0510-450c-94bd-d6d0428b8997" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grafviz.js" beforeDir="false" afterPath="$PROJECT_DIR$/grafviz.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taxo-samples/spiders-4k-old.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taxo-samples/spiders-4k.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/maths/maths.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/political/Philippe-II-2018.json" beforeDir="false" afterPath="$PROJECT_DIR$/political/Philippe-II-2018.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redirect.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,11 +21,15 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/grafviz.js" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1kIOElxFNx9auMjP6HjocEZxxS8" />
   <component name="ProjectViewState">
@@ -33,7 +43,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/grafviz.js" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -51,6 +63,7 @@
       <workItem from="1605874599416" duration="19921000" />
       <workItem from="1606047283781" duration="14355000" />
       <workItem from="1606201343814" duration="31995000" />
+      <workItem from="1606572346092" duration="286548000" />
     </task>
     <servers />
   </component>
@@ -62,6 +75,15 @@
       <screen x="0" y="23" width="1280" height="740" />
     </state>
     <state x="274" y="79" key="#Inspections/0.23.1280.740@0.23.1280.740" timestamp="1605433064408" />
+    <state x="374" y="235" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1607084614791">
+      <screen x="0" y="23" width="1280" height="743" />
+    </state>
+    <state x="374" y="235" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1280.742@0.23.1280.742" timestamp="1607011179825" />
+    <state x="374" y="235" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.23.1280.743@0.23.1280.743" timestamp="1607084614791" />
+    <state x="26" y="23" width="1238" height="703" key="DiffContextDialog" timestamp="1608137725882">
+      <screen x="0" y="23" width="1280" height="742" />
+    </state>
+    <state x="26" y="23" width="1238" height="703" key="DiffContextDialog/0.23.1280.742@0.23.1280.742" timestamp="1608137725882" />
     <state x="141" y="33" key="SettingsEditor" timestamp="1605543518606">
       <screen x="0" y="23" width="1280" height="741" />
     </state>
@@ -70,5 +92,17 @@
       <screen x="0" y="23" width="1280" height="740" />
     </state>
     <state x="149" y="103" width="540" height="587" key="StructurePopup/0.23.1280.740@0.23.1280.740" timestamp="1605715423597" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1607701163236">
+      <screen x="0" y="23" width="1280" height="743" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.23.1280.743@0.23.1280.743" timestamp="1607701163236" />
+    <state x="423" y="294" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606734675411">
+      <screen x="0" y="23" width="1280" height="742" />
+    </state>
+    <state x="423" y="294" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1280.742@0.23.1280.742" timestamp="1606734675411" />
+    <state x="295" y="89" width="670" height="676" key="search.everywhere.popup" timestamp="1606734876000">
+      <screen x="0" y="23" width="1280" height="742" />
+    </state>
+    <state x="295" y="89" width="670" height="676" key="search.everywhere.popup/0.23.1280.742@0.23.1280.742" timestamp="1606734876000" />
   </component>
 </project>

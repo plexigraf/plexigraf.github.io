@@ -21,17 +21,19 @@
   }
 
   .boxname{
-    fill: white;  
+    fill: white;
   }
 
   .type text{
   	font-family:American Typewriter, serif;
-  } 
-    
+  }
+
 
 
 
   </style>
+
+
 </head>
 <body>
 <p><strong>1 click</strong>: Info</p>
@@ -43,28 +45,15 @@
     <input name="Submit"  type="submit" value="Search in graph (Beta)" >
 </form>
 
-<h2 id="processing"><tspan id="dbname"></tspan>, please wait...</h2>
-
-<script type="text/javascript">
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    let filename = urlParams.get('filename')
-    let load_from_WD = urlParams.get('load_from_WD')=='true'? true:false
-    let wdjs = urlParams.get('wdjs')=='true'? true:false
-    let wdKey=urlParams.get('wdKey')
-    if (filename == null && !load_from_WD && !wdjs){
-        filename='political/Philippe-II-2018.json'
-    }
-    document.getElementById("dbname").innerHTML=load_from_WD? 'Querying DB' : 'Processing DB '+filename;
-    console.log(queryString,load_from_WD,wdjs,filename)
-</script>
-
-  <div class="chart" id="mainchart"></div>
+<h2  id="dbname">Processing... </h2>
 
 
 
-<script type="text/javascript" src="grafviz.js">
- 
+<script type="text/javascript" src="prepare.js"></script>
+
+
+<script type="text/javascript" src="grafviz.js"></script>
+
 </script>
 </body>
 </html>

@@ -19,48 +19,15 @@
 <h2>WikiData Live</h2>
 
 <a href="graph-v3.html?load_from_WD=true&wdKey=maths">Mathematicians</a>
+<a href="graph-v3.html?load_from_WD=true&wdKey=frMaths">French mathematicians</a>
 <a href="graph-v3.html?load_from_WD=true&wdKey=mammals">Mammals</a>
 
 <h2>WikiData offline</h2>
 
 <a href="graph-v3.html?wdjs=true&wdKey=maths">Mathematicians</a>
+<a href="graph-v3.html?wdjs=true&wdKey=frMaths">French mathematicians</a>
 <a href="graph-v3.html?wdjs=true&wdKey=mammals">Mammals</a>
 
-<h2>Living beings (large DB)</h2>
-<p><a href="graph-v3.html?filename=taxo-samples/taxo_complete_params-spiders-80K.json">Spiders, 80k taxons</a></p>
-
-<script type="text/javascript" >
-/*
-
-
-
-
-    $.getJSON( "Philippe-II.json", function( data ) {
-     var idx = lunr(function () {
-       this.ref('id')
-       this.field('lastName', { boost: 10 })
-       this.field('firstName')
-       this.field('params')
-       data.forEach(function (entry) {
-         entry.params=JSON.stringify(entry.params)
-         this.add(entry)
-       }, this)
-     })
-     results=idx.search("macron~2")
-        console.log(results)
-     var resultdiv = $('#search-results');
-       for (var item in results) {
-         var ref = results[item].ref;
-           var searchitem = '<li class="result">'+ref+'</li>';
-           resultdiv.append(searchitem);
-     }
-     })
-
-
-
-
-*/
-</script>
 
 </body>
 </html>
