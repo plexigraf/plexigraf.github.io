@@ -1,5 +1,4 @@
-var maxRadius=100
-var padding=150
+
 var zoomCounter=0
 start()
 
@@ -41,7 +40,7 @@ function start() {
         const sparqlQuery = wdQuery(wdKey);
         console.log(sparqlQuery)
         console.log('querying...')
-        document.getElementById("dbname").innerHTML = "Query from WikiData, please wait...";
+        document.getElementById("dbname").innerHTML = "Query from WikiData.org, please wait...";
         const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
         queryDispatcher.query(sparqlQuery).then(treatWDDB);
     } else if (wdjs) {
@@ -54,7 +53,7 @@ function start() {
             buildNodesLinks(json)
 
             //on calcule les liens visibles et on lance la simulation
-            init(true);
+            init();
 
             //effet "apparition progressive"
             /*vis.attr("opacity", 1e-6)
@@ -647,9 +646,11 @@ function buildNodesLinks(data) {
     }
 
     console.log('make index')
+ //pour la fonction de recherche
 
-    makeIndex(nodes) //pour la fonction de recherche
+    init()
 
+        makeIndex(nodes)
 
 }
 
@@ -688,7 +689,7 @@ function handleClick(event) { //pour la fctn de recherche
             //infos = [,nodeById(results[0].ref)];
             console.log("search", infos)
             //document.getElementById("focus_p").innerHTML = focus;
-            init(false);
+            init();
         } else {
             console.log('no results')
             infos = [{
@@ -878,7 +879,7 @@ function visibleNetwork() {
 }
 
 
-function init(adapt) {
+function init() {
 
     if (force) force.stop(); //useful?
     console.log('init', nodes)
@@ -962,7 +963,7 @@ crsrText.attr("display","none");
                 console.log('collapse', d.parentId)
                 collapseNode(nodes[d.parentId]);
             }
-            init(false);
+            init();
         });
 
 
@@ -999,7 +1000,7 @@ crsrText.attr("display","none");
             } else {
                 focus = d.id;
             }
-            init(false);
+            init();
         })
 
       node.append('pattern')
@@ -1139,7 +1140,7 @@ crsrText.attr("display","none");
                 }]
                 infosFocus(d)
                 infoDisp();
-                init(false)
+                init()
             }
         });
 
@@ -1187,6 +1188,8 @@ crsrText.attr("display","none");
 }
 
 function collide(alpha) {
+  var maxRadius=100
+  var padding=150
   var quadtree = d3.geom.quadtree(net.nodes);
   return function(d) {
     if (d.id==focus){
@@ -1337,7 +1340,7 @@ function infoDisp() {
                     //on range l'ancien focus, sauf si on clique sur un noeud déballé
                     infosFocus(d);
                     focus = d.id;
-                    init(false);
+                    init();
                 })
 
             let bckgrdRect = info.append("rect")

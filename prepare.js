@@ -20,7 +20,24 @@ function setUp(s){
   if (s.endsWith('Maths')){
     return {'rootName':'Linages'}
   } else if (s=='maths') {return {'rootName':'Mathematicians'}}
-    else if( s.includes('taxons')){ return {'rootName':s.replace('taxons',)}}
+    else if( s.includes('taxons')){
+      s=s.replace('taxons','')
+      return {'rootName':s,'rootId':s=='Mammals'?'Qxxx':s=='Arachnids'?'QXXX':'root'}
+    }
+}
+
+continentName={
+  "Q15":"Africa",
+  "Q18":"South America",
+  "Q46":"Europe",
+  "Q48":"Asia",
+  "Q49":"North America",
+  "Q51":"Antarctica",
+  "Q538":"Oceania",
+  "Q828":"Americas",
+  "Q3960":"Australia",
+  "Q27527":"Afro-Eurasia",
+  "Q150408":"Zealandia"
 }
 
 let json_WD;
@@ -41,15 +58,15 @@ class SPARQLQueryDispatcher {
 
 function treatWDDB(result) {
 
-    console.log(JSON.stringify(result, null, 2))
+    //console.log(JSON.stringify(result, null, 2))
 
     //download(result, 'json.txt', 'text/plain');
     let nodesWD={'root': {'id': 'root',
-                          'name': setUp(wdKey).rootName,
+                          'name': setUp(wdKey).rootName||'',
                           'parentId': 'root',
                           'hasFeaturedDesc':true,
                           'options': {},
-                          'noInfoDisplay':  false,//(wdKey.endsWith("aths")),
+                          'noInfoDisplay':  true,//(wdKey.endsWith("aths")),
                           //'words': {'Contains' : 'Mentored'}
                         }};
     if (wdKey=='maths'){
@@ -58,7 +75,6 @@ function treatWDDB(result) {
     const entries = result.results.bindings;
     console.log('DataInfo: Translating raw DB, ' + entries.length+' entries with possible duplicates');
     for (let r in entries) {
-
         let uri = entries[r].id.value;
         let node={id : uri.split('/').slice(-1)[0],//QXXXX
                   name:entries[r].idLabel? entries[r].idLabel.value :  id,
@@ -91,7 +107,8 @@ function treatWDDB(result) {
         }
 
         if ('parentId' in entries[r]) {
-            node.parentId = entries[r].parentId.value.split('/').slice(-1)[0]//QXXXX
+            pId=entries[r].parentId.value.split('/').slice(-1)[0]
+            node.parentId = ( pId==setUp(wdKey).rootId) ? 'root' : pId//QXXXX
             //console.log(id,'parent',parentId)
         }
 
@@ -110,11 +127,12 @@ function treatWDDB(result) {
 
           if ( entries[r].countryLabel) {nodesWD[countryId].name=entries[r].countryLabel.value}
 
-          if (!(continentId in nodesWD)) {
+          if (!(continentId in nodesWD)) {//create continent in nodesWD
                 nodesWD[continentId]={
                     "id": continentId,
                     "parentId": 'root', // == "Q7377" ? "root" : parentUri,
                     "options": {},
+                    "name":continentName[continentId],
                     "words":{'Member of':'Member of'}
                 }
 
@@ -155,7 +173,7 @@ function treatWDDB(result) {
                 'nodes': nodesWD,
                 'links': [],};
 
-                console.log('nodesWD',nodesWD,nodesWD['Q41485'])
+                console.log('nodesWD',nodesWD)
     /*if ((wdjs||load_from_WD)&&(wdKey.endsWith('aths'))){
         json_WD['words']={
             'Member of':'Mentored by',
@@ -166,8 +184,6 @@ function treatWDDB(result) {
     buildNodesLinks(json_WD)
 
 
-    //on calcule les liens visibles et on lance la simulation
-    init(true);
 
 
 }
@@ -267,10 +283,10 @@ function wdQuery(s) {
                 GROUP BY ?id ?idLabel ?occupation ?parentId ?optionAward ?optionAwardLabel ?mgid ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?influencer
 
   `
-} 
+}
     else if  (s== 'maths')
   {return `SELECT ?id ?idLabel ?country ?countryLabel ?continent  ?occupation ?parentId ?optionAward ?optionAwardLabel ?mgid ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?influencer (SAMPLE(?student) AS ?student) (SAMPLE(?img) AS ?img) WHERE {
-  ?id wdt:P106 wd:Q170790;
+  ?id wdt:P106 wd:Q170790; #mathematician
     rdfs:label ?idLabel. FILTER((LANG(?idLabel)) = "en")
   optional{ ?id wdt:P27 ?country.
       ?country  rdfs:label ?countryLabel. FILTER((LANG(?countryLabel)) = "en")
