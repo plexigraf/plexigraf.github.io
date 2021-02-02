@@ -2,7 +2,8 @@
   "params" : {
     "alwaysShowParent" : true,
     "hierarchyInfo" : false,
-    "displayFiliation" : false
+    "displayFiliation" : false,
+    "initialFocus" : "Ministres"
   },
   "linksWidth" : {
     "belongsTo" : 3,

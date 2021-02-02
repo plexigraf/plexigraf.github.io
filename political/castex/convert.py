@@ -60,5 +60,9 @@ with open('castex.json','w') as file:
 							'Contains':'Contient',
 							'Links':'Liens'},
 				'params':{'hierarchyInfo':False,
-							'displayFiliation':False}}
+							'displayFiliation':False,
+							'inheritPicFromChild':False,
+							'initialFocus':"Ministres",
+							'oldNodesNumber':10,
+							'description': "Ceci est une visualisation des liens entres les membres actuels du gouvernement et d'autres entités privées ou publiques"}}
 			,file)

@@ -39,8 +39,8 @@ function start() {
         const endpointUrl = 'https://query.wikidata.org/sparql';
         const sparqlQuery = wdQuery(wdKey);
         console.log(sparqlQuery)
-        console.log('querying...')
-        document.getElementById("dbname").innerHTML = "Query from WikiData.org, please wait...";
+        console.log('querying...'+wdKey)
+          appendDbInfo( "Query from WikiData.org, please wait...");
         const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
         queryDispatcher.query(sparqlQuery).then(treatWDDB);
     } else if (wdjs) {
@@ -49,6 +49,8 @@ function start() {
     } else {
         //lance la simu
         d3.json(filename, function(error, json) {
+            console.log('desc',json.params)
+              document.getElementById("description").innerHTML=json.params.description;
             //if (error) throw error;
             buildNodesLinks(json)
 
@@ -77,7 +79,7 @@ let params = {
         initialFocus: 'root',
         expand_first_n_gens: 1,
         hierarchyInfo: true, //affiche layer, descendants pour chaque noeud
-        simultImg: 150, //max number img to display
+        simultImg: 150000, //max number img to display
         imgHeights: 150,
         inheritPicFromChild: true,
         cleanNonFeatured: false, //remove nodes which only have non-featured descendants (incl. themselves)
@@ -110,7 +112,7 @@ let links = [];
 let infos = [];
 let infoWidth = 0; //varie en fonction de info/removeInfos
 let infoTextSize = 14;
-let oldNodesNumber = 2.5;
+let oldNodesNumber = params.oldNodesNumber || 10;
 let scaleFactor = 1;
 //variable contenant nodes et links utilisé par D3 pour tracer
 let maxGen = 0;
@@ -128,12 +130,12 @@ const curve = d3.svg.line()
 const fill = d3.scale.category20();
 // --------------------------------------------------------
 
-let idx = 'idx undef yet';
+let idx;
 
 
 //3eme partie: on fait l'index pour la recherche
 //$.getJSON(filename, function(json) {
-async function makeIndex(entries) {
+function makeIndex(entries) {
     console.log('entries', entries)
     idx = lunr(function() {
         this.ref('id')
@@ -161,6 +163,8 @@ async function makeIndex(entries) {
     }*/
 }
 
+
+
 //})
 
 
@@ -172,7 +176,6 @@ const body = d3.select(divName);
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 const canvas = body.append("svg").attr("id", "canvas")
     .style("border", "1px solid #ccc")
-    .attr('transform',width>600?"translate(50,0)":'')
     .attr("width", width)
     .attr("height", height),
     zoomCanvas = canvas.append("svg").attr("width", width).attr("id", "zoomCanvas")
@@ -225,12 +228,14 @@ function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
     newNodesNumber = net.nodes.length
     scaleFactor = zoom.scale() * Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
+
+    console.log('zoom',newNodesNumber,scaleFactor)
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
     //console.log('scale',scaleFactor,focusX,focusY,oldFocusX,oldFocusY)
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
     vis.transition()
-        .duration(zoomCounter<=1?2000:300)
+        .duration(zoomCounter<1?2000:300)
         .call(zoom
             .scale(scaleFactor)
             .translate([width / 2 - focusX * scaleFactor, width / 4 - focusY * scaleFactor]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
@@ -240,7 +245,7 @@ function adaptZoom() {
     zoomCounter+=1
     console.log('zoomcounter',zoomCounter)
     if (zoomCounter<3){
-    adaptZoom()
+    setTimeout(adaptZoom,2000)
   }
 }
 
@@ -273,8 +278,7 @@ function buildNodesLinks(data) {
     //console.log(json_WD,json_WD['root'])
     //if (load_from_WD){data = json_WD;}
 
-
-    document.getElementById("dbname").innerHTML = 'Processing DB ' + filename + ', ' + data.nodes.length + ' nodes';
+    appendDbInfo( 'Processing DB, ' +(filename?filename:wdKey)+ Object.keys(data.nodes).length + ' nodes')
     //priorité aux params du fichier:
     const keys = data.params?Object.keys(data.params):[]
     for (let k in keys) {
@@ -344,7 +348,7 @@ function buildNodesLinks(data) {
       dictNodes['root']={'id':'root','parentId':'root'}
     }
     console.log('dataInfo: ',' dictNodes  ',Object.keys(dictNodes).length,dictNodes)
-    document.getElementById("dbname").innerHTML = "dataInfo: "+Object.keys(dictNodes).length+"nodes";
+      //appendDbInfo(   "dataInfo: "+Object.keys(dictNodes).length+"nodes");
 
 
     //checker si il n'y a pas des noeuds a créer via des target de liens
@@ -365,7 +369,7 @@ function buildNodesLinks(data) {
         }
     }
     console.log('dataInfo: ',nodesCreatedByLinks,'nodes created by link')
-    document.getElementById("dbname").innerHTML = "dataInfo: "+Object.keys(dictNodes).length+"nodes, "+nodesCreatedByLinks+' nodes created by link,';
+    if (nodesCreatedByLinks>0) { appendDbInfo(  nodesCreatedByLinks+' nodes created by link,')};
 
     let merges=0
     let dataChildren = {'root':['root']} //id->list of children,temp?
@@ -470,11 +474,8 @@ function buildNodesLinks(data) {
     //console.log(x,'au total')
     console.log('dataInfo: Retained ',Object.keys(nodes).length , ' single nodes descending from root, processing hierarchy, initialisations:',initialisations);
 
-    document.getElementById("dbname").innerHTML = "dataInfo: "+Object.keys(dictNodes).length+"nodes, "+nodesCreatedByLinks+' nodes created by link,'+Object.keys(nodes).length + ' single nodes descending from root';
+      appendDbInfo(   Object.keys(nodes).length + ' single nodes descending from root');
 
-    focus = params.initialFocus //nodes[1].id
-    prevFocus=focus
-    console.log("focus", focus)
 
 
     /*if (createOrphans) {
@@ -559,7 +560,9 @@ function buildNodesLinks(data) {
     }
     console.log('dataInfo: hidden',hidden)
 
-        document.getElementById("dbname").innerHTML = "dataInfo: "+Object.keys(dictNodes).length+"nodes, "+nodesCreatedByLinks+' nodes created by link,'+Object.keys(nodes).length + ' single nodes descending from root,'+ hidden+' hidden';
+    if (params.cleanNonFeatured){
+          appendDbInfo(  hidden+' non-featured nodes hidden, remaining '+(Object.keys(nodes).length-hidden));
+        }
 
 
     for (let i in nodes) {
@@ -629,28 +632,37 @@ function buildNodesLinks(data) {
             nodes[i].options['Layer'] = {
                 'value':  nodes[i].generation.toString()
                 ,
-                'priority': 10
+                'priority': 100
             };
             nodes[i].options['Descendants'] = {
                 'value': nodes[i].descendants.toString()
                 ,
-                'priority': 10
+                'priority': 100
             };
             nodes[i].options['Depth'] = {
                 'value': nodes[i].depth.toString() + (" (" + nodes[i].depthGuy + ")" || "")
                 ,
-                'priority': 10
+                'priority': 100
             };
         }
         nodes[i].infosToDisplay = collectInfos(nodes[i])
     }
 
     console.log('make index')
- //pour la fonction de recherche
 
+    appendDbInfo('Building search Index...')
+    makeIndex(nodes)
+
+
+        focus = params.initialFocus //nodes[1].id
+        prevFocus=focus
+        nodes[focus].deployedInfos=true
+        infosFocus(nodes[focus])
+        console.log("focus", focus,params.initialFocus)
+    //pour la fonction de recherche
+    appendDbInfo('Starting simulation')
+    infoDisp()
     init()
-
-        makeIndex(nodes)
 
 }
 
@@ -668,7 +680,7 @@ function handleClick(event) { //pour la fctn de recherche
         }
         else {
         value= term.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        value=value+' '+(value + '~1')+(value + '*')+('*'+value)
+        value=value+' '+(value + '~1')+' '+(value + '*')+' '+('*'+value)
         }
         console.log('value',value)
         let searchResults = idx.search(value);
@@ -711,7 +723,6 @@ function showParents(n) {
     nodes[n.parentId].show = true;
     if (n.id != 'root') {
         showParents(nodes[n.parentId])
-
     }
 }
 
@@ -745,6 +756,7 @@ function visibleNetwork() {
     //on montre les noeuds expanded ou dont le parent expanded
     for (let k in nodes) {
         nodes[k].prevShow = nodes[k].show; //pour faire popper au bon endroit éventuellement
+            nodes[k].highlighted = false
         nodes[k].show = nodes[k].expanded || nodes[nodes[k].parentId].expanded || false;
         nodes[k].visibleDepth = 0;
 
@@ -755,9 +767,11 @@ function visibleNetwork() {
         let focusedNode = nodes[focus]
         console.log('focus', focus, focusedNode)
         focusedNode.show = true;
+        focusedNode.highlighted = true;
         showParents(focusedNode)
         for (let k in focusedNode.linked) {//disabled for now as it makes too many nodes out
             focusedNode.linked[k].show = true;
+            focusedNode.linked[k].highlighted = true;
             console.log(k, 'show focus')
             if (params.alwaysShowParent) {
                 showParents(focusedNode.linked[k])
@@ -909,7 +923,6 @@ function init() {
             .charge(function(n, i) {
                 return (n.id === focus ? -200 * n.radius : -150 * n.radius);
             })
-            //.gravity(0.1)
             .chargeDistance(800)
             .friction(.4)
             .start();
@@ -946,7 +959,7 @@ crsrText.attr("display","none");
         .enter().append("path")
         .attr("class", "hull")
         .style("fill", d => fill(nodes[d.parentId].visibleParentId))
-        .style("opacity", d => d.parentId == "root" ? 0.1 : Math.max(0.1, 1 - nodes[d.parentId].visibleDepth / 3))
+        .style("opacity", d => d.parentId == "root" ? 0.1 : d.parentId=='focus'? 1 : Math.min(0.8 , Math.max(0.1, 1 - (nodes[d.parentId].visibleDepth) / 3)))
         //.attr("d", drawCluster)
         .style("stroke-width", "8px")
         .style("stroke", "blue") //d => fill(nodeById(d.parentId).visibleParentId))
@@ -1004,7 +1017,7 @@ crsrText.attr("display","none");
         })
 
       node.append('pattern')
-      .attr("id", d=> "image"+ d.id  )
+      .attr("id", d=> "image"+ (d.id.split(' ').join())  )
       .attr("width", 1)
       .attr("height", 1)
                .attr('patternContentUnits', 'objectBoundingBox')
@@ -1012,19 +1025,19 @@ crsrText.attr("display","none");
       .attr("xlink:href", d=>d.img)//function(d) { return d.img;})
                    .attr("height", 1)
                    .attr("width", 1)
-                   .attr("preserveAspectRatio", "xMidYMin slice");
+                   .attr("preserveAspectRatio", "xMidYMid slice");
       //.attr("width", d=>2*d.radius);
 
 
     nodec = node.append("circle")
         .attr("stroke-width", d => d.isLeave ? d.id == focus ? 10 : "1px" : 5 * (Math.sqrt(d.depth)))
-        .style("opacity", d => d.id == "root" ? 0.1 : Math.max(0.1, 1 - d.visibleDepth / 3))
+        .style("opacity", d => d.id == "root" ? 0.1 : d.highlighted? 1 : Math.max(0.1, 1 - (d.visibleDepth+2) / 3))
         .attr("stroke", d => (d.id === focus) ? "red" : 'grey')
         //.style("fill-opacity", d => d.expanded ? 0 : 1)
         .attr("r", d => d.radius)
         .attr("cx", 0)
         .attr("cy", 0)
-      .attr("fill",d=> d.imgDisp ?  "url(#image"+ d.id +")" :  d.expanded ? fill(d.id) : fill(nodes[d.parentId].visibleParentId))
+      .attr("fill",d=> d.imgDisp ?  "url(#image"+ (d.id.split(' ').join()) +")" :  d.expanded ? fill(d.id) : fill(nodes[d.parentId].visibleParentId))
 
 
     /*node.append("svg:image")
@@ -1366,7 +1379,9 @@ function infoDisp() {
                 .attr("xlink:href", d => d.img) //?d.img:"") //function(d) { return d.img;})
                 .attr("x", 30) //infoWidth/2-50)//d=>-d.radius)// function(d) { return -25;})
                 .attr("y", "3em") //d=>-d.radius)//function(d) { return -25;})
-                .attr("height", params.imgHeights)
+                .style("height", params.imgHeights)
+                .style("width", 230)//params.imgHeights+"px")
+                //.attr("preserveAspectRatio", "xMidYMid slice");
             //.attr("width",100);
 
             //on met a jour la hauteur du bloc au fur et a mesure
@@ -1695,7 +1710,7 @@ function drawCluster(d) {
 
 function word(d, s) {
   //console.log('translation'+s,d.id,d,'words' in d && s in d.words,('words' in d && s in d.words)?d.words[s]:'no')
-    //s=s.toString()
+    s=s?s.toString():''
     return ('words' in d && s in d.words) ? d.words[s] : (s in words) ? words[s] : s in nodes ? nodes[s].name : s ||''
 
 }

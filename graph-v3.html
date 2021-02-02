@@ -9,7 +9,7 @@
   <script src = "https://d3js.org/d3.v3.min.js"></script>
   <script src="https://d3plus.org/js/d3plus.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://unpkg.com/lunr/lunr.js"></script>
 
 
@@ -28,6 +28,12 @@
   	font-family:American Typewriter, serif;
   }
 
+  #canvas {
+    margin-left:3em;
+  }
+    #searchForm {
+      margin-left:3em !important;
+    }
 
 
 
@@ -36,16 +42,26 @@
 
 </head>
 <body>
-<p><strong>1 click</strong>: Info</p>
-<p><strong>Dbl click</strong>: Expand</p>
-<p><strong>Zoom in/out</strong>: Scroll up/down</p>
 
-<form name="myform" onSubmit="return handleClick()" style="display:block">
-    <input type="text" id="myVal" placeholder="Text...">
-    <input name="Submit"  type="submit" value="Search in graph (Beta)" >
+<form id='searchForm' name="myform" onSubmit="return handleClick()" style="display:block; margin:1em; color:blue">
+    <input type="text" id="myVal" placeholder="Text..." style='margin-right:1em'>
+    <input name="Submit"  type="submit" value="Search" class='swal-button'>
 </form>
 
-<h2  id="dbname">Processing... </h2>
+<div  id="dbname"style='text-align: left'><p id='description'>The circles represent entities and might themselves contain other entities.
+                    On the left, the info panel gives you information on the currently selected node.
+                    </p>
+                    <h3>Instructions: </h3>
+
+                  <ul><li><strong>One click</strong>: select a node</li>
+                      <li><strong>Two clicks</strong>: select and expand a node by showing the nodes it contains</li>
+                      <li><strong>Scroll up/down</strong>: Zoom in/out on the graph</li>
+                      <li><strong>Search</strong> for a particular node with the search field on top</li>
+                      </ul>
+
+                      <p>It is advised to look on the Chrome browser</p>
+                  <p>Loading...</p>
+                    </div>
 
 
 

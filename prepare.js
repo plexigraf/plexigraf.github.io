@@ -1,5 +1,17 @@
+swal({
+  title: "Info",
+  content: dbname,
+  buttons: false
+})
 
 
+
+const url=window.location.href
+if (url.startsWith('https://grafviz')){//disable live output
+  console.log=function(s){
+
+  }
+}
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 let filename = urlParams.get('filename')
@@ -17,12 +29,17 @@ console.log(queryString,load_from_WD,wdjs,filename)
 //console.log = function() {}
 
 function setUp(s){
-  if (s.endsWith('Maths')){
-    return {'rootName':'Linages'}
-  } else if (s=='maths') {return {'rootName':'Mathematicians'}}
+  if (s.endsWith('maths')||s.endsWith('Maths')){
+    return {'rootName':'Mathematicians',
+            'title':'Mathematicians',
+            'description':'This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'}
+  }
     else if( s.includes('taxons')){
       s=s.replace('taxons','')
       return {'rootName':s,'rootId':s=='Mammals'?'Qxxx':s=='Arachnids'?'QXXX':'root'}
+    }
+    else {
+      return {}
     }
 }
 
@@ -58,6 +75,7 @@ class SPARQLQueryDispatcher {
 
 function treatWDDB(result) {
 
+
     //console.log(JSON.stringify(result, null, 2))
 
     //download(result, 'json.txt', 'text/plain');
@@ -76,7 +94,8 @@ function treatWDDB(result) {
     console.log('DataInfo: Translating raw DB, ' + entries.length+' entries with possible duplicates');
     for (let r in entries) {
         let uri = entries[r].id.value;
-        let node={id : uri.split('/').slice(-1)[0],//QXXXX
+        let id=uri.split('/').slice(-1)[0];
+        let node={id : id,//QXXXX
                   name:entries[r].idLabel? entries[r].idLabel.value :  id,
                   img : entries[r].img ? entries[r].img.value : undefined,
                   options:{'Data': {
@@ -91,16 +110,24 @@ function treatWDDB(result) {
 
         for (let key in entries[r]){
           if (key.startsWith('option')){
-            title=key.replace('option','').replace('Label','')
+            title=key.replace('option','').replace('Label','').split('_').join(' ')
+            labelKey=key.endsWith('Label')?key:key+'Label'
             //console.log(key,entries[r][key],entries[r])
-            node.options[title.replace('_',' ')]={'value':entries[r]['option'+title+'Label']?.value||entries[r][key].value,
+            value=entries[r][labelKey]?.value||entries[r][key].value
+            if (title=='Date of birth'){
+              title='Year of birth';
+              firstChar=value.substring(0,1)//in case of negative year
+              rest=value.substring(1)
+              value=parseInt(firstChar+rest.split('-')[0]).toString()
+            }
+            node.options[title]={'value':value,
                                       'source':'WikiData',
-                                      'url':entries[r]['option'+title].value||uri,
+                                      'url':entries[r][key.replace('Label','')].value||uri,
                                       'priority':(title=='Notable_work')? 2 : 3
                                     }
             if (title=='Itis_TSN'){
-              node.options[title.replace('_',' ')].url='https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value='+entries[r][key].value
-              node.options[title.replace('_',' ')].source='ITIS Website'
+              node.options[title].url='https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value='+entries[r][key].value
+              node.options[title].source='ITIS Website'
             }
 
           }
@@ -113,40 +140,37 @@ function treatWDDB(result) {
         }
 
         node.options['Also member of']={'value':new Set()}
-        if ('country' in entries[r]){
-          countryId=entries[r].country.value.split('/').slice(-1)[0]
-          node.options['Also member of'].value.add(countryId)
-          //trick: last occurence of country prevails to get the first continent property
-          continentId = entries[r].continent.value.split('/').slice(-1)[0]
-                nodesWD[countryId]={
-                    "id": countryId,
-                    "parentId": continentId, // == "Q7377" ? "root" : parentUri,
-                    "options": {},
-                    "words":{'Member of':'Member of'}
-                }
 
-          if ( entries[r].countryLabel) {nodesWD[countryId].name=entries[r].countryLabel.value}
+          if ('continent' in entries[r]){
+            continentId = entries[r].continent.value.split('/').slice(-1)[0];
+            node.options['Also member of'].value.add(continentId);
+            nodesWD[continentId]={
+                      "id": continentId,
+                      "name": entries[r].continentLabel?entries[r].continentLabel.value : continentName[continentId],
+                      "parentId": 'root', // == "Q7377" ? "root" : parentUri,
+                      "options": {},
+                      "words":{'Member of':'Member of'}
+                    }
+          } else if ('country' in entries[r])
+          {
+            countryId=entries[r].country.value.split('/').slice(-1)[0]
+            if (id!=countryId) {node.options['Also member of'].value.add(countryId)}
+          } else if (wdKey=='maths')
+          {
+              node.options['Also member of'].value.add('No country indicated')
+          }
 
-          if (!(continentId in nodesWD)) {//create continent in nodesWD
-                nodesWD[continentId]={
-                    "id": continentId,
-                    "parentId": 'root', // == "Q7377" ? "root" : parentUri,
-                    "options": {},
-                    "name":continentName[continentId],
-                    "words":{'Member of':'Member of'}
-                }
 
-            }
-          if ( entries[r].continentLabel) {nodesWD[continentId].name=entries[r].continentLabel.value}
-        } else if (wdKey=='maths'){
-          node.options['Also member of'].value.add('No country indicated')
-        }
+
+
 
         //console.log(entries[r].childLabel.value,id,entries[r].pic,entries[r].linkTo.value.split('/').slice(-1)[0]);
         //debug_print(id,entries[r],entries[r].occupation)
         //console.log(entries[r])
         node.isMath= (wdKey=='maths') || ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q170790') )//math
         node.feat=('optionItis_TSN' in entries[r])
+                              ||
+                            ('optionAward' in entries[r] && entries[r].optionAward.value.includes('Q28835') )//Fields medal
                               ||
                             ('optionWikipedia_article' in entries[r]//un matheux est celebre s'il a un article WP et un Notable_work ou (un award et un student mathematician)
                                 &&
@@ -163,12 +187,13 @@ function treatWDDB(result) {
         nodesWD[node.id]=mergeNodes(nodesWD[node.id],node)
         //console.log(r,id,nodesWD[r],isMath,entries[r],entries[r].occupation.value,entries[r].occupation.value.split('/').slice(-1)[0]=='Q1622272')
     }
-    json_WD = {'params': {'cleanNonFeatured': true,
+    json_WD = {'params': {'cleanNonFeatured': (wdKey!='countriesWD'),
                           'inheritPicFromChild':(wdKey.includes('taxons')),
                             'simultImg':150,
                             'inheritLinks': (wdKey=='maths')?2:1,//1 node suffices to inherit link
                             'connectOtherParents':(wdKey.endsWith('aths')),
-                           'biPartiteLinks': false },
+                           'biPartiteLinks': false,
+                            'description':setUp(wdKey).description||''},
                 'linksWidth':{'Member of':5,'Also member of':2,'Multiple links':10},
                 'nodes': nodesWD,
                 'links': [],};
@@ -226,14 +251,18 @@ function addOptionValue(node, key, obj) { //add value to  nodes[id].options[key]
     return node
 }
 
-function download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    var file = new Blob([content], {type: contentType});
-    a.href = URL.createObjectURL(file);
-    a.download = fileName;
-    a.click();
-}
+function appendDbInfo(s){
 
+          var br = document.createElement("br");
+          var t=document.createTextNode(s);
+          document.getElementById("dbname").appendChild(br)
+          document.getElementById("dbname").appendChild(t);
+          swal({
+            title: "Info",
+            content: dbname,
+            buttons: 'OK'
+          })
+}
 
 function wdQuery(s) {
   console.log('wdquery',s)
@@ -285,16 +314,16 @@ function wdQuery(s) {
   `
 }
     else if  (s== 'maths')
-  {return `SELECT ?id ?idLabel ?country ?countryLabel ?continent  ?occupation ?parentId ?optionAward ?optionAwardLabel ?mgid ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?influencer (SAMPLE(?student) AS ?student) (SAMPLE(?img) AS ?img) WHERE {
-  ?id wdt:P106 wd:Q170790; #mathematician
-    rdfs:label ?idLabel. FILTER((LANG(?idLabel)) = "en")
-  optional{ ?id wdt:P27 ?country.
-      ?country  rdfs:label ?countryLabel. FILTER((LANG(?countryLabel)) = "en")
-          ?country wdt:P30 ?continent.}
+  {return `SELECT ?id ?idLabel ?country ?optionDate_of_birth ?occupation ?parentId ?optionAward ?optionAwardLabel ?mgid ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?optionInfluenced_by (SAMPLE(?student) AS ?student) (SAMPLE(?img) AS ?img) WHERE {
+  ?id wdt:P106 wd:Q170790;
+    rdfs:label ?idLabel.
+  FILTER((LANG(?idLabel)) = "en")
+  OPTIONAL { ?id wdt:P27 ?country. }
   OPTIONAL {
     ?optionWikipedia_article schema:about ?id;
       schema:isPartOf <https://en.wikipedia.org/>.
   }
+  OPTIONAL { ?id wdt:P569 ?optionDate_of_birth. }
   OPTIONAL { ?id wdt:P18 ?img. }
   OPTIONAL {
     ?id p:P800 _:b102.
@@ -316,10 +345,9 @@ function wdQuery(s) {
     _:b103 (ps:P1066|ps:P184) ?parentId.
     ?parentId wdt:P106 wd:Q170790.
   }
-  OPTIONAL { ?id wdt:P737 ?influencer. }
+  OPTIONAL { ?id wdt:P737 ?optionInfluenced_by. }
 }
-GROUP BY ?id ?idLabel ?country ?countryLabel ?continent    ?occupation ?parentId ?optionAward ?optionAwardLabel ?mgid ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?influencer
-
+GROUP BY ?id ?idLabel ?country ?optionDate_of_birth ?occupation ?parentId ?optionAward ?optionAwardLabel ?mgid ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?optionInfluenced_by
 `
     }
     else if (s.includes('taxons')){
@@ -343,5 +371,30 @@ GROUP BY ?id ?idLabel ?country ?countryLabel ?continent    ?occupation ?parentId
         }
         GROUP BY ?id ?idLabel ?optionItis_TSN ?optionEnglish_article ?optionFrench_article ?parentId #pour results qui ont la meme image
         `
+      }
+      else if (s=='countriesWD'){
+        return `SELECT ?id ?idLabel ?continent ?capitalLabel ?continentLabel ?country ?countryLabel  (SAMPLE(?img) AS ?img) (sample(?guy) as ?guy)
+WHERE {
+  {
+    SELECT ?id ?idLabel ?img ?capitalLabel ?continentLabel  ?country ?countryLabel ?guy (SAMPLE(?capital) AS ?capital) (SAMPLE(?continent) AS ?continent)
+               WHERE {
+       ?guy wdt:P106 wd:Q170790;#mathematician
+       wdt:P27 ?id.
+      ?id wdt:P30 ?continent1.
+      optional {
+        ?id wdt:P17 ?country
+        }
+      OPTIONAL {
+        ?id wdt:P36 ?capital.
+        ?capital wdt:P30 ?continent2.
+      }
+      BIND(IF(BOUND(?continent2), ?continent2, ?continent1) AS ?continent)
+      OPTIONAL { ?id wdt:P41 ?img. }
+    }
+    GROUP BY ?id ?capitalLabel ?img ?idLabel ?continentLabel ?guy ?country ?countryLabel
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+GROUP BY ?id ?idLabel ?continent ?capitalLabel ?continentLabel  ?country ?countryLabel`
       }
 }
