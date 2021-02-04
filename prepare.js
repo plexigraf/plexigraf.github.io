@@ -197,7 +197,7 @@ function treatWDDB(result) {
                 'linksWidth':{'Member of':5,'Also member of':2,'Multiple links':10},
                 'nodes': nodesWD,
                 'links': [],};
-
+ 
                 console.log('nodesWD',nodesWD)
     /*if ((wdjs||load_from_WD)&&(wdKey.endsWith('aths'))){
         json_WD['words']={

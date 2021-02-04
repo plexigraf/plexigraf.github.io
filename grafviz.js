@@ -223,7 +223,7 @@ function zoomed() {
     vis.attr("transform", "translate(" + d3.event.translate + ")scale(" + (d3.event.scale) + ")")
     //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
 }
-
+ 
 function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
     newNodesNumber = net.nodes.length
