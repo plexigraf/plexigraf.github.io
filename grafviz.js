@@ -223,7 +223,7 @@ function zoomed() {
     vis.attr("transform", "translate(" + d3.event.translate + ")scale(" + (d3.event.scale) + ")")
     //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
 }
- 
+
 function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
     newNodesNumber = net.nodes.length
@@ -238,7 +238,7 @@ function adaptZoom() {
         .duration(zoomCounter<1?2000:300)
         .call(zoom
             .scale(scaleFactor)
-            .translate([width / 2 - focusX * scaleFactor, width / 4 - focusY * scaleFactor]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
+            .translate([width *2/3 - focusX * scaleFactor, width / 4 - focusY * scaleFactor]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
             //.translate([width/2-focusX*scaleFactor,width/4-focusY*scaleFactor])// width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
             .event);
     oldNodesNumber = newNodesNumber
@@ -1031,7 +1031,7 @@ crsrText.attr("display","none");
 
     nodec = node.append("circle")
         .attr("stroke-width", d => d.isLeave ? d.id == focus ? 10 : "1px" : 5 * (Math.sqrt(d.depth)))
-        .style("opacity", d => d.id == "root" ? 0.1 : d.highlighted? 1 : Math.max(0.1, 1 - (d.visibleDepth+2) / 3))
+        .style("opacity", nodeOpacity)
         .attr("stroke", d => (d.id === focus) ? "red" : 'grey')
         //.style("fill-opacity", d => d.expanded ? 0 : 1)
         .attr("r", d => d.radius)
@@ -1557,9 +1557,13 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
 
 }
 
+function nodeOpacity(d){
+  return d.id == "root" ? 0.1 : d.highlighted? 1 : Math.max(0.1, 1 - (d.visibleDepth+2) / 3)
+}
 
 function lightNode(id, p) {
     nodec.filter(d => (d.id === id)).attr("stroke", d => d.id == focus ? "red" : p === "on" ? "orange" : "grey")
+        nodec.filter(d => (d.id === id)).style("opacity", d=> p=="on"? 1 : nodeOpacity(d))
 }
 
 
