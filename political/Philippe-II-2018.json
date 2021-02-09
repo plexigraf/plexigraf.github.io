@@ -3,7 +3,8 @@
     "alwaysShowParent" : true,
     "hierarchyInfo" : false,
     "displayFiliation" : false,
-    "initialFocus" : "Ministres"
+    "initialFocus" : "Ministres",
+    "description" : "Ceci est une visualisation des liens entres les membres actuels du gouvernement et d'autres entités privées ou publiques"
   },
   "linksWidth" : {
     "belongsTo" : 3,

@@ -1,5 +1,6 @@
+ 
 swal({
-  title: "Info",
+  title: "Loading...",
   content: dbname,
   buttons: false
 })
@@ -31,9 +32,9 @@ console.log(queryString,load_from_WD,wdjs,filename)
 function setUp(s){
   if (s.endsWith('maths')||s.endsWith('Maths')){
     return {'rootName':'Mathematicians',
-            'title':'Mathematicians',
-            'description':'This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'}
-  }
+            'title':'Mathematicians'
+          }
+            }
     else if( s.includes('taxons')){
       s=s.replace('taxons','')
       return {'rootName':s,'rootId':s=='Mammals'?'Qxxx':s=='Arachnids'?'QXXX':'root'}
@@ -192,12 +193,13 @@ function treatWDDB(result) {
                             'simultImg':150,
                             'inheritLinks': (wdKey=='maths')?2:1,//1 node suffices to inherit link
                             'connectOtherParents':(wdKey.endsWith('aths')),
-                           'biPartiteLinks': false,
-                            'description':setUp(wdKey).description||''},
+                           'biPartiteLinks': false
+                         },
                 'linksWidth':{'Member of':5,'Also member of':2,'Multiple links':10},
                 'nodes': nodesWD,
-                'links': [],};
- 
+                'links': []}
+              ;
+
                 console.log('nodesWD',nodesWD)
     /*if ((wdjs||load_from_WD)&&(wdKey.endsWith('aths'))){
         json_WD['words']={
@@ -258,7 +260,7 @@ function appendDbInfo(s){
           document.getElementById("dbname").appendChild(br)
           document.getElementById("dbname").appendChild(t);
           swal({
-            title: "Info",
+            title: "Instructions",
             content: dbname,
             buttons: 'OK'
           })

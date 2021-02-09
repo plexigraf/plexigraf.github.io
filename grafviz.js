@@ -36,6 +36,10 @@ start()
 
 function start() {
     if (load_from_WD) {
+      if (wdKey.endsWith('aths')){
+        document.getElementById("description").innerHTML='This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
+
+      }
         const endpointUrl = 'https://query.wikidata.org/sparql';
         const sparqlQuery = wdQuery(wdKey);
         console.log(sparqlQuery)
@@ -44,6 +48,10 @@ function start() {
         const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
         queryDispatcher.query(sparqlQuery).then(treatWDDB);
     } else if (wdjs) {
+      if (wdKey.endsWith('aths')){
+        document.getElementById("description").innerHTML='This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
+
+      }
         console.log('wdjs, loading file')
         $.getJSON("wdOffline/" + wdKey + ".json", treatWDDB)
     } else {
@@ -72,7 +80,7 @@ function start() {
 
 
 let params = {
-        screenRatio: 4 / 5,
+        screenRatio: 7/8,
         zoomFactor: 2, //plus c'est petit plus le graphe apparaitra grand
         dr: 44, // default point radius
         alwaysShowParent: false, // dès qu'un noeud sort tous ses ancetres également (pour l'instant vrai que pour le focused node)
@@ -1195,7 +1203,7 @@ crsrText.attr("display","none");
 
     });
 
-    setTimeout(adaptZoom, 2000);
+adaptZoom()
 
 
 }
