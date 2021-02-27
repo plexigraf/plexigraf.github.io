@@ -1,4 +1,4 @@
- 
+
 swal({
   title: "Loading...",
   content: dbname,
@@ -15,10 +15,10 @@ if (url.startsWith('https://grafviz')){//disable live output
 }
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-let filename = urlParams.get('filename')
-let load_from_WD = urlParams.get('load_from_WD')=='true'? true:false
-let wdjs = urlParams.get('wdjs')=='true'? true:false
-let wdKey=urlParams.get('wdKey')
+const filename = urlParams.get('filename')
+const load_from_WD = urlParams.get('load_from_WD')=='true'? true:false
+const wdjs = urlParams.get('wdjs')=='true'? true:false
+var wdKey=urlParams.get('wdKey')
 if (filename == null && !load_from_WD && !wdjs){
     filename='political/Philippe-II-2018.json'
 }
@@ -208,7 +208,7 @@ function treatWDDB(result) {
         }
     }*/
     //if (error) throw error;
-    buildNodesLinks(json_WD)
+    return buildNodesLinks(json_WD)
 
 
 

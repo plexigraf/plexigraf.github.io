@@ -1,6 +1,4 @@
 
-var zoomCounter=0
-start()
 
 //TO DO
 //petit bug: si je navigue dans les liens d'enfant en enfant dans le cadre, et qu'a la fin je
@@ -34,51 +32,6 @@ start()
 //1e partie: WD
 
 
-function start() {
-    if (load_from_WD) {
-      if (wdKey.endsWith('aths')){
-        document.getElementById("description").innerHTML='This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
-
-      }
-        const endpointUrl = 'https://query.wikidata.org/sparql';
-        const sparqlQuery = wdQuery(wdKey);
-        console.log(sparqlQuery)
-        console.log('querying...'+wdKey)
-          appendDbInfo( "Query from WikiData.org, please wait...");
-        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-        queryDispatcher.query(sparqlQuery).then(treatWDDB);
-    } else if (wdjs) {
-      if (wdKey.endsWith('aths')){
-        document.getElementById("description").innerHTML='This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
-
-      }
-        console.log('wdjs, loading file')
-        $.getJSON("wdOffline/" + wdKey + ".json", treatWDDB)
-    } else {
-        //lance la simu
-        d3.json(filename, function(error, json) {
-            console.log('desc',json.params)
-              document.getElementById("description").innerHTML=json.params.description;
-            //if (error) throw error;
-            buildNodesLinks(json)
-
-            //on calcule les liens visibles et on lance la simulation
-            init();
-
-            //effet "apparition progressive"
-            /*vis.attr("opacity", 1e-6)
-            .transition()
-            .duration(3000)
-            .attr("opacity", 1);*/ //empêche le zoom initial... :(
-
-
-        });
-    }
-}
-
-//2e partie: paramètres globaux
-
-
 let params = {
         screenRatio: 7/8,
         zoomFactor: 2, //plus c'est petit plus le graphe apparaitra grand
@@ -95,7 +48,8 @@ let params = {
         inheritLinks: 0, //0 nodes showed required to inherit link
         addOrphansToRoot: true, //les noeuds dont le parent n'est pas dans data est rattaché à root
         displayFiliation: true,
-        biPartiteLinks: true
+        biPartiteLinks: true,
+        saveAllData: false
         //initialFocus;undef by default
     },
     linksWidth= {
@@ -112,6 +66,7 @@ let params = {
     height = width, // svg height
     largeWidth = true, //chartDiv.offsetWidth > 600,//permet d'afficher les infos
     off = params.dr;
+    transCorrect={'x':width *1/6, 'y':0}//why these values??
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
 let nodes = [];
 //tous les liens de la DB, y compris parenté, remplacé par metaLinks pour le tracé
@@ -124,9 +79,85 @@ let oldNodesNumber = params.oldNodesNumber || 10;
 let scaleFactor = 1;
 //variable contenant nodes et links utilisé par D3 pour tracer
 let maxGen = 0;
-let words;
+const maxSearchResults=40;
+let words={};
 let net;
 let force, link, linkp, node, nodec, focusedNode, focusX, focusY;
+
+var zoomCounter=0
+
+
+
+let meta_obj
+//loading data
+console.log('load data')
+d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
+	if (!error) {
+		console.log('rtu ok')
+		nodes = json.nodes
+		params = json.params
+		links = json.links
+		idx = lunr.Index.load(json.idx)
+		words = json.words || {}
+
+
+		focus = params.initialFocus //nodes[1].id
+		prevFocus = focus
+		nodes[focus].deployedInfos = true
+
+		console.log('nodes rtu', nodes, nodes[focus])
+		infosFocus(nodes[focus])
+		console.log("focus", focus, params.initialFocus)
+		appendDbInfo('Starting simulation')
+		infoDisp()
+		init()
+	} else {
+    console.log('no rtu data',load_from_WD,wdjs)
+		if (load_from_WD) {
+			if (wdKey.endsWith('aths')) {
+				document.getElementById("description").innerHTML = 'This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Bernoulli", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
+
+			}
+			const endpointUrl = 'https://query.wikidata.org/sparql';
+			const sparqlQuery = wdQuery(wdKey);
+			console.log(sparqlQuery)
+			console.log('querying...' + wdKey)
+			appendDbInfo("Query from WikiData.org, please wait...");
+			const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+			meta_obj=queryDispatcher.query(sparqlQuery).then(treatWDDB);
+		} else if (wdjs) {
+			if (wdKey.endsWith('aths')) {
+				document.getElementById("description").innerHTML = 'This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
+
+			}
+			console.log('wdjs, loading file')
+			meta_obj=$.getJSON("wdOffline/" + wdKey + ".json", treatWDDB)
+		} else {
+
+        console.log('json?',filename)
+			//lance la simu
+			d3.json(filename, function(error, json) {
+				console.log('desc', json.params)
+				document.getElementById("description").innerHTML = json.params.description;
+				//if (error) throw error;
+				meta_obj = buildNodesLinks(json)
+
+
+
+				//effet "apparition progressive"
+				/*vis.attr("opacity", 1e-6)
+				.transition()
+				.duration(3000)
+				.attr("opacity", 1);*/ //empêche le zoom initial... :(
+
+
+			});
+		}
+
+	}
+})
+
+
 
 const curve = d3.svg.line()
     .interpolate("cardinal-closed")
@@ -225,10 +256,12 @@ zoomCanvas.on("mouseover", function() {
 
 
 function zoomed() {
+  let x=d3.event.translate[0]-transCorrect.x
+  let y=d3.event.translate[1]-transCorrect.y
     /*prevTgt=msTgt;
     msTgt="root"//d3.event.sourceEvent.target.id||"root";
     if (msTgt==="canv" && prevTgt==="canv") {*/
-    vis.attr("transform", "translate(" + d3.event.translate + ")scale(" + (d3.event.scale) + ")")
+    vis.attr("transform", "translate(" +( x)+","+(y) + ")scale(" + (d3.event.scale) + ")")
     //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
 }
 
@@ -246,7 +279,7 @@ function adaptZoom() {
         .duration(zoomCounter<1?2000:300)
         .call(zoom
             .scale(scaleFactor)
-            .translate([width *2/3 - focusX * scaleFactor, width / 4 - focusY * scaleFactor]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
+            .translate([width *2/3 , width / 4 ]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
             //.translate([width/2-focusX*scaleFactor,width/4-focusY*scaleFactor])// width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
             .event);
     oldNodesNumber = newNodesNumber
@@ -296,7 +329,6 @@ function buildNodesLinks(data) {
     for (let k in data.linksWidth) {
         linksWidth[k] = data.linksWidth[k]
     }
-    words = data.words || {}
     console.log('data', data)
 
     //empty children linked links, initial x y random, deployedInfos prevshow=false
@@ -310,7 +342,7 @@ function buildNodesLinks(data) {
           n.firstName = n.firstName || names.shift()
           n.lastName = n.lastName || names.join(' ')
         }
-        n.name = n.name+(n.feat?' *':'')
+        n.name = n.name+(n.feat?' °':'')
         n.children = [];
         n.x = 100 + width * Math.random();
         n.y = 300 * Math.random();
@@ -427,6 +459,8 @@ function buildNodesLinks(data) {
       return n
     }
     //build nodes object
+    nodes={}
+
     function createDesc(p, id) {
         //console.log(counter)
         if (!(id in nodes)){
@@ -516,7 +550,7 @@ function buildNodesLinks(data) {
             'priority': 1
         }
         if (i != "root") {
-            parent.children.push(nodei);
+            parent.children.push(i);
         }
     }
 
@@ -535,18 +569,26 @@ function buildNodesLinks(data) {
             img = n.img,
             desc = 0,
             hasFeaturedDesc = n.hasFeaturedDesc;
-        for (let c in n.children) {
-            let [kidDesc, dp, g, descImg, kidHasFD] = computeDesc(n.children[c].id)
-            if (dp > max) {
-                max = dp
-                guy = n.children[c].name
+        for (let c = 0;c<n.children.length;c++) {
+            let [kidDesc, dp, g, descImg, kidHasFD] = computeDesc(n.children[c])
+            if ( kidHasFD || !params.cleanNonFeatured ) {
+              if (dp > max) {
+                  max = dp
+                  guy = nodes[n.children[c]].name
+              }
+              if (img == null && params.inheritPicFromChild && id != 'root') {
+                  nodes[id].inheritedPic = true
+                  img = descImg
+              }
+              desc += kidDesc
+              hasFeaturedDesc = hasFeaturedDesc || kidHasFD
+            } else {
+              if (nodes[id].children.length>40){//too slow to load children
+              nodes[id].children.splice(c,1);
+              c--
             }
-            if (img == null && params.inheritPicFromChild && id != 'root') {
-                nodes[id].inheritedPic = true
-                img = descImg
             }
-            desc += kidDesc
-            hasFeaturedDesc = hasFeaturedDesc || kidHasFD
+
 
         }
         if (!hasFeaturedDesc){
@@ -562,6 +604,8 @@ function buildNodesLinks(data) {
         nodes[id].depth = max
         nodes[id].depthGuy = guy
         nodes[id].img = img
+
+
 
         return [1 + desc, max + 1, guy, img, hasFeaturedDesc]
 
@@ -614,10 +658,10 @@ function buildNodesLinks(data) {
             }
 
             //pour chaque noeud on a la liste "linked", qui contient les noeuds avec lesquels il est lié, et une liste "links", qui contient les liens eux-mêmes
-            nodes[linki.source].linked.push(nodes[linki.target]);//used for focus
+            nodes[linki.source].linked.push(linki.target);//used for focus
             nodes[linki.source].links.push(linki);//used for info and lightnode
             if (params.biPartiteLinks) {
-              nodes[linki.target].linked.push(nodes[linki.source]);
+              nodes[linki.target].linked.push(linki.source);
               nodes[linki.target].links.push(linki);
             }
         }
@@ -661,6 +705,9 @@ function buildNodesLinks(data) {
     appendDbInfo('Building search Index...')
     makeIndex(nodes)
 
+    let meta_obj={'nodes':nodes,'links':links,'params':params,'idx':idx,'words': data.words || {}}
+
+
 
         focus = params.initialFocus //nodes[1].id
         prevFocus=focus
@@ -671,6 +718,21 @@ function buildNodesLinks(data) {
     appendDbInfo('Starting simulation')
     infoDisp()
     init()
+
+    console.log('saving not', wdKey, nodes)
+    if (params.saveAllData) {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(meta_obj, null, 2)], {
+        type: "text/plain"
+      }));
+      console.log('name', wdKey, name)
+      a.setAttribute("download", wdKey + "-rtu-data.json");
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      //on calcule les liens visibles et on lance la simulation
+      init();
+    }
 
 }
 
@@ -691,7 +753,7 @@ function handleClick(event) { //pour la fctn de recherche
         value=value+' '+(value + '~1')+' '+(value + '*')+' '+('*'+value)
         }
         console.log('value',value)
-        let searchResults = idx.search(value);
+        let searchResults = idx.search(value).slice(0, maxSearchResults);
         //searchResults = searchResults.concat(idx.search(term + '~1'));
         //searchResults = searchResults.concat(idx.search(term + '*'));
         //searchResults = searchResults.concat(idx.search('*'+term ));
@@ -700,7 +762,10 @@ function handleClick(event) { //pour la fctn de recherche
         console.log("results", searchResults);
         removeInfos();
         if (searchResults.length > 0) {
-            focus = searchResults[0].ref;
+            let firstId=searchResults[0].ref
+            if (nodes[firstId].hasFeaturedDesc || !params.cleanNonFeatured){
+              focus = firstId;
+            }
             searchResults.push('useless') //otherwise bug
             for (let i = 0; i < searchResults.length - 1; i++) {
                 infos.push(nodes[searchResults[i].ref])
@@ -778,11 +843,11 @@ function visibleNetwork() {
         focusedNode.highlighted = true;
         showParents(focusedNode)
         for (let k in focusedNode.linked) {//disabled for now as it makes too many nodes out
-            focusedNode.linked[k].show = true;
-            focusedNode.linked[k].highlighted = true;
+            nodes[focusedNode.linked[k]].show = true;
+            nodes[focusedNode.linked[k]].highlighted = true;
             console.log(k, 'show focus')
             if (params.alwaysShowParent) {
-                showParents(focusedNode.linked[k])
+                showParents(nodes[focusedNode.linked[k]])
             }
         }
     }
@@ -1182,11 +1247,15 @@ crsrText.attr("display","none");
         let maxX = net.nodes.reduce((max, p) => p.x > max ? p.x : max, net.nodes[0].x); //unused
         let minX = net.nodes.reduce((min, p) => p.x < min ? p.x : min, net.nodes[0].x);
 
-
+        //var focusDeltaX = nodes[focus].x-globalCenter.x*scaleFactor/10
+        //var focusDeltaY = nodes[focus].y-transCorrectenter.y*scaleFactor^2/2
+        //console.log('foc',nodes[focus].x,focusDeltaX,globalCenter.x*scaleFactor/10)
         //evolution des noeuds en les ramenant dans le cadre
         node
         .each(collide(e.alpha/4))
         .each(function(d) {
+            d.x=d.x-e.alpha*nodes[focus].x
+            d.y=d.y-e.alpha*nodes[focus].y
             d.x = minX < 100 ? d.x + 50 * e.alpha : d.x //:d.x>width?d.x-d.x+100*e.alpha:d.x;
             d.y = minY < 0 ? d.y + 50 * e.alpha : d.y;
         })
@@ -1226,7 +1295,8 @@ function collide(alpha) {
         var x = d.x - quad.point.x,
             y = d.y - quad.point.y,
             l = Math.sqrt(x * x + y * y),
-            r = (d.radius + quad.point.radius + padding+(d.parentId==quad.point.parentId?0:200))*(quad.point.id==focus?2:1);
+            focusFactor=(quad.point.id==focus)?1:0
+            r = ((2+2*focusFactor)*d.radius + quad.point.radius + padding+(d.parentId==quad.point.parentId?0:200))*(1+focusFactor);
         if (l < r) {
           l = (l - r) / l * alpha;
           d.x -= x *= l;
@@ -1360,8 +1430,10 @@ function infoDisp() {
                     console.log('clictext')
                     //on range l'ancien focus, sauf si on clique sur un noeud déballé
                     infosFocus(d);
-                    focus = d.id;
-                    init();
+                    if (d.hasFeaturedDesc || !params.cleanNonFeatured) {
+                      focus = d.id;
+                      init();
+                    }
                 })
 
             let bckgrdRect = info.append("rect")
@@ -1387,8 +1459,8 @@ function infoDisp() {
                 .attr("xlink:href", d => d.img) //?d.img:"") //function(d) { return d.img;})
                 .attr("x", 30) //infoWidth/2-50)//d=>-d.radius)// function(d) { return -25;})
                 .attr("y", "3em") //d=>-d.radius)//function(d) { return -25;})
-                .style("height", params.imgHeights)
-                .style("width", 230)//params.imgHeights+"px")
+                .attr("height", params.imgHeights)
+                .attr("width", 230)//params.imgHeights+"px")
                 //.attr("preserveAspectRatio", "xMidYMid slice");
             //.attr("width",100);
 
@@ -1471,7 +1543,7 @@ function collectInfos(d) {
             //maybe problem because linked contains objects now, not just ids
             result.push({
                 'title': word(d, "Links with"),
-                'value': d.linked.map(n => nodes[n.id].name).join(', '),
+                'value': d.linked.map(id => nodes[id].name).join(', '),
                 'priority': 100
             })
         }
@@ -1543,7 +1615,10 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
             "off": 10,
             "deployedInfos": true
         })
-        infos=infos.concat(d.children)
+        d.children.forEach(function(c){
+          infos.push(nodes[c])
+        }
+      )
     }
 
 
