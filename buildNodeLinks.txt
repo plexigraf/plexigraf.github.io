@@ -1,0 +1,75 @@
+GRAFVIZ.js
+
+
+Prend en donnée un json 'data' avec les entrées
+nodes
+links rendre optionel?
+params rendre optionel? priorité sur params par défaut de grfviz
+(words)
+...
+
+il faut qu'il y ait un noeud root
+
+chaque node doit avoir:
+id
+parentId
+(name)
+(hasFeaturedDesc)
+(img)
+(otherParents)
+(params:{'info':{'texte':..,'source':...,'url':...},...) rendre optionnel?
+
+
+MWE:data={nodes:[{'id':'root'}]} (pas encore...)
+
+les descendances circulaires créent qqch de non-prévisible
+
+Si plusieurs noeuds ont le même id et différents parents, un parent sera choisi
+plus tard. S'ils ont même id et même parent, ils seront fusionnés arbitrairement (pour l'instant)
+
+chaque link doit avoir
+source: (id)
+target: (id)
+
+chaque noeud peut avoir:
+links:[{target:...},{...},...]
+
+
+Le prgm analyse les données en construisant d'abord dataMap qui prend
+la première occurence du noeud de data.nodes pour chaque id, et 
+datachildren qui donne 
+pour chaque id (et chaque noeud) ses enfants recensés
+Si un noeud a un parent qui n'est pas dans data.nodes, il est ajouté
+a 'root' si l'option addOrphansToRoot=true, sinon il sera ignoré. Si deux noeuds
+ont même id et même parentId, on pourrait rajouter ici des règles d'agrégation
+
+le prgm scanne ensuite data.links et créée éventuellement dans dataMap
+les noeuds qui n'existent pas encore. Il met a jour datachildren
+
+On créée désormais nodes à partir de dataMap dataChildren en partant de root et en descendant recursivement en cherchant les enfants dans dataChildren. On calcule
+la génération au passage.
+Les noeuds qui ne descendent pas de root (après éventuel rattachement) seront ignorés.
+si un noeud apparait plusieurs fois avec plusieurs parents, ca se voit quand dataChildren
+des deux parents est analysé, ils seront fusionnés. On garde le parent le plus bas hierarchiquement, arbitraire si égalité.
+le Set pendingParents est là pour vérifier qu'il n'y a pas de descendance circulaire
+(=noeud qui est son propre descendant strict), auquel car un msg d'erreur est généré.
+Le prgm est censé supprimé ce noeud comme enfant mais pas sûr...
+
+on fait une boucle pour ajouter le champ 'member of'
+
+Les noeuds finaux et leurs paramètres ont été décidés, on fait l'index de recherche.
+
+on calcule ensuite récursive ment les descendants, la profondeur, l'image si 
+params.inheritPic, hasFeaturedDesc.
+
+On ajoute ensuite à links (qui est encore vide) les 'belongsTo' entre chaque noeud et son parent officiel.
+Mais pas a data.links sinon...? ( les parents seront dans la liste 'linked' et ca fera des liens double)
+Si connectOtherParents, on rajoute a data.links.
+
+On scande ensuite data.links qui sont des liens non-parent-enfant (sauf éventuellement
+otherParent) et on construit links et linked pour chaque noeud.
+
+on met finalement a jour les infos des noeuds (descendants, linked with, layer, radius,
+..) et on construit infosToDisplay
+
+

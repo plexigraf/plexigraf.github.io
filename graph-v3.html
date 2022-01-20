@@ -5,12 +5,19 @@
 
   <title>Graph exploration</title>
 
-  <!--D3v3, textbox, hierarchy-->
-  <script src = "https://d3js.org/d3.v3.min.js"></script>
+  <!--D3v3, textbox, hierarchy
   <script src="https://d3plus.org/js/d3plus.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://unpkg.com/lunr/lunr.js"></script>
+-->
+   <script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>
+   <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+  
+<script src="https://unpkg.com/d3-force-cluster@latest"></script>
+
+  <script src="https://d3js.org/d3-shape.v2.min.js"></script>
+ <script src="https://d3js.org/d3-path.v2.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
 
 
 
@@ -46,7 +53,7 @@
 <form id='searchForm' name="myform" onSubmit="return handleClick()" style="display:block; margin:1em; color:blue">
     <input type="text" id="myVal" placeholder="Text..." style='margin-right:1em'>
     <input name="Submit"  type="submit" value="Search" class='swal-button'>
-</form> 
+</form>
 
 <div  id="dbname"style='text-align: left'><p id='description'>The circles represent entities and might themselves contain other entities.
                     On the left, the info panel gives you information on the currently selected node.

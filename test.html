@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<div id='truc'></div>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+
+var dataArray = [{x:100, y:100}, {x:200, y:200}];
+
+var svgWidth = 800, svgHeight = 800;
+
+var svg = d3.select('body')
+    .append("svg:svg")
+    .attr("width", svgWidth)
+    .attr("height", svgHeight);
+var zoomRect = svg.append('rect')
+    .attr("width", svgWidth)
+    .attr("height", svgHeight)
+    .attr("fill", "white");
+
+var root = svg.append("g");
+
+var nodes = root
+    .selectAll('.node')
+    .data(dataArray)
+    .enter()
+    .append('g')
+    .attr('class', 'node')
+    .attr("transform", function (data) {
+        return "translate(" + [data.x, data.y] + ")";
+    })
+    .call(function () {
+        return d3.drag().on('drag', function (d, i) {
+            d.x += d3.event.dx;
+            d.y += d3.event.dy;
+            d3.select(this).attr("transform", function () {
+                return "translate(" + [d.x, d.y] + ")";
+            });
+        })
+    }());
+
+nodes.append("svg:rect")
+    .attr("width", 50)
+    .attr("height", 50)
+    .style("fill", "#ffb5b5")
+    .style("stroke", "green").style("stroke-width", "3px");
+
+var zoom = d3.zoom()
+    .scaleExtent([1, 8])
+    .on("zoom", function () {
+        var t = d3.event.transform;
+        root.attr("transform", t);
+        //canvas.style("transform", "translateX(" + t.x + "px) translateY(" + t.y + "px) scale(" + t.k + ")");
+    });
+
+zoomRect.call(zoom);
+</script>

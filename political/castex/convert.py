@@ -1,6 +1,13 @@
 import pandas as pd
 import glom
 import json
+import urllib, json
+url = "https://www.hatvp.fr/livraison/merge/declarations.xml"
+response = urllib.urlopen(url)
+data = json.loads(response.read())
+print data
+
+a=bb
 
 df=pd.read_csv('Castex.tsv', sep='\t')
 

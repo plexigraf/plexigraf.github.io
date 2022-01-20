@@ -185,7 +185,7 @@ function makeIndex(entries) {
 
         for (id in entries) {
             //idealement il  faudrait enlever les keys du json
-            entries[id].strParams = JSON.stringify(entries[id].options).replace(/[^0-9a-z]/gi, ' ')
+            entries[id].strParams = (entries[id].feat? (entries[id].name+' ').repeat(10) : '')+JSON.stringify(entries[id].options).replace(/[^0-9a-z]/gi, ' ')
             this.add(entries[id])
         } //, this)
     })
@@ -279,7 +279,7 @@ function adaptZoom() {
         .duration(zoomCounter<1?2000:300)
         .call(zoom
             .scale(scaleFactor)
-            .translate([width *2/3 , width / 4 ]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
+            //.translate([width *2/3 , width / 4 ]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
             //.translate([width/2-focusX*scaleFactor,width/4-focusY*scaleFactor])// width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
             .event);
     oldNodesNumber = newNodesNumber
@@ -850,6 +850,9 @@ function visibleNetwork() {
                 showParents(nodes[focusedNode.linked[k]])
             }
         }
+        for (let k in focusedNode.children) {//disabled for now as it makes too many nodes out
+            nodes[focusedNode.children[k]].highlighted = true;
+        }
     }
 
     let imgCounter = 0;
@@ -985,21 +988,20 @@ function init() {
     //};
 
 
-        force = d3.layout.force()
+            var force = d3.forceSimulation()
             .nodes(net.nodes)
-            .links(net.links)
-            .size([width / 2, height / 2])
-            //.linkDistance(function(l, i) { return 600; })
-            .linkStrength(function(l, i) {
-                return ((l.source.id === focus) || (l.target.id === focus) || (l.type === "Member of" && !nodes[l.source.id].expanded)) ? .5 : 0.1;
-            })
-            .charge(function(n, i) {
-                return (n.id === focus ? -200 * n.radius : -150 * n.radius);
-            })
-            .chargeDistance(800)
-            .friction(.4)
-            .start();
-
+                .force("link", d3.forceLink(net.links).distance(function(l){
+                    //console.log(l.source.id,l.type,l.target.id)
+                  return (l.type=='Member of' && !l.source.expanded? 150 : focus==l.source.id || focus==l.target.id ? 200 : height/2 )
+                }) .strength(.3))
+                  /*.force('cluster', d3.forceCluster().centers(function(d){
+                    return d.expanded? d : nodes[d.parentId]
+                  }).strength(.1))*/
+                .force("collide",d3.forceCollide( function(n){
+                  return n.expanded? n.radius*2 : n.radius*1.3
+                }).strength(.8).iterations(16) )
+                //.force("charge", d3.forceManyBody(function(n){ return -100}))
+                .force("center", d3.forceCenter(width / 2, height / 2))
 
     //A noter: force transforme links: il remplace link.source.id par l'objet source, etc...
 
@@ -1061,9 +1063,10 @@ crsrText.attr("display","none");
     node = nodeg.selectAll(".node").data(net.nodes, d => d.id); //, nodeid);
 
     //node.exit().remove();
-    node.enter()
+    node=node.enter()
         .append("g")
         .attr("class", "node")
+        .style("opacity", nodeOpacity)
         //.attr("display", d => d.id == "root" ? "none" : "block")
         .attr("font-size", "18px")
         .attr("text-anchor", "middle")
@@ -1103,9 +1106,8 @@ crsrText.attr("display","none");
 
 
     nodec = node.append("circle")
-        .attr("stroke-width", d => d.isLeave ? d.id == focus ? 10 : "1px" : 5 * (Math.sqrt(d.depth)))
-        .style("opacity", nodeOpacity)
-        .attr("stroke", d => (d.id === focus) ? "red" : 'grey')
+        .attr("stroke-width", d => d.isLeave ? d.id == focus ? 10 : "3px" : 5 * (Math.sqrt(d.depth)))
+        .attr("stroke", d => (d.id === focus) ? "red" : 'white')
         //.style("fill-opacity", d => d.expanded ? 0 : 1)
         .attr("r", d => d.radius)
         .attr("cx", 0)
@@ -1194,7 +1196,7 @@ crsrText.attr("display","none");
     link = linkg.selectAll("link").data(net.links);
 
 
-    link.enter().append("g")
+    link=link.enter().append("g")
         .attr("class", "link")
         .attr("transform", d => "translate(" + d.source.x + "," + d.source.y + ")")
         .on("mouseover", function(d) {
@@ -1238,6 +1240,11 @@ crsrText.attr("display","none");
     //node.call(force.drag);
 
     force.on("tick", function(e) {
+        if (force.alpha()<.7){
+          force.stop()
+          return
+        }
+        console.log(force.alpha())
         if (!hull.empty()) {
             hull.data(convexHulls(net.nodes, off))
                 .attr("d", drawCluster);
@@ -1251,14 +1258,14 @@ crsrText.attr("display","none");
         //var focusDeltaY = nodes[focus].y-transCorrectenter.y*scaleFactor^2/2
         //console.log('foc',nodes[focus].x,focusDeltaX,globalCenter.x*scaleFactor/10)
         //evolution des noeuds en les ramenant dans le cadre
-        node
+        /*node
         .each(collide(e.alpha/4))
         .each(function(d) {
             d.x=d.x-e.alpha*nodes[focus].x
             d.y=d.y-e.alpha*nodes[focus].y
             d.x = minX < 100 ? d.x + 50 * e.alpha : d.x //:d.x>width?d.x-d.x+100*e.alpha:d.x;
             d.y = minY < 0 ? d.y + 50 * e.alpha : d.y;
-        })
+        })*/
         node.attr("transform", d => "translate(" + (d.x) + "," + (d.y) + ")");
 
         //Evolution des liens et de leurs enveloppes
@@ -1475,18 +1482,12 @@ function infoDisp() {
                     d.height = blockHeight;
                     //console.log('ayyyyy', d)
                     //calcul approximatif de la hauteur du texte une fois formatté, en fonction du nombre de lettres
-                    blockHeight = blockHeight + infoTextSize * Math.floor(3 + .55 * d.value.length * infoTextSize / infoWidth);
-                    return d.height
+                    blockHeight = blockHeight + infoTextSize * Math.floor(3 + .55 * d.value.length * infoTextSize / infoWidth*1.2);
+                    return d.height+15
                 })
                 .text(d => d.value)
                 .attr("font-size", infoTextSize)
-                .each(function() {
-                    d3plus.textwrap()
-                        .container(d3.select(this))
-                        .width(infoWidth)
-                        .height(height)
-                        .draw();
-                })
+                .each(wrapText)
                 //on saute une ligne à la fin
                 .append("tspan")
                 .text("   ")
@@ -1523,6 +1524,31 @@ function infoDisp() {
 
 
 } //end of function
+
+
+function wrapText(){
+  let counter=1
+  var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em")
+    while (word = words.pop()) {
+      line.push(word)
+      tspan.text(line.join(" "))
+      if (tspan.node().getComputedTextLength() > infoWidth*.9) {
+        line.pop()
+        tspan.text(line.join(" "))
+        line = [word]
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", 18*counter).text(word)
+        counter++
+      }
+    }
+}
 
 function collectInfos(d) {
     if (d.noInfoDisplay) {
@@ -1641,12 +1667,13 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
 }
 
 function nodeOpacity(d){
-  return d.id == "root" ? 0.1 : d.highlighted? 1 : Math.max(0.1, 1 - (d.visibleDepth+2) / 3)
+  return d.id == "root" ? 0.1 : d.highlighted? 1 : .1//Math.max(0.1,Math.min(0.3, 1 - (d.visibleDepth+2) / 3))
 }
 
 function lightNode(id, p) {
-    nodec.filter(d => (d.id === id)).attr("stroke", d => d.id == focus ? "red" : p === "on" ? "orange" : "grey")
-        nodec.filter(d => (d.id === id)).style("opacity", d=> p=="on"? 1 : nodeOpacity(d))
+    nodec.filter(d => (d.id === id)).attr("stroke", d => d.id == focus ? "red" : p === "on" ? "orange" : "white")
+        nodeTextg.attr("stroke-width",  0)
+        node.filter(d => (d.id === id)).style("opacity", d=> p=="on"? 1 : nodeOpacity(d))
 }
 
 

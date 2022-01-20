@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head><title>GBIF JS</title>
+
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+//occurence https://api.gbif.org/v1/occurrence/1258202889 -> parent=genusKey
+//taxon   -> parent=parentKey
+
+console.log('go')
+$.ajax({
+        url: 'https://api.gbif.org/v1/occurrence/2405267252',
+         success: function(data){
+					console.log('success')
+            treat(data);
+            //process the JSON data etc
+        }, error: function(data){
+					console.log('error request')
+            //process the JSON data etc
+        }
+})
+
+function treat(data){
+	console.log(data)
+
+}
+</script>
+
+</html>
