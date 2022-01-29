@@ -1178,7 +1178,7 @@ crsrText.attr("display","none");
     nodeTextg.append("text")
         .style("font-size", "10px")
         .style("font-family", "American Typewriter, serif")
-        .attr("dy", d=>d.lastName?'3em':'1.5em')//d => d.imgDisp ? "3.8em" : "1.3em")
+        .attr("dy", 30)//d=>d.lastName?'3em':'1.5em')//d => d.imgDisp ? "3.8em" : "1.3em")
         .text(d => nodes[d.parentId].name)
         //.attr("y", '3em')//d => d.imgDisp ? "3em" : 0)
 
@@ -1535,7 +1535,7 @@ function wrapText(){
         lineNumber = 0,
         lineHeight = 1.1, // ems
         y = text.attr("y"),
-        dy = parseFloat(text.attr("dy")),
+        dy = parseFloat(text.attr("dy"))||0,
         tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em")
     while (word = words.pop()) {
       line.push(word)
