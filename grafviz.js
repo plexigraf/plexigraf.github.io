@@ -136,6 +136,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 
         console.log('json?',filename)
 			//lance la simu
+
 			d3.json(filename, function(error, json) {
 				console.log('desc', json.params)
 				document.getElementById("description").innerHTML = json.params.description;
@@ -378,7 +379,7 @@ function buildNodesLinks(data) {
     for (let i in data.nodes){
       let n = data.nodes[i]
       if (n.id in dictNodes){
-        console.log('error: 2 nodes with id ',n.id)
+        console.log('error: 2 nodes with id ',n.id,n)
           window.alert('error: 2 nodes with id ',n.id,)
       }
       dictNodes[n.id]=n
