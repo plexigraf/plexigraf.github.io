@@ -18,12 +18,12 @@ Tout fichier de données est sous forme json et contient:
 
 ``` 
 {
-    "nodes":[
-        {
+    "nodes":
+        "id1":{
             "id":"id1",
             "name":name1
         },
-        {
+        "id2":{
             "id":"id2",
             "name":"name2"
          }],
