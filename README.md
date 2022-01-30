@@ -64,13 +64,12 @@ En plus des champs obligatoires "id" et "parentId", de nombreux champs sont poss
 - "img" (sous forme d'une URL)
 - "options", qui contient lui-même des informations qui seront affichées lorsque l'on sélectionne l'individu. Chaque entrée d'option est de la forme
 ```
-"nom de l'option": {"value": "valeur de l'option", 
-                    "sourve": "source de l'information (optionnel)",
-                    "url": "adresse (optionnel)}
+nom_option: {"value": valeur_option, 
+                    "source": optionnel_source_information,
+                    "url": optionnel_url_source}
 ```
 - "options" peut notamment contenir le champ "Also member of", qui indique un parent secondaire de l'individu.
-- Les liens éventuels de l'individu avec d'autres individus sont normalement indiqués dans l'entrée "links", mais il est possible de les indiquer directement
-- ici, via une liste "links".
+- Les liens éventuels de l'individu avec d'autres individus sont normalement indiqués dans l'entrée "links", mais il est possible de les indiquer directement ici, via une liste "links".
 
 
 TODO:
