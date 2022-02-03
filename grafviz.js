@@ -689,11 +689,14 @@ function buildNodesLinks(data) {
         if (nodes[i].options['Layer']<=params.expand_first_n_gens){
           nodes[i].show=true
         }
+        des=nodes[i].descendants
+        if (des>0){
         nodes[i].options['Size'] = {
-            'value': nodes[i].children.length+" ("+nodes[i].descendants.toString()+")"
+            'value': nodes[i].children.length+" ("+des.toString()+")"
             ,
             'priority': 100
         };
+      }
         if (params.hierarchyInfo) {
             nodes[i].options['Layer'] = {
                 'value':  nodes[i].generation.toString()
@@ -1091,11 +1094,18 @@ crsrText.attr("display","none");
             if (largeWidth) {
                 infosFocus(d);
             } //modifie les infos aussi
-            if (focus == d.id && !d.isLeave) {
+
+            if (focus == d.id && !d.isLeave ) {
+              proceed=true
+            if (d.children.length>80) {
+              proceed=window.confirm('It is not recommended to expand a node with so many children, do you wish to continue?')
+            }
+            if (proceed){
                 d.expanded = true;
                 if (d.children.length == 0) {
                     removeInfos();
                 }
+              }
             } else {
                 focus = d.id;
             }
