@@ -50,7 +50,8 @@ let params = {
         addOrphansToRoot: true, //les noeuds dont le parent n'est pas dans data est rattaché à root
         displayFiliation: true,
         biPartiteLinks: true,
-        saveAllData: false
+        saveAllData: false,
+        infoMax: 50,//max infoblocks to display
         //initialFocus;undef by default
     },
     linksWidth= {
@@ -1350,7 +1351,8 @@ return u<v ? u+"|"+v : v+"|"+u;
 }*/
 
 
-function infoDisp() {
+function infoDisp()
+{
     //lit l'info de d et affiche les infos correspondantes
     infoWidth = 300;
     //on enleve tout
@@ -1361,7 +1363,11 @@ function infoDisp() {
     //sert à savoir si on affiche le prochain subblock
     let displaySubBlocks = true;
 
-    for (let i in infos) {
+    let counter=0
+    for (let i in infos)
+    {
+      counter++
+
       //TODO:infos contient plusieurs éléments, chaque élément représente un bloc qui peut éventuellement se déployer
         let d = infos[i] //node or link or custom
         let prevHeight = infog.getBBox().height + 5;
@@ -1372,6 +1378,8 @@ function infoDisp() {
             .attr("class", "infoblock")
             .attr("transform", "translate(" + (d.off || off) + "," + prevHeight + ")")
 
+            if (counter>params.infoMax){
+              break}
         //rectangle du cadre titre
         info.append("rect")
             .data([d]).attr("fill", d => fill(d.id) || 'lightblue')
@@ -1601,7 +1609,6 @@ function collectInfos(d) {
     }
     if (d.options) {
         //entries=Object.entries(d.options)
-        console.log(d)
         for (let e in d.options) {
 
             option = d.options[e]
@@ -1612,7 +1619,6 @@ function collectInfos(d) {
                 option={'value':option}
             }
             }
-            console.log(e,option)
             option.title=word(d,e)
             if (typeof(option.value)=='object') {//concat set elements
                 values=[]
@@ -1676,9 +1682,12 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
             "off": 10,
             "deployedInfos": true
         })
+
+        infoDisp();
         d.children.forEach(function(c){
           infos.push(nodes[c])
         }
+
       )
     }
 
