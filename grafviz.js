@@ -1,5 +1,8 @@
 
 
+//improve perf:
+//ne pas mettre les options au début/fichier séparé?
+
 //TO DO
 //petit bug: si je navigue dans les liens d'enfant en enfant dans le cadre, et qu'a la fin je
 //double clic sur un enfant dans le graphe, les noeuds qui ont été ouverts dans le cadre
@@ -28,8 +31,6 @@
 //rajouter filiation dans les infos
 //possibilité de naviger dans les infos des briques, sous briques etc...
 
-
-//1e partie: WD
 
 
 let params = {
@@ -75,7 +76,7 @@ let links = [];
 let infos = [];
 let infoWidth = 0; //varie en fonction de info/removeInfos
 let infoTextSize = 14;
-let oldNodesNumber = params.oldNodesNumber || 10;
+let oldNodesNumber = params.oldNodesNumber || 10;//pour le zoom initial il faut savoir combien il y aura de noeuds à l'écran
 let scaleFactor = 1;
 //variable contenant nodes et links utilisé par D3 pour tracer
 let maxGen = 0;
@@ -91,6 +92,7 @@ var zoomCounter=0
 let meta_obj
 //loading data
 console.log('load data')
+//load prepared data if any
 d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 	if (!error) {
 		console.log('rtu ok')
@@ -113,7 +115,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 		init()
 	} else {
     console.log('no rtu data',load_from_WD,wdjs)
-		if (load_from_WD) {
+		if (load_from_WD) {//load online from WD
 			if (wdKey.endsWith('aths')) {
 				document.getElementById("description").innerHTML = 'This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Bernoulli", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
 
@@ -125,21 +127,23 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 			appendDbInfo("Query from WikiData.org, please wait...");
 			const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
 			meta_obj=queryDispatcher.query(sparqlQuery).then(treatWDDB);
-		} else if (wdjs) {
+		} else if (wdjs) {//load from locally saved WD data
 			if (wdKey.endsWith('aths')) {
 				document.getElementById("description").innerHTML = 'This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
 
 			}
 			console.log('wdjs, loading file')
 			meta_obj=$.getJSON("wdOffline/" + wdKey + ".json", treatWDDB)
-		} else {
-
-        console.log('json?',filename)
+		} else {//load from GV data file
+      console.log('json?',filename)
 			//lance la simu
 
 			d3.json(filename, function(error, json) {
+        json.params=json.params || {}
+        words=json.words||{}
 				console.log('desc', json.params)
-				document.getElementById("description").innerHTML = json.params.description;
+				if (json.params.description) {
+          document.getElementById("description").innerHTML = json.params.description  };
 				//if (error) throw error;
 				meta_obj = buildNodesLinks(json)
 
@@ -176,6 +180,7 @@ let idx;
 //3eme partie: on fait l'index pour la recherche
 //$.getJSON(filename, function(json) {
 function makeIndex(entries) {
+
     console.log('entries', entries)
     idx = lunr(function() {
         this.ref('id')
@@ -319,14 +324,15 @@ d3.select(this).classed("dragging", false);
 function buildNodesLinks(data) {
     //console.log(json_WD,json_WD['root'])
     //if (load_from_WD){data = json_WD;}
-
-    appendDbInfo( 'Processing DB, ' +(filename?filename:wdKey)+ Object.keys(data.nodes).length + ' nodes')
+    //console.log('keys',keys(data.nodes))
+    appendDbInfo( 'Processing DB, ' +(filename?filename:wdKey)+ ', '+Object.keys(data.nodes).length + ' nodes')
     //priorité aux params du fichier:
     const keys = data.params?Object.keys(data.params):[]
     for (let k in keys) {
         params[keys[k]] = data.params[keys[k]]
           console.log(keys[k],params[keys[k]])
     };
+    console.log(params)
     for (let k in data.linksWidth) {
         linksWidth[k] = data.linksWidth[k]
     }
@@ -337,12 +343,14 @@ function buildNodesLinks(data) {
         if (n.firstName){
           n.lastName=n.lastName||''
           n.name=n.name || (n.firstName+' '+n.lastName)
+          n.lastName=shorten(n.lastName)
         } else {
           n.name=n.name || n.id
           names=n.name.split(' ')
-          n.firstName = n.firstName || names.shift()
-          n.lastName = n.lastName || names.join(' ')
+          n.firstName = shorten(n.firstName || names.shift())
+          n.lastName = shorten(n.lastName || names.join(' '))
         }
+        n.shortName=n.shortName || shorten(n.name)
         n.name = n.name+(n.feat?' °':'')
         n.children = [];
         n.x = 100 + width * Math.random();
@@ -380,7 +388,7 @@ function buildNodesLinks(data) {
       let n = data.nodes[i]
       if (n.id in dictNodes){
         console.log('error: 2 nodes with id ',n.id,n)
-          window.alert('error: 2 nodes with id ',n.id,)
+          window.alert('error: 2 nodes with id ',n.id)
       }
       dictNodes[n.id]=n
     }
@@ -681,17 +689,18 @@ function buildNodesLinks(data) {
         if (nodes[i].options['Layer']<=params.expand_first_n_gens){
           nodes[i].show=true
         }
+        nodes[i].options['Size'] = {
+            'value': nodes[i].children.length+" ("+nodes[i].descendants.toString()+")"
+            ,
+            'priority': 100
+        };
         if (params.hierarchyInfo) {
             nodes[i].options['Layer'] = {
                 'value':  nodes[i].generation.toString()
                 ,
                 'priority': 100
             };
-            nodes[i].options['Descendants'] = {
-                'value': nodes[i].descendants.toString()
-                ,
-                'priority': 100
-            };
+
             nodes[i].options['Depth'] = {
                 'value': nodes[i].depth.toString() + (" (" + nodes[i].depthGuy + ")" || "")
                 ,
@@ -1131,10 +1140,14 @@ crsrText.attr("display","none");
 
     nodeTextg.append("rect")
         .attr("class", "boxname top")//will contain first name, width is determined later depending on first name
+        .attr("rx", 6)
+        .attr("ry", 6)
 
     nodeTextg.append("rect")
         .attr("class", "boxname middle")//contains last name if any
         .attr('display',d=>d.lastName?'block':'none')
+        .attr("rx", 6)
+        .attr("ry", 6)
 
     nodeTextg.append("text")
         .attr("x", 0)
@@ -1180,7 +1193,7 @@ crsrText.attr("display","none");
         .style("font-size", "10px")
         .style("font-family", "American Typewriter, serif")
         .attr("dy", 30)//d=>d.lastName?'3em':'1.5em')//d => d.imgDisp ? "3.8em" : "1.3em")
-        .text(d => nodes[d.parentId].name)
+        .text(d => nodes[d.parentId].shortName)
         //.attr("y", '3em')//d => d.imgDisp ? "3em" : 0)
 
     //only for mouseover event
@@ -1405,7 +1418,7 @@ function infoDisp() {
             displaySubBlocks = d.deployedInfos
 
             info.append("text")
-                .text(word({}, d.value))
+                .text(word({}, d.value||d))
                 .attr("x", 31)
                 .attr("y", 20)
                 .attr("font-size", 16)
@@ -1419,12 +1432,12 @@ function infoDisp() {
             //titre
             info.append("text")
                 .text(d.id ?
-                    nodes[d.id].name //node
+                    nodes[d.id].shortName //node
                     :
                     d.source ? //link
                     d.source.id ? //ca peut etre le noeud (auquel car il a un id) ou juste son nom
-                    nodes[d.source.id].name + (" \u21E8 " || " -> ") + nodes[d.target.id].name :
-                    nodes[d.source].name + (" \u21E8 " || " -> ") + nodes[d.target].name :
+                    nodes[d.source.id].shortName + (" \u21E8 " || " -> ") + nodes[d.target.id].shortName :
+                    nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName :
                     d.value) //texte
                 //.attr("font-family","American Typewriter")
                 .attr("font-size", d.source ? 10 : 15)
@@ -1530,7 +1543,7 @@ function infoDisp() {
 function wrapText(){
   let counter=1
   var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
+        wordings = text.text().split(/\s+/).reverse(),
         word,
         line = [],
         lineNumber = 0,
@@ -1538,7 +1551,7 @@ function wrapText(){
         y = text.attr("y"),
         dy = parseFloat(text.attr("dy"))||0,
         tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em")
-    while (word = words.pop()) {
+    while (word = wordings.pop()) {
       line.push(word)
       tspan.text(line.join(" "))
       if (tspan.node().getComputedTextLength() > infoWidth*.9) {
@@ -1580,11 +1593,14 @@ function collectInfos(d) {
         //entries=Object.entries(d.options)
         for (let e in d.options) {
             option = d.options[e]
+            if (!option.value){
+              option={'value':option}
+            }
             option.title=word(d,e)
             if (typeof(option.value)=='object') {//concat set elements
                 values=[]
                 option.value.forEach(function(s){
-                  let t=nodes[s]?nodes[s].name:word(d,s)||s
+                  let t=nodes[s]?nodes[s].shortName:word(d,s)||s
                   values.push(t)
                 })
 
@@ -1826,6 +1842,10 @@ function drawCluster(d) {
 function word(d, s) {
   //console.log('translation'+s,d.id,d,'words' in d && s in d.words,('words' in d && s in d.words)?d.words[s]:'no')
     s=s?s.toString():''
-    return ('words' in d && s in d.words) ? d.words[s] : (s in words) ? words[s] : s in nodes ? nodes[s].name : s ||''
+    return ('words' in d && s in d.words) ? d.words[s] : (s in words) ? words[s] : s in nodes ? nodes[s].shortName : s ||''
 
+}
+
+function shorten(s) {
+  return s.length>32? s.substring(0,25)+"..." : s
 }
