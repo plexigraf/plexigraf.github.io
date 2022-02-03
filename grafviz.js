@@ -1601,14 +1601,22 @@ function collectInfos(d) {
     }
     if (d.options) {
         //entries=Object.entries(d.options)
+        console.log(d)
         for (let e in d.options) {
+
             option = d.options[e]
             if (!option.value){
-              option={'value':option}
+              if (option.source){
+                option.value=option.source
+              }else{
+                option={'value':option}
             }
+            }
+            console.log(e,option)
             option.title=word(d,e)
             if (typeof(option.value)=='object') {//concat set elements
                 values=[]
+                console.log(d,option)
                 option.value.forEach(function(s){
                   let t=nodes[s]?nodes[s].shortName:word(d,s)||s
                   values.push(t)
