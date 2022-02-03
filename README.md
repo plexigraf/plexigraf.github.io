@@ -64,6 +64,10 @@ En plus des champs obligatoires "id" et "parentId", de nombreux champs sont poss
 - "img" (sous forme d'une URL)
 - "options", qui contient lui-même des informations qui seront affichées lorsque l'on sélectionne l'individu. Chaque entrée d'option est de la forme
 ```
+nom_option:{valeur}
+```
+ou si l'on veut préciser la source d'information
+```
 nom_option: {"value": valeur_option, 
                     "source": optionnel_source_information,
                     "url": optionnel_url_source}
