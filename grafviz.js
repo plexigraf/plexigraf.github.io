@@ -68,7 +68,7 @@ let params = {
     height = width, // svg height
     largeWidth = true, //chartDiv.offsetWidth > 600,//permet d'afficher les infos
     off = params.dr;
-    transCorrect={'x':width *1/6, 'y':0}//why these values??
+    transCorrect={'x':width *0, 'y':0}//why these values??
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
 let nodes = [];
 //tous les liens de la DB, y compris parenté, remplacé par metaLinks pour le tracé
@@ -79,7 +79,6 @@ let infoWidth = 0; //varie en fonction de info/removeInfos
 let infoTextSize = 14;
 let oldNodesNumber = params.oldNodesNumber || 10;//pour le zoom initial il faut savoir combien il y aura de noeuds à l'écran
 let scaleFactor = 1;
-//variable contenant nodes et links utilisé par D3 pour tracer
 let maxGen = 0;
 const maxSearchResults=40;
 let words={};
@@ -139,10 +138,10 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
       console.log('json?',filename)
 			//lance la simu
 
-			d3.json(filename, function(error, json) {
+			d3.json(filename, function(error, json) {//very long to execute...
         json.params=json.params || {}
         words=json.words||{}
-				console.log('desc', json.params)
+				console.log('file params', json.params)
 				if (json.params.description) {
           document.getElementById("description").innerHTML = json.params.description  };
 				//if (error) throw error;
@@ -211,7 +210,6 @@ function makeIndex(entries) {
 
 
 
-//})
 
 
 //on lance la simu
@@ -253,7 +251,6 @@ const zoom = d3.behavior.zoom()
 zoomCanvas.on("mouseover", function() {
         d3.select(this).style("cursor", "all-scroll")
     })
-    //.on("click", removeInfos)
     .call(zoom) // delete this line to disable free zooming
     .call(zoom.event);
 
