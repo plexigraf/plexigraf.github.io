@@ -66,7 +66,7 @@ let params = {
     divName = "body",
     width = params.screenRatio * window.screen.width, // svg width
     height = width, // svg height
-    largeWidth = true, //chartDiv.offsetWidth > 600,//permet d'afficher les infos
+    largeWidth = true, //false enleverait l'affichage d'infos
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
@@ -723,7 +723,7 @@ function buildNodesLinks(data) {
         focus = params.initialFocus //nodes[1].id
         prevFocus=focus
         nodes[focus].deployedInfos=true
-        infosFocus(nodes[focus])
+        if (width>500) {infosFocus(nodes[focus])}
         console.log("focus", focus,params.initialFocus)
     //pour la fonction de recherche
     appendDbInfo('Starting simulation')
@@ -1384,7 +1384,7 @@ function infoDisp()
             .attr("width", infoWidth)
             //.attr("stroke-width",2)
             //.attr("stroke","black")
-            .style("opacity", .4)
+            .style("opacity", .9)
             .attr("rx", 5)
 
         //flèche de deploiement
@@ -1424,7 +1424,7 @@ function infoDisp()
                 .attr("x", -27)
                 .attr("y", 23)
                 .attr("font-size", 26)
-                .text("\u2573" || "X")
+                .text("\u2716" || "Y")
         }
         firstBlock = false;
 
@@ -1477,7 +1477,7 @@ function infoDisp()
                 .attr("y", 30)
                 .attr("height", 0)
                 .attr("width", infoWidth)
-                .style("opacity", .8)
+                .style("opacity", .9)
 
 
             let infoSubBlock = info.append("text")
