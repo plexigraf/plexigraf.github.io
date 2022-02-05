@@ -65,7 +65,7 @@ let params = {
     focus,
     prevFocus,
     divName = "body",
-    width = params.screenRatio * window.screen.width, // svg width
+    width = params.screenRatio * document.body.clientWidth//window.screen.width, // svg width
     height = width, // svg height
     largeWidth = width>500, //false enleverait l'affichage d'infos
     off = params.dr;
