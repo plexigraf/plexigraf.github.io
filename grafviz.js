@@ -1,4 +1,5 @@
-
+console.log(window.screen)
+window.alert(window.screen.width)
 
 //improve perf:
 //ne pas mettre les options au début/fichier séparé?
@@ -66,7 +67,7 @@ let params = {
     divName = "body",
     width = params.screenRatio * window.screen.width, // svg width
     height = width, // svg height
-    largeWidth = true, //false enleverait l'affichage d'infos
+    largeWidth = width>500, //false enleverait l'affichage d'infos
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
@@ -239,7 +240,7 @@ let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
     nodeg = vis.append("g").attr("id", "nodeg"); //nodeuds
 //infoG est une selection D3, infog est un element html
 let infoG = canvas.append("g")
-    .attr("id", "infog").attr("display", largeWidth ? "block" : "none"), //infos
+    .attr("id", "infog").attr("display", "block"),//largeWidth ? "block" : "none"), //infos
     infog = document.getElementById("infog") //automatic?
 //zoom ability
 const zoom = d3.behavior.zoom()
@@ -723,7 +724,7 @@ function buildNodesLinks(data) {
         focus = params.initialFocus //nodes[1].id
         prevFocus=focus
         nodes[focus].deployedInfos=true
-        if (width>500) {infosFocus(nodes[focus])}
+        if (largeWidth) {infosFocus(nodes[focus])}
         console.log("focus", focus,params.initialFocus)
     //pour la fonction de recherche
     appendDbInfo('Starting simulation')
@@ -794,9 +795,7 @@ function handleClick(event) { //pour la fctn de recherche
             }]
         }
 
-        if (largeWidth) {
-            infoDisp();
-        }
+        infoDisp();
     } catch (error) {
         console.log('search error', error)
     }
@@ -1089,9 +1088,8 @@ crsrText.attr("display","none");
             lightNodeLinks(d, "off")
         })
         .on("click", function(d) {
-            if (largeWidth) {
-                infosFocus(d);
-            } //modifie les infos aussi
+            infosFocus(d);
+            //modifie les infos aussi
 
             if (focus == d.id && !d.isLeave ) {
               proceed=true
@@ -1240,7 +1238,7 @@ crsrText.attr("display","none");
         .style("stroke-width", d => linksWidth[d.type||'default'])
         .on("click", function(d) {
             focus = (focus==d.source.id)? focus=d.target.id : focus=d.source.id;
-            if (largeWidth) {
+            //if (largeWidth) {
                 removeInfos();
                 infos = [d, {
                     type: "Links",
@@ -1251,7 +1249,7 @@ crsrText.attr("display","none");
                 infosFocus(d)
                 infoDisp();
                 init()
-            }
+            //}
         });
 
     link.sort(linkSort)
