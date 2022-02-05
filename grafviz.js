@@ -1,5 +1,3 @@
-window.alert("window.screen.width"+window.screen.width)
-window.alert("client"+ document.body.clientWidth)
 
 //improve perf:
 //ne pas mettre les options au début/fichier séparé?
@@ -65,7 +63,7 @@ let params = {
     focus,
     prevFocus,
     divName = "body",
-    width = params.screenRatio * document.body.clientWidth//window.screen.width, // svg width
+    width = params.screenRatio * window.screen.width, // svg width
     height = width*1.5, // svg height
     largeWidth = width>800, //false enleverait l'affichage d'infos
     off = params.dr;
