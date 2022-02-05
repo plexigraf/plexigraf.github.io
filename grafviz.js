@@ -1,5 +1,3 @@
-window.alert("window.screen.width"+window.screen.width)
-window.alert("client"+ document.body.clientWidth)
 
 //improve perf:
 //ne pas mettre les options au début/fichier séparé?
@@ -65,9 +63,9 @@ let params = {
     focus,
     prevFocus,
     divName = "body",
-    width = params.screenRatio * document.body.clientWidth//window.screen.width, // svg width
+    mobile = window.screen.width<800, //false enleverait l'affichage d'infos
+    width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
-    largeWidth = width>800, //false enleverait l'affichage d'infos
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
@@ -724,7 +722,7 @@ function buildNodesLinks(data) {
         focus = params.initialFocus //nodes[1].id
         prevFocus=focus
         nodes[focus].deployedInfos=true
-        if (largeWidth) {infosFocus(nodes[focus])}
+        if (!mobile) {infosFocus(nodes[focus])}
         console.log("focus", focus,params.initialFocus)
     //pour la fonction de recherche
     appendDbInfo('Starting simulation')
