@@ -63,9 +63,9 @@ let params = {
     focus,
     prevFocus,
     divName = "body",
-    width = params.screenRatio * window.screen.width, // svg width
+    width = params.screenRatio * window.screen.width, // document.body.clientWidth
     height = width*1.5, // svg height
-    largeWidth = width>800, //false enleverait l'affichage d'infos
+    largeWidth = document.body.clientWidth>800, //false enleverait l'affichage d'infos
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
