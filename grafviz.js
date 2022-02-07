@@ -220,17 +220,24 @@ const body = d3.select(divName);
 const canvas = body.append("svg").attr("id", "canvas")
     .style("border", "1px solid #ccc")
     .attr("width", width)
-    .attr("height", height),
-    zoomCanvas = canvas.append("svg").attr("width", width).attr("id", "zoomCanvas")
-    .attr("height", height);
+    .attr("height", height)
+
+const zoomCanvas = canvas.append("svg").attr("id", "zoomCanvas")
 
 //necessaire pr zoom
-zoomCanvas.append("rect")
+zoomCanvas.append("rect")//il faut un rectangle qui réagit aux events de zoom
+                          //mais le zoom s'applique à tout ce qui est sur vis (et pas au rectangle)
+
     .attr("width", width)
     .attr("height", height).attr("opacity", .1);
 
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 const vis = zoomCanvas.append("g").attr("id", "vis");
+
+vis.append("circle").attr("r", 30)
+.attr("cx", 100)
+.attr("cy", 100)
+.attr("fill","red")
 
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
