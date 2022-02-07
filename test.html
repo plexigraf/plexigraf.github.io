@@ -19,6 +19,7 @@ mobile = window.screen.width<800 //false enleverait l'affichage d'infos
 width = mobile?  document.body.clientWidth : window.screen.width, // svg width
 height = width*1.5// svg height
 
+let counter=1
 
 const body = d3.select("body");
 
@@ -51,6 +52,8 @@ const zoom = d3.behavior.zoom()
 
 
 zoomCanvas.on("mouseover", function() {
+  counter++
+
         d3.select(this).style("cursor", "all-scroll")
     })
     .call(zoom) // delete this line to disable free zooming
@@ -58,7 +61,8 @@ zoomCanvas.on("mouseover", function() {
 
 
     function zoomed() {
-      window.alert('zoom')
+      //window.alert('zoom')
+      counter++
       let x=d3.event.translate[0]
       let y=d3.event.translate[1]
         /*prevTgt=msTgt;
@@ -66,10 +70,20 @@ zoomCanvas.on("mouseover", function() {
         if (msTgt==="canv" && prevTgt==="canv") {*/
         vis.attr("transform", "translate(" +( x)+","+(y) + ")scale(" + (d3.event.scale) + ")")
         //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
+
+        canvas.append("g")
+                .attr("id", "infog").attr("display", "block").append("text")
+                    .attr("x", 200)
+                    .style("font-family", "American Typewriter, serif")
+                    .attr("y", 200)//d => d.lastName ? d.imgDisp ?  "2em" : "-1.2em" : d.imgDisp ? "3em" : 0)//d.radius  : -0.6*d.radius : d.imgDisp ? 1.5*d.radius:0)//
+                    .text(counter)
     }
 let infoG = canvas.append("g")
-        .attr("id", "infog").attr("display", "block")//largeWidth ? "block" : "none"), //infos
-
+        .attr("id", "infog").attr("display", "block").append("text")
+            .attr("x", 200)
+            .style("font-family", "American Typewriter, serif")
+            .attr("y", 200)//d => d.lastName ? d.imgDisp ?  "2em" : "-1.2em" : d.imgDisp ? "3em" : 0)//d.radius  : -0.6*d.radius : d.imgDisp ? 1.5*d.radius:0)//
+            .text(counter)
 
 </script>
 
