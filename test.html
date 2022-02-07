@@ -9,50 +9,69 @@
   <script src="https://d3plus.org/js/d3plus.js"></script>
 -->
    <script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>
-   <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
-
-  <script src="https://d3js.org/d3-shape.v2.min.js"></script>
- <script src="https://d3js.org/d3-path.v2.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="https://unpkg.com/lunr/lunr.js"></script>
-
-
-
-  <style type = "text/css">
-
-  body {
-    font: 10px sans-serif;
-  }
-
-  .boxname{
-    fill: white;
-  }
-
-  .type text{
-  	font-family:American Typewriter, serif;
-  }
-
-  #canvas {
-    margin-left:3em;
-  }
-    #searchForm {
-      margin-left:3em !important;
-    }
-
-
-
-  </style>
-
 
 </head>
 <body>
 
+<script >
+
+mobile = window.screen.width<800 //false enleverait l'affichage d'infos
+width = mobile?  document.body.clientWidth : window.screen.width, // svg width
+height = width*1.5// svg height
+
+
+const body = d3.select("body");
+
+const canvas = body.append("svg").attr("id", "canvas")
+    .style("border", "1px solid #ccc")
+    .attr("width", width)
+    .attr("height", height)
 
 
 
+const zoomCanvas = canvas.append("svg").attr("id", "zoomCanvas")
 
-<script type="text/javascript" src="mweZoom.js"></script>
+
+zoomCanvas.append("rect")//il faut un rectangle qui réagit aux events de zoom
+                          //mais le zoom s'applique à tout ce qui est sur vis (et pas au rectangle)
+    .attr("width",200)
+    .attr("height", 200).attr("opacity", .05);
+
+//html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
+const vis = zoomCanvas.attr("id", "vis").append("circle").attr("r", 30)
+.attr("cx", 100)
+.attr("cy", 100)
+.attr("fill","red")
+; //nodeuds
+
+const zoom = d3.behavior.zoom()
+    .scaleExtent([.1, 10])
+    .scale(1)
+    .on("zoom", zoomed);
+
+
+zoomCanvas.on("mouseover", function() {
+        d3.select(this).style("cursor", "all-scroll")
+    })
+    .call(zoom) // delete this line to disable free zooming
+    .call(zoom.event);
+
+
+    function zoomed() {
+      window.alert('zoom')
+      let x=d3.event.translate[0]
+      let y=d3.event.translate[1]
+        /*prevTgt=msTgt;
+        msTgt="root"//d3.event.sourceEvent.target.id||"root";
+        if (msTgt==="canv" && prevTgt==="canv") {*/
+        vis.attr("transform", "translate(" +( x)+","+(y) + ")scale(" + (d3.event.scale) + ")")
+        //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
+    }
+let infoG = canvas.append("g")
+        .attr("id", "infog").attr("display", "block")//largeWidth ? "block" : "none"), //infos
+
+
+</script>
 
 </script>
 </body>
