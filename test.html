@@ -15,18 +15,14 @@
 
 <script >
 
-mobile = window.screen.width<800 //false enleverait l'affichage d'infos
-width = mobile?  document.body.clientWidth : window.screen.width, // svg width
-height = width*1.5// svg height
-
 let counter=1
 
 const body = d3.select("body");
 
 const canvas = body.append("svg").attr("id", "canvas")
     .style("border", "1px solid #ccc")
-    .attr("width", width)
-    .attr("height", height)
+    .attr("width", 300)
+    .attr("height", 300)
 
 
 
