@@ -62,7 +62,6 @@ let params = {
     //const filename = "taxo-graph.json"
     focus,
     prevFocus,
-    divName = "body",
     mobile = window.screen.width<800, //false enleverait l'affichage d'infos
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
@@ -214,7 +213,7 @@ function makeIndex(entries) {
 //on lance la simu
 // --------------------------------------------------------
 
-const body = d3.select(divName);
+const body = d3.select("body");
 
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 const canvas = body.append("svg").attr("id", "canvas")
