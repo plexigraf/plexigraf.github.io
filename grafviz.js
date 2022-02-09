@@ -217,26 +217,35 @@ const body = d3.select("body");
 
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 const canvas = body.append("svg").attr("id", "canvas")
-    .style("border", "1px solid #ccc")
+    .style("border", "5px solid #ccc")
     .attr("width", width)
     .attr("height", height)
+    .call(d3.zoom().on("zoom", zoomed))
 
-const zoomCanvas = canvas.append("svg").attr("id", "zoomCanvas")
+
+    function zoomed(){
+         vis.attr("transform", d3.event.transform)
+    }
+
+
+var zoomDecoRect=canvas.append('rect').attr('width',width).attr("height",height)
+                        .attr('opacity',.1)
+                        .on("mouseover", function() {
+                                d3.select(this).style("cursor", "all-scroll")
+                            })
+
+
+var vis= canvas.append("g").attr("id", "vis")
 
 //necessaire pr zoom
-zoomCanvas.append("rect")//il faut un rectangle qui réagit aux events de zoom
-                          //mais le zoom s'applique à tout ce qui est sur vis (et pas au rectangle)
 
-    .attr("width", width)
-    .attr("height", height).attr("opacity", .1);
+//html structure??:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
+//const vis = zoomCanvas.append("g").attr("id", "vis");
 
-//html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
-const vis = zoomCanvas.append("g").attr("id", "vis");
-
-vis.append("circle").attr("r", 30)
-.attr("cx", 100)
-.attr("cy", 100)
-.attr("fill","red")
+//vis.append("circle").attr("r", 30)
+//.attr("cx", 100)
+//.attr("cy", 100)
+//.attr("fill","red")
 
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
@@ -247,32 +256,17 @@ let infoG = canvas.append("g")
     .attr("id", "infog").attr("display", "block"),//largeWidth ? "block" : "none"), //infos
     infog = document.getElementById("infog") //automatic?
 //zoom ability
-const zoom = d3.behavior.zoom()
-    .scaleExtent([.1, 10])
-    .scale(1)
-    .on("zoom", zoomed);
 
 
-zoomCanvas.on("mouseover", function() {
-        d3.select(this).style("cursor", "all-scroll")
-    })
-    .call(zoom) // delete this line to disable free zooming
-    .call(zoom.event);
+
+
 
 
 //info text when cursor is over convex hull
 //crsrText = vis.append("text").attr("id","crsrtxt");
 
 
-function zoomed() {
-  let x=d3.event.translate[0]-transCorrect.x
-  let y=d3.event.translate[1]-transCorrect.y
-    /*prevTgt=msTgt;
-    msTgt="root"//d3.event.sourceEvent.target.id||"root";
-    if (msTgt==="canv" && prevTgt==="canv") {*/
-    vis.attr("transform", "translate(" +( x)+","+(y) + ")scale(" + (d3.event.scale) + ")")
-    //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
-}
+
 
 function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
