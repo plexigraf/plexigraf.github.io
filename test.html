@@ -57,8 +57,6 @@ const zoom = d3.behavior.zoom()
 
 
 zoomCanvas.on("mouseover", function() {
-
-
         d3.select(this).style("cursor", "all-scroll")
     })
     .call(zoom) // delete this line to disable free zooming

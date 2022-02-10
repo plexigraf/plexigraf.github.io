@@ -214,44 +214,33 @@ function makeIndex(entries) {
 // --------------------------------------------------------
 
 const body = d3.select("body");
-let prev={'x':0,'y':0,'k':1}
 
-var _zoom = d3.zoom()
-  .scaleExtent([.01, 100])
-      .on("zoom", function() {
-    vis.attr("transform", d3.event.transform);
-    prev=d3.event.transform
-  });
+
+
+
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 const canvas = body.append("svg").attr("id", "canvas")
-    .style("border", "5px solid #ccc")
+    .style("border", "1px solid #ccc")
     .attr("width", width)
-    .attr("height", height)
-    .call(_zoom)
-
-canvas.append('rect').attr('width',width).attr("height",height)//decoration
-                            .attr('opacity',.1)
-                            .on("mouseover", function() {
-                                    d3.select(this).style("cursor", "all-scroll")
-                                })
+    .attr("height", height).call(d3.zoom().on("zoom", zoomed))
 
 
+    function zoomed(){
+         vis.attr("transform", d3.event.transform)
+    }
 
 
+var zoomDecoRect=canvas.append('rect')
+                  .attr('width',width)
+                  .attr("height",height)
+                  .attr('opacity',.1)
 
+const vis = canvas.append("g").attr("id", "vis");
 
-
-var vis= canvas.append("g").attr("id", "vis")
-
-//necessaire pr zoom
-
-//html structure??:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
-//const vis = zoomCanvas.append("g").attr("id", "vis");
-
-//vis.append("circle").attr("r", 30)
-//.attr("cx", 100)
-//.attr("cy", 100)
-//.attr("fill","red")
+vis.append("circle").attr("r", 30)
+.attr("cx", 100)
+.attr("cy", 100)
+.attr("fill","red")
 
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
@@ -264,29 +253,44 @@ let infoG = canvas.append("g")
 //zoom ability
 
 
-
-
+vis.on("mouseover", function() {
+        d3.select(this).style("cursor", "all-scroll")
+    })
+    .call(zoom) // delete this line to disable free zooming
+    .call(zoom.event);
 
 
 //info text when cursor is over convex hull
 //crsrText = vis.append("text").attr("id","crsrtxt");
 
 
-
+function zoomed() {
+  let x=d3.event.translate[0]-transCorrect.x
+  let y=d3.event.translate[1]-transCorrect.y
+    /*prevTgt=msTgt;
+    msTgt="root"//d3.event.sourceEvent.target.id||"root";
+    if (msTgt==="canv" && prevTgt==="canv") {*/
+    vis.attr("transform", "translate(" +( x)+","+(y) + ")scale(" + (d3.event.scale) + ")")
+    //infoG.attr("transform", "translate(0,"+d3.event.translate[0]+")")
+}
 
 function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
     newNodesNumber = net.nodes.length
-    scaleFactor =  Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
+    scaleFactor = zoom.scale() * Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
 
     console.log('zoom',newNodesNumber,scaleFactor)
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
     //console.log('scale',scaleFactor,focusX,focusY,oldFocusX,oldFocusY)
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
-    var t = d3.zoomIdentity.translate(prev.x,prev.y).scale(prev.k*scaleFactor);
-    canvas.transition().duration(650).call(_zoom.transform, t);
-
+    vis.transition()
+        .duration(zoomCounter<1?2000:300)
+        .call(zoom
+            .scale(scaleFactor)
+            //.translate([width *2/3 , width / 4 ]) // width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
+            //.translate([width/2-focusX*scaleFactor,width/4-focusY*scaleFactor])// width/2-(  nodes[focus].x)*scaleFactor, 200-(  nodes[focus].y)*scaleFactor])
+            .event);
     oldNodesNumber = newNodesNumber
     zoomCounter+=1
     console.log('zoomcounter',zoomCounter)
@@ -1264,7 +1268,7 @@ crsrText.attr("display","none");
           force.stop()
           return
         }
-        //console.log(force.alpha())
+        console.log(force.alpha())
         if (!hull.empty()) {
             hull.data(convexHulls(net.nodes, off))
                 .attr("d", drawCluster);
@@ -1299,7 +1303,7 @@ crsrText.attr("display","none");
 
     });
 
-    adaptZoom()
+adaptZoom()
 
 
 }
