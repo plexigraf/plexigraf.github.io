@@ -223,10 +223,15 @@ var _zoom = d3.zoom()
     prev=d3.event.transform
   });
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
-const canvas = body.append("svg").attr("id", "canvas")
+const Scanvas = body.append("svg").attr("id", "scanvas")
     .style("border", "5px solid #ccc")
     .attr("width", width)
     .attr("height", height)
+
+const canvas = Scanvas.append("svg").attr("id", "canvas")
+        .style("border", "5px solid #ccc")
+        .attr("width", width)
+        .attr("height", height)
     .call(_zoom)
 
 canvas.append('rect').attr('width',width).attr("height",height)//decoration
@@ -258,9 +263,10 @@ let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
     linkg = vis.append("g").attr("id", "linkg"), //liens
     nodeg = vis.append("g").attr("id", "nodeg"); //nodeuds
 //infoG est une selection D3, infog est un element html
-let infoG = canvas.append("g")
+let infoG = Scanvas.append("g")
     .attr("id", "infog").attr("display", "block"),//largeWidth ? "block" : "none"), //infos
-    infog = document.getElementById("infog") //automatic?
+
+infog = document.getElementById("infog") //automatic?
 //zoom ability
 
 
