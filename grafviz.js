@@ -67,6 +67,7 @@ let params = {
     height = width*1.5, // svg height
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
+
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
 let nodes = [];
 //tous les liens de la DB, y compris parenté, remplacé par metaLinks pour le tracé
@@ -227,6 +228,8 @@ const canvas = body.append("svg").attr("id", "canvas")
     .style("border", "5px solid #ccc")
     .attr("width", width)
     .attr("height", height)
+
+canvas.append("text").text(mobile).attr('x',50).attr('y',50).attr('font-size',"3em")
 
 const zoomCanvas = canvas.append("svg").attr("id", "zcanvas")
         .style("border", "5px solid #ccc")
@@ -1355,7 +1358,7 @@ return u<v ? u+"|"+v : v+"|"+u;
 function infoDisp()
 {
     //lit l'info de d et affiche les infos correspondantes
-    infoWidth = "90%"//mobile? "90%":300;
+    infoWidth = mobile? "90%":300;
     //on enleve tout
     infoG.selectAll(".infoblock").remove()
     let off = 10;
