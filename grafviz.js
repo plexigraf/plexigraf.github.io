@@ -1355,7 +1355,7 @@ return u<v ? u+"|"+v : v+"|"+u;
 function infoDisp()
 {
     //lit l'info de d et affiche les infos correspondantes
-    infoWidth = mobile? "90%":300;
+    infoWidth = "90%"//mobile? "90%":300;
     //on enleve tout
     infoG.selectAll(".infoblock").remove()
     let off = 10;
