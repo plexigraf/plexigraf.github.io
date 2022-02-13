@@ -223,18 +223,18 @@ var _zoom = d3.zoom()
     prev=d3.event.transform
   });
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
-const Scanvas = body.append("svg").attr("id", "scanvas")
+const canvas = body.append("svg").attr("id", "canvas")
     .style("border", "5px solid #ccc")
     .attr("width", width)
     .attr("height", height)
 
-const canvas = Scanvas.append("svg").attr("id", "canvas")
+const zoomCanvas = canvas.append("svg").attr("id", "zcanvas")
         .style("border", "5px solid #ccc")
         .attr("width", width)
         .attr("height", height)
     .call(_zoom)
 
-canvas.append('rect').attr('width',width).attr("height",height)//decoration
+zoomCanvas.append('rect').attr('width',width).attr("height",height)//decoration
                             .attr('opacity',.1)
                             .on("mouseover", function() {
                                     d3.select(this).style("cursor", "all-scroll")
@@ -246,7 +246,7 @@ canvas.append('rect').attr('width',width).attr("height",height)//decoration
 
 
 
-var vis= canvas.append("g").attr("id", "vis")
+var vis= zoomCanvas.append("g").attr("id", "vis")
 
 //necessaire pr zoom
 
@@ -263,7 +263,7 @@ let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
     linkg = vis.append("g").attr("id", "linkg"), //liens
     nodeg = vis.append("g").attr("id", "nodeg"); //nodeuds
 //infoG est une selection D3, infog est un element html
-let infoG = Scanvas.append("g")
+let infoG = canvas.append("g")
     .attr("id", "infog").attr("display", "block"),//largeWidth ? "block" : "none"), //infos
 
 infog = document.getElementById("infog") //automatic?
@@ -291,7 +291,7 @@ function adaptZoom() {
     //console.log('scale',scaleFactor,focusX,focusY,oldFocusX,oldFocusY)
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
     var t = d3.zoomIdentity.translate(prev.x,prev.y).scale(prev.k*scaleFactor);
-    canvas.transition().duration(650).call(_zoom.transform, t);
+    zoomCanvas.transition().duration(650).call(_zoom.transform, t);
 
     oldNodesNumber = newNodesNumber
     zoomCounter+=1
@@ -1355,7 +1355,7 @@ return u<v ? u+"|"+v : v+"|"+u;
 function infoDisp()
 {
     //lit l'info de d et affiche les infos correspondantes
-    infoWidth = 300;
+    infoWidth = mobile? "90%":300;
     //on enleve tout
     infoG.selectAll(".infoblock").remove()
     let off = 10;
