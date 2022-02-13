@@ -67,7 +67,7 @@ let params = {
     height = width*1.5, // svg height
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
-
+console.log("mobile",mobile)
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
 let nodes = [];
 //tous les liens de la DB, y compris parenté, remplacé par metaLinks pour le tracé
@@ -223,13 +223,19 @@ var _zoom = d3.zoom()
     vis.attr("transform", d3.event.transform);
     prev=d3.event.transform
   });
+
+
+var _zoom2 = d3.zoom()
+  .scaleExtent([.01, 100])
+      .on("zoom", function() {
+    infoG.attr("transform", d3.event.transform);
+    prev=d3.event.transform
+  });
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 const canvas = body.append("svg").attr("id", "canvas")
     .style("border", "5px solid #ccc")
     .attr("width", width)
     .attr("height", height)
-
-canvas.append("text").text(mobile).attr('x',50).attr('y',50).attr('font-size',"3em")
 
 const zoomCanvas = canvas.append("svg").attr("id", "zcanvas")
         .style("border", "5px solid #ccc")
@@ -266,8 +272,9 @@ let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
     linkg = vis.append("g").attr("id", "linkg"), //liens
     nodeg = vis.append("g").attr("id", "nodeg"); //nodeuds
 //infoG est une selection D3, infog est un element html
-let infoG = canvas.append("g")
-    .attr("id", "infog").attr("display", "block"),//largeWidth ? "block" : "none"), //infos
+let infoG = canvas.append("svg").call(_zoom2).append("g")
+    .attr("id", "infog").attr("display", "block")
+,//largeWidth ? "block" : "none"), //infos
 
 infog = document.getElementById("infog") //automatic?
 //zoom ability
