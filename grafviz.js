@@ -65,6 +65,8 @@ let params = {
     mobile = window.screen.width<800, //false enleverait l'affichage d'infos
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
+    infoWidth = 300;
+    zoomInfo=mobile? 0.9*width/infoWidth
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
@@ -224,13 +226,6 @@ var _zoom = d3.zoom()
     prev=d3.event.transform
   });
 
-
-var _zoom2 = d3.zoom()
-  .scaleExtent([.01, 100])
-      .on("zoom", function() {
-    infoG.attr("transform", d3.event.transform);
-    prev=d3.event.transform
-  });
 //html structure:canvas - [ infog, zoomCanvas [ vis [ nodeg, linkg, hullg ]]]
 const canvas = body.append("svg").attr("id", "canvas")
     .style("border", "5px solid #ccc")
@@ -271,10 +266,26 @@ var vis= zoomCanvas.append("g").attr("id", "vis")
 let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
     linkg = vis.append("g").attr("id", "linkg"), //liens
     nodeg = vis.append("g").attr("id", "nodeg"); //nodeuds
+
+
+
+
+
+var _zoom2 = d3.zoom()
+  .scaleExtent([.01, 100])
+      .on("zoom", function() {
+    infoG.attr("transform", d3.event.transform);
+    prev=d3.event.transform
+  })//;;
 //infoG est une selection D3, infog est un element html
-let infoG = canvas.append("svg").call(_zoom2).append("g")
+let zoomInfoG=canvas.append("svg").call(_zoom2)
+let infoG = zoomInfoG.append("g")
     .attr("id", "infog").attr("display", "block")
-,//largeWidth ? "block" : "none"), //infos
+
+var initialZoomInfo = d3.zoomIdentity.translate(0,0).scale(mobile?3:1);
+zoomInfoG.transition().duration(650).call(_zoom2.transform, initialZoomInfo);
+
+//largeWidth ? "block" : "none"), //infos
 
 infog = document.getElementById("infog") //automatic?
 //zoom ability
@@ -1365,7 +1376,6 @@ return u<v ? u+"|"+v : v+"|"+u;
 function infoDisp()
 {
     //lit l'info de d et affiche les infos correspondantes
-    infoWidth = mobile? "90%":300;
     //on enleve tout
     infoG.selectAll(".infoblock").remove()
     let off = 10;
