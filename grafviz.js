@@ -66,7 +66,7 @@ let params = {
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
     infoWidth = 300;
-    zoomInfo=mobile? 0.9*width/infoWidth
+    zoomInfo=mobile? 0.9*width/infoWidth :1
     off = params.dr;
     transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
@@ -282,7 +282,7 @@ let zoomInfoG=canvas.append("svg").call(_zoom2)
 let infoG = zoomInfoG.append("g")
     .attr("id", "infog").attr("display", "block")
 
-var initialZoomInfo = d3.zoomIdentity.translate(0,0).scale(mobile?3:1);
+var initialZoomInfo = d3.zoomIdentity.translate(0,0).scale(zoomInfo);
 zoomInfoG.transition().duration(650).call(_zoom2.transform, initialZoomInfo);
 
 //largeWidth ? "block" : "none"), //infos
