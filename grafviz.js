@@ -259,7 +259,7 @@ zoomCanvas.append('rect').attr('width',width).attr("height",height)//decoration
 
 var vis= zoomCanvas.append('g').attr("transform","translate("+centerX+","+centerY+")").append("g").attr("id", "vis")
 
-vis.append('circle').attr('r',30).attr('cx',-200).attr('cy',-200).attr("fill","red")
+//vis.append('circle').attr('r',30).attr('cx',-200).attr('cy',-200).attr("fill","red")
 
 //necessaire pr zoom
 
@@ -320,13 +320,12 @@ function adaptZoom() {
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
 
-    var total = [0, 1, 2, 3].reduce((max, b)=> b>max?b:max,0);
 
     let maxX = net.nodes.reduce((max, p) => p.highlighted && p.x > max ? p.x : max, net.nodes[0].x);
     let minX = net.nodes.reduce((min, p) => p.highlighted && p.x < min ? p.x : min, net.nodes[0].x);
     let minY = net.nodes.reduce((min, p) => p.highlighted && p.y < min ? p.y : min, net.nodes[0].y);
 
-    scaleFactor=Math.min( (width/4)/(maxX-focusX) , (width/3)/(focusY-minY) )
+    scaleFactor=Math.min( (width/4)/(50+maxX-focusX),  (width/4)/(50+focusX - minX) , (width/3)/(50+focusY-minY) , )
 
 
     //scaleFactor =  prev.k*Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
