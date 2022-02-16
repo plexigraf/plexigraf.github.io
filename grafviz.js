@@ -9,8 +9,6 @@
 //liens trop grands dépassent
 
 
-
-
 //petit bug: si je navigue dans les liens d'enfant en enfant dans le cadre, et qu'a la fin je
 //double clic sur un enfant dans le graphe, les noeuds qui ont été ouverts dans le cadre
 //se referment. Ils n'ont en effet pas été 'expanded' mais ils devraient s'ouvrir via 'showparents'
@@ -76,7 +74,7 @@ let params = {
     height = width*1.5, // svg height
     off = params.dr,
     centerX=width/2,
-    centerY=200
+    centerY=mobile? width/2 : width/3
     //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
@@ -318,11 +316,22 @@ function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
     newNodesNumber = net.nodes.length
     //pour dézoomer si le nb de noeuds augmente
-    scaleFactor =  prev.k*Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
 
-    console.log('zoom',newNodesNumber,scaleFactor,nodes[focus],prev)
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
+
+    var total = [0, 1, 2, 3].reduce((max, b)=> b>max?b:max,0);
+
+    let maxX = net.nodes.reduce((max, p) => p.highlighted && p.x > max ? p.x : max, net.nodes[0].x);
+    let minX = net.nodes.reduce((min, p) => p.highlighted && p.x < min ? p.x : min, net.nodes[0].x);
+    let minY = net.nodes.reduce((min, p) => p.highlighted && p.y < min ? p.y : min, net.nodes[0].y);
+
+    scaleFactor=Math.min( (width/4)/(maxX-focusX) , (width/3)/(focusY-minY) )
+
+
+    //scaleFactor =  prev.k*Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
+
+    console.log('zoom',newNodesNumber,scaleFactor,nodes[focus],prev,maxX,focusX)
     //console.log('scale',scaleFactor,focusX,focusY,oldFocusX,oldFocusY)
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
     var t = d3.zoomIdentity.translate(-focusX*scaleFactor,-focusY*scaleFactor).scale(scaleFactor);//prev.x,prev.y
@@ -1312,9 +1321,9 @@ crsrText.attr("display","none");
                 .attr("d", drawCluster);
         }
 
-        let minY = net.nodes.reduce((min, p) => p.y < min ? p.y : min, net.nodes[0].y);
-        let maxX = net.nodes.reduce((max, p) => p.x > max ? p.x : max, net.nodes[0].x); //unused
-        let minX = net.nodes.reduce((min, p) => p.x < min ? p.x : min, net.nodes[0].x);
+        //let minY = net.nodes.reduce((min, p) => p.y < min ? p.y : min, net.nodes[0].y);
+        //let maxX = net.nodes.reduce((max, p) => p.x > max ? p.x : max, net.nodes[0].x); //unused
+        //let minX = net.nodes.reduce((min, p) => p.x < min ? p.x : min, net.nodes[0].x);
 
         //var focusDeltaX = nodes[focus].x-globalCenter.x*scaleFactor/10
         //var focusDeltaY = nodes[focus].y-transCorrectenter.y*scaleFactor^2/2
