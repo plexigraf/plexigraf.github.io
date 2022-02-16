@@ -75,7 +75,7 @@ let params = {
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
     off = params.dr,
-    centerX=width/3,
+    centerX=width/2,
     centerY=200
     //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
