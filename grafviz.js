@@ -3,6 +3,14 @@
 //ne pas mettre les options au début/fichier séparé?
 
 //TO DO
+//Si deux entités sont liés indirectement (via leurs enfants), elles ne s'allument
+//pas quand l'autre est focused
+
+//liens trop grands dépassent
+
+
+
+
 //petit bug: si je navigue dans les liens d'enfant en enfant dans le cadre, et qu'a la fin je
 //double clic sur un enfant dans le graphe, les noeuds qui ont été ouverts dans le cadre
 //se referment. Ils n'ont en effet pas été 'expanded' mais ils devraient s'ouvrir via 'showparents'
@@ -36,7 +44,8 @@ let params = {
         screenRatio: 7/8,
         zoomFactor: 2, //plus c'est petit plus le graphe apparaitra grand
         dr: 44, // default point radius
-        alwaysShowParent: false, // dès qu'un noeud sort tous ses ancetres également (pour l'instant vrai que pour le focused node)
+        alwaysShowParent: false, // dès qu'un noeud sort tous ses ancetres également
+                                //(pour l'instant vrai que pour le focused node)
         initialFocus: 'root',
         expand_first_n_gens: 1,
         hierarchyInfo: true, //affiche layer, descendants pour chaque noeud
@@ -45,7 +54,7 @@ let params = {
         inheritPicFromChild: true,
         cleanNonFeatured: false, //remove nodes which only have non-featured descendants (incl. themselves)
         connectOtherParents: false, //put a link with non principal parents
-        inheritLinks: 0, //0 nodes showed required to inherit link
+        inheritLinks: 0, //0 nodes showed required to inherit link, to avoid link overcrowding
         addOrphansToRoot: true, //les noeuds dont le parent n'est pas dans data est rattaché à root
         displayFiliation: true,
         biPartiteLinks: true,
@@ -65,8 +74,10 @@ let params = {
     mobile = window.screen.width<800, //false enleverait l'affichage d'infos
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
-    off = params.dr;
-    transCorrect={'x':width *0, 'y':0}//why these values??
+    off = params.dr,
+    centerX=width/3,
+    centerY=200
+    //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
 let nodes = [];
@@ -211,7 +222,7 @@ function makeIndex(entries) {
 
 
 
-//on lance la simu
+//on met en place la structure DOM
 // --------------------------------------------------------
 
 const body = d3.select("body");
@@ -248,7 +259,9 @@ zoomCanvas.append('rect').attr('width',width).attr("height",height)//decoration
 
 
 
-var vis= zoomCanvas.append("g").attr("id", "vis")
+var vis= zoomCanvas.append('g').attr("transform","translate("+centerX+","+centerY+")").append("g").attr("id", "vis")
+
+vis.append('circle').attr('r',30).attr('cx',-200).attr('cy',-200).attr("fill","red")
 
 //necessaire pr zoom
 
@@ -304,22 +317,23 @@ infog = document.getElementById("infog") //automatic?
 function adaptZoom() {
     //calcul du nouveau zoom basé sur le nb de noeuds.
     newNodesNumber = net.nodes.length
-    scaleFactor =  Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
+    //pour dézoomer si le nb de noeuds augmente
+    scaleFactor =  prev.k*Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
 
-    console.log('zoom',newNodesNumber,scaleFactor)
+    console.log('zoom',newNodesNumber,scaleFactor,nodes[focus],prev)
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
     //console.log('scale',scaleFactor,focusX,focusY,oldFocusX,oldFocusY)
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
-    var t = d3.zoomIdentity.translate(prev.x,prev.y).scale(prev.k*scaleFactor);
+    var t = d3.zoomIdentity.translate(-focusX*scaleFactor,-focusY*scaleFactor).scale(scaleFactor);//prev.x,prev.y
     zoomCanvas.transition().duration(650).call(_zoom.transform, t);
 
     oldNodesNumber = newNodesNumber
     zoomCounter+=1
     console.log('zoomcounter',zoomCounter)
-    if (zoomCounter<3){
-    setTimeout(adaptZoom,2000)
-  }
+    //if (zoomCounter<2){
+    //setTimeout(adaptZoom,2000)
+  //}
 }
 
 /*
@@ -879,7 +893,7 @@ function visibleNetwork() {
         focusedNode.show = true;
         focusedNode.highlighted = true;
         showParents(focusedNode)
-        for (let k in focusedNode.linked) {//disabled for now as it makes too many nodes out
+        for (let k in focusedNode.linked) {
             nodes[focusedNode.linked[k]].show = true;
             nodes[focusedNode.linked[k]].highlighted = true;
             console.log(k, 'show focus')
@@ -1072,6 +1086,7 @@ crsrText.attr("display","none");
         .attr("class", "hull")
         .style("fill", d => fill(nodes[d.parentId].visibleParentId))
         .style("opacity", d => d.parentId == "root" ? 0.1 : d.parentId=='focus'? 1 : Math.min(0.8 , Math.max(0.1, 1 - (nodes[d.parentId].visibleDepth) / 3)))
+        .style("fill-opacity", d => d.parentId == "root" ? 0.1 : d.parentId=='focus'? 1 : Math.min(0.8 , Math.max(0.1, 1 - (nodes[d.parentId].visibleDepth) / 3)))
         //.attr("d", drawCluster)
         .style("stroke-width", "8px")
         .style("stroke", "blue") //d => fill(nodeById(d.parentId).visibleParentId))
@@ -1135,7 +1150,7 @@ crsrText.attr("display","none");
             init();
         })
 
-      node.append('pattern')
+      node.append('pattern')//affichage images
       .attr("id", d=> "image"+ (d.id.split(' ').join())  )
       .attr("width", 1)
       .attr("height", 1)
@@ -1326,7 +1341,7 @@ crsrText.attr("display","none");
 
     });
 
-    adaptZoom()
+    setTimeout(adaptZoom,2000)
 
 
 }
