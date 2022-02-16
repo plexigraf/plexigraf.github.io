@@ -69,12 +69,12 @@ let params = {
     //const filename = "taxo-graph.json"
     focus,
     prevFocus,
-    mobile = window.screen.width<800, //false enleverait l'affichage d'infos
+    mobile = window.screen.width<800, //enleve l'affichage d'infos et change le zoom auto
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
     off = params.dr,
-    centerX=width/2,
-    centerY=mobile? width/2 : width/3
+    centerX=width/2,//pour le zoom auto
+    centerY=mobile? width/2 : width/4
     //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
@@ -320,7 +320,7 @@ function adaptZoom() {
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
 
-
+    //on calcule le zoom en fonction des noeuds highlighted les plus loins du focus
     let maxX = net.nodes.reduce((max, p) => p.highlighted && p.x > max ? p.x : max, net.nodes[0].x);
     let minX = net.nodes.reduce((min, p) => p.highlighted && p.x < min ? p.x : min, net.nodes[0].x);
     let minY = net.nodes.reduce((min, p) => p.highlighted && p.y < min ? p.y : min, net.nodes[0].y);
@@ -339,9 +339,9 @@ function adaptZoom() {
     oldNodesNumber = newNodesNumber
     zoomCounter+=1
     console.log('zoomcounter',zoomCounter)
-    //if (zoomCounter<2){
-    //setTimeout(adaptZoom,2000)
-  //}
+    if (zoomCounter<2){
+    setTimeout(adaptZoom,1000)//on fait deux zoom au cas ou ca bouge encore
+  }
 }
 
 /*
@@ -888,7 +888,7 @@ function visibleNetwork() {
     //on montre les noeuds expanded ou dont le parent expanded
     for (let k in nodes) {
         nodes[k].prevShow = nodes[k].show; //pour faire popper au bon endroit éventuellement
-            nodes[k].highlighted = false
+            nodes[k].highlighted = false //sera modifié par la suite
         nodes[k].show = nodes[k].expanded || nodes[nodes[k].parentId].expanded || false;
         nodes[k].visibleDepth = 0;
 
@@ -991,12 +991,19 @@ function visibleNetwork() {
         j = 0;
     for (let k = 0; k < links.length; ++k) {
         numVisibleNodes = (nodes[links[k].source].show ? 1 : 0) + (nodes[links[k].target].show ? 1 : 0)
-        if (numVisibleNodes >= params.inheritLinks) { //on modifie les indices des sources pour qu'elles correspondent aux parents visibles
-            let visibleSourceIndex = displayedNodesMap[nodes[links[k].source].visibleParentId];
-            let visibleTargetIndex = displayedNodesMap[nodes[links[k].target].visibleParentId];
+        if (numVisibleNodes >= params.inheritLinks) { //on ne visualise le lien que si suffisament de vrais extremités (0, 1 ou 2) sont vraiment visibles (et pas seulement leur parent)
+          //on modifie les indices des sources pour qu'elles correspondent aux parents visibles
+            let visibleTarget=nodes[links[k].target].visibleParentId
+            let visibleSource=nodes[links[k].source].visibleParentId
+            let visibleSourceIndex = displayedNodesMap[visibleSource];
+            let visibleTargetIndex = displayedNodesMap[visibleTarget];
+            let focusedLinked = (visibleSource==focus || visibleTarget==focus)
+            if (focusedLinked) {nodes[visibleTarget].highlighted=true;
+                                nodes[visibleSource].highlighted=true}//on illumine la cible du lien si la source est focus
+            console.log("link",links[k],visibleSource,nodes[visibleSource],nodes[visibleSource].highlighted)
             if ((visibleSourceIndex != visibleTargetIndex)) {
 
-                let linkid = visibleSourceIndex + "|" + visibleTargetIndex;
+                let linkid = visibleSourceIndex + "|" + visibleTargetIndex;//
 
                 //on ajoute a la liste entre ces 2 parents visibles, ou on la créee
                 if (linkid in metaLinks) {
@@ -1349,7 +1356,7 @@ crsrText.attr("display","none");
 
     });
 
-    setTimeout(adaptZoom,2000)
+    setTimeout(adaptZoom,1000)
 
 
 }
