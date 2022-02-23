@@ -1,15 +1,16 @@
 import pandas,json,collections
 
-filename='efd_lille'
+filename='efd_paris'
+minimal_version=False
 light_version=True
 #filename='efd'
 # Opening JSON file
-
+non_indicated_string="-"#"non renseigné"
 
 def printjs(s):
     json.dumps(s, indent=4, sort_keys=True, default=str,ensure_ascii=False)
 
-df=pandas.read_json(filename+'.json').fillna("non renseigné")
+df=pandas.read_json(filename+'.json').fillna(non_indicated_string)
 nodes={'Entreprises':{'id':'Entreprises',
                         'parentId':'root'},
         'root':{'id':'root',
@@ -20,14 +21,12 @@ firmes=[]
 for index, row in df.iterrows():
     #print(row)
     cat=row['Catégorie Beneficiaire']
-    nom=row['Structure Bénéficiaire'] if row['Nom Prénom']=="non renseigné" else row['Nom Prénom']
+    nom=row['Structure Bénéficiaire'] if row['Nom Prénom']==non_indicated_string else row['Nom Prénom']
     ville=row['Beneficiaire Ville']
     if not nom in nodes:
 
         nodes[nom]={'id':nom,
-                        'Ville':ville,
                         'parentId':cat,
-                        'options':{'Nom complet':{'value':nom}}#,'Also member of':ville}
                         }
 
     if cat not in nodes:
@@ -46,17 +45,22 @@ for index, row in df.iterrows():
             #'targetName':firme,
             'target':firme,
             'targetParentId':'Entreprises',
-            'options': { 'Montant':{'value':str(row['Montant Ttc'])+" €"},#{k:{'value':str(v)} for k,v in row.to_dict().items()
-                        #'Détail':{'value':str(row['Date'])},
-                        'Date':{'value':str(row['Date'])},
-                        'ID Transparence Santé':{'value':row['Declaration ID'],'source':'Lien','url':'https://www.transparence.sante.gouv.fr/flow/interrogationAvancee?execution=e2s1'}
             }
-            }
-    link['options']['Détail']=  row['Detail'] if light_version else detail
 
-    if not light_version:
-        if filiale!="non renseigné":
+    if not minimal_version:
+        nodes[nom]['Ville']=ville
+        nodes[nom]['options']={'Nom complet':{'value':nom}}#,'Also member of':ville}
+
+        link['options']={ 'Montant':{'value':str(row['Montant Ttc'])+" €"},#{k:{'value':str(v)} for k,v in row.to_dict().items()
+                    #'Détail':{'value':str(row['Date'])},
+                    'Date':{'value':str(row['Date'])},
+                    'ID Transparence Santé':{'value':row['Declaration ID'],'source':'Lien','url':'https://www.transparence.sante.gouv.fr/flow/interrogationAvancee?execution=e2s1'
+                                                },
+                    'Détail': row['Detail'] if light_version else detail
+                    }
+        if filiale!= non_indicated_string:
             link['options']['Filiale']=filiale
+
     links+=[link]
 
     #print(',,,,',nodes[nom])
@@ -71,8 +75,9 @@ params= {"hierarchyInfo": False,
 
 words={"Member of": "Membre de", "Contains": "Contient", "Links": "Liens","Links with": "Liens avec","Size":'Taille'}
 
+minStr="-minimal" if minimal_version else ""
 print(collections.Counter(firmes))
-with open(filename+"-grafviz.json", "w+") as jsonFile:
+with open(filename+"-grafviz"+minStr+".json", "w+") as jsonFile:
     jsonFile.seek(0)
     json.dump({'nodes':nodes
                 ,'links':links,

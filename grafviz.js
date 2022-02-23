@@ -5,6 +5,20 @@
 //TO DO
 //Si deux entités sont liés indirectement (via leurs enfants), elles ne s'allument
 //pas quand l'autre est focused
+/*Rewrite infoG with things such as body.append("div")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "1px")
+    .style("border-radius", "5px")
+    .style("padding", "10px")
+    .html("<p>I'm a tooltip written in HTML</p><img src='https://github.com/holtzy/D3-graph-gallery/blob/master/img/section/ArcSmal.png?raw=true'></img><br>Fancy<br><span style='font-size: 40px;'>Isn't it?</span>");
+
+- les descendants invisibles devraient apparaitre dans les infos (et dans la recherche?)
+- pb temps de chargement: charger séparément structure et options (ou plutot prévoir de charger des options à posteriori)
+*/
+
 
 //liens trop grands dépassent
 
@@ -37,6 +51,12 @@
 //possibilité de naviger dans les infos des briques, sous briques etc...
 
 
+/* sart of code */
+
+
+
+//SETUP
+
 
 let params = {
         screenRatio: 7/8,
@@ -58,6 +78,7 @@ let params = {
         biPartiteLinks: true,
         saveAllData: false,
         infoMax: 50,//max infoblocks to display
+        maxNodeShow: 80//max number of nodes when expanding linked of focus
         //initialFocus;undef by default
     },
     linksWidth= {
@@ -88,7 +109,6 @@ let infoTextSize = 14;
 let oldNodesNumber = params.oldNodesNumber || 10;//pour le zoom initial il faut savoir combien il y aura de noeuds à l'écran
 let scaleFactor = 1;
 let maxGen = 0;
-const maxSearchResults=40;
 let words={};
 let net;
 let force, link, linkp, node, nodec, focusedNode, focusX, focusY;
@@ -100,6 +120,7 @@ var zoomCounter=0
 let meta_obj
 //loading data
 console.log('load data')
+console.time('load')
 //load prepared data if any
 d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 	if (!error) {
@@ -116,11 +137,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 		nodes[focus].deployedInfos = true
 
 		console.log('nodes rtu', nodes, nodes[focus])
-		infosFocus(nodes[focus])
-		console.log("focus", focus, params.initialFocus)
-		appendDbInfo('Starting simulation')
-		infoDisp()
-		init()
+		startVis()
 	} else {
     console.log('no rtu data',load_from_WD,wdjs)
 		if (load_from_WD) {//load online from WD
@@ -134,7 +151,9 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 			console.log('querying...' + wdKey)
 			appendDbInfo("Query from WikiData.org, please wait...");
 			const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+
 			meta_obj=queryDispatcher.query(sparqlQuery).then(treatWDDB);
+
 		} else if (wdjs) {//load from locally saved WD data
 			if (wdKey.endsWith('aths')) {
 				document.getElementById("description").innerHTML = 'This page is a visualisation of informations about mathematicians entred by WikiData users.<br><br> Explore mathematicians lineages by expanding the nodes and/or searching in the form above. Try for instance "Pythagoras", "Fields", "Fourier", .... <br><br> If you disagree with the informations, you are welcome to modify them yourselves on Wikidata.org! The link is given on the left info panel.'
@@ -142,11 +161,15 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 			}
 			console.log('wdjs, loading file')
 			meta_obj=$.getJSON("wdOffline/" + wdKey + ".json", treatWDDB)
+
+
 		} else {//load from GV data file
       console.log('json?',filename)
 			//lance la simu
+      //$.getJSON(filename, function(json) {
 
 			d3.json(filename, function(error, json) {//very long to execute...
+
         json.params=json.params || {}
         words=json.words||{}
 				console.log('file params', json.params)
@@ -187,9 +210,16 @@ let idx;
 
 //3eme partie: on fait l'index pour la recherche
 //$.getJSON(filename, function(json) {
+
+
+
+
+
 function makeIndex(entries) {
 
+    console.timeEnd('build')
     console.log('entries', entries)
+    console.time('search index')
     idx = lunr(function() {
         this.ref('id')
         this.field('name', {
@@ -202,9 +232,16 @@ function makeIndex(entries) {
             entries[id].strParams = (entries[id].feat? (entries[id].name+' ').repeat(10) : '')+JSON.stringify(entries[id].options).replace(/[^0-9a-z]/gi, ' ')
             this.add(entries[id])
         } //, this)
-    })
 
-    console.log('idx done', idx)
+    }
+
+
+  )
+
+
+  console.timeEnd('search index')
+
+  console.log('idx done', idx)
 
     /*results = idx.search("truc")
     console.log('truc results', results)
@@ -256,7 +293,6 @@ zoomCanvas.append('rect').attr('width',width).attr("height",height)//decoration
 
 
 
-
 var vis= zoomCanvas.append('g').attr("transform","translate("+centerX+","+centerY+")").append("g").attr("id", "vis")
 
 //vis.append('circle').attr('r',30).attr('cx',-200).attr('cy',-200).attr("fill","red")
@@ -281,10 +317,15 @@ let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
 
 
 var _zoom2 = d3.zoom()
-  .scaleExtent([.01, 100])
-      .on("zoom", function() {
-    infoG.attr("transform", d3.event.transform);
-    prev=d3.event.transform
+  .scaleExtent([.1,10])
+  .on("zoom", function() {
+    e=d3.event.transform
+    //_zoom2.translate([e.x,e.y])
+    infoG.attr("transform", "translate(" + [Math.max(0,e.x), Math.max(0,e.y)] + ") scale(" + e.k + ")");
+
+    //infoG.attr("transform", d3.event.transform);
+    prev=e
+  //console.log("prev",prev)
   })//;;
 //infoG est une selection D3, infog est un element html
 let zoomInfoG=canvas.append("svg").call(_zoom2)
@@ -319,14 +360,20 @@ function adaptZoom() {
 
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
-
+    console.log('zoom highlighted?')
     //on calcule le zoom en fonction des noeuds highlighted les plus loins du focus
-    let maxX = net.nodes.reduce((max, p) => p.highlighted && p.x > max ? p.x : max, net.nodes[0].x);
-    let minX = net.nodes.reduce((min, p) => p.highlighted && p.x < min ? p.x : min, net.nodes[0].x);
-    let minY = net.nodes.reduce((min, p) => p.highlighted && p.y < min ? p.y : min, net.nodes[0].y);
+    let maxX = net.nodes.reduce((max, p) => p.highlighted && p.x > max ? p.x : max, nodes[focus].x);
+    let maxY = net.nodes.reduce((max, p) => p.highlighted && p.y > max ? p.y : max, nodes[focus].y);
+    let minX = net.nodes.reduce((min, p) => p.highlighted && p.x < min ? p.x : min, nodes[focus].x);
+    let minY = net.nodes.reduce((min, p) => p.highlighted && p.y < min ? p.y : min, nodes[focus].y);
 
-    scaleFactor=Math.min( (width/4)/(50+maxX-focusX),  (width/4)/(50+focusX - minX) , (width/3)/(50+focusY-minY) , )
+    spaceMaxX=(width/4)/(Math.max(400,maxX-focusX))
+    spaceMinX=(width/4)/(Math.max(400,focusX - minX))
+    spaceMinY=(width/4)/(Math.max(400,focusY-minY))
+    spaceMaxY=(width/4)/(Math.max(400,maxY-focusY))
+    scaleFactor=Math.min(spaceMaxX ,  spaceMinX,spaceMinY )
 
+    console.log('zoom char',maxX-focusX,maxY-focusY,focusX - minX,focusY-minY,spaceMaxX ,  spaceMinX,spaceMinY,scaleFactor)
 
     //scaleFactor =  prev.k*Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
 
@@ -370,6 +417,9 @@ d3.select(this).classed("dragging", false);
 
 //construit nodes et links à partir de données json
 function buildNodesLinks(data) {
+
+  console.timeEnd('load')
+  console.time('build')
     //console.log(json_WD,json_WD['root'])
     //if (load_from_WD){data = json_WD;}
     //console.log('keys',keys(data.nodes))
@@ -740,7 +790,7 @@ function buildNodesLinks(data) {
         des=nodes[i].descendants
         if (des>0){
         nodes[i].options['Size'] = {
-            'value': nodes[i].children.length+" ("+des.toString()+")"
+            'value': nodes[i].children.length+" ("+(des.toString()+1)+" "+word(nodes[i],"descendants")+")"
             ,
             'priority': 100
         };
@@ -764,24 +814,19 @@ function buildNodesLinks(data) {
     console.log('make index')
 
     appendDbInfo('Building search Index...')
+
+
     makeIndex(nodes)
 
     let meta_obj={'nodes':nodes,'links':links,'params':params,'idx':idx,'words': data.words || {}}
 
 
 
-        focus = params.initialFocus //nodes[1].id
-        prevFocus=focus
-        nodes[focus].deployedInfos=true
-        if (!mobile) {infosFocus(nodes[focus])}
-        console.log("focus", focus,params.initialFocus)
-    //pour la fonction de recherche
-    appendDbInfo('Starting simulation')
-    infoDisp()
-    init()
 
-    console.log('saving not', wdKey, nodes)
+    //console.log('saving not', wdKey, nodes)
     if (params.saveAllData) {
+      console.time('save')
+      console.log("savinf all data")
       const a = document.createElement("a");
       a.href = URL.createObjectURL(new Blob([JSON.stringify(meta_obj, null, 2)], {
         type: "text/plain"
@@ -791,9 +836,12 @@ function buildNodesLinks(data) {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+
+        console.timeEnd('save')
       //on calcule les liens visibles et on lance la simulation
-      init();
     }
+
+    startVis()
 
 }
 
@@ -814,7 +862,7 @@ function handleClick(event) { //pour la fctn de recherche
         value=value+' '+(value + '~1')+' '+(value + '*')+' '+('*'+value)
         }
         console.log('value',value)
-        let searchResults = idx.search(value).slice(0, maxSearchResults);
+        let searchResults = idx.search(value).slice(0, params.infoMax);
         //searchResults = searchResults.concat(idx.search(term + '~1'));
         //searchResults = searchResults.concat(idx.search(term + '*'));
         //searchResults = searchResults.concat(idx.search('*'+term ));
@@ -875,7 +923,7 @@ function updateVisibleDepth(n) { //used for transparency
 function visibleNetwork() {
     //règles:
     //-si un noeud a son parent expanded=true, on le montre (show=true)
-    //-si un noeud est focused, ou s'il est lié à un focused, on le montre
+    //-si un noeud est focused, ou s'il est lié à un focused, on le montre - limiter a pas plus de x noeuds...
     //-si alwaysShowParent: si un noeud a show=true, on montre son parent
     //fonctionnement: user définit expanded et focus, show est calculé par le programme en fctn des règles
     //a faire:
@@ -894,24 +942,29 @@ function visibleNetwork() {
 
     }
 
-    //on montre le focuses et ses liens, et leurs parents
+    //on montre le focuses et ses liens, et leurs parents s'ils ne sont pas trop nombreux
     if (focus) {
         let focusedNode = nodes[focus]
         console.log('focus', focus, focusedNode)
         focusedNode.show = true;
         focusedNode.highlighted = true;
         showParents(focusedNode)
-        for (let k in focusedNode.linked) {
-            nodes[focusedNode.linked[k]].show = true;
-            nodes[focusedNode.linked[k]].highlighted = true;
-            console.log(k, 'show focus')
-            if (params.alwaysShowParent) {
-                showParents(nodes[focusedNode.linked[k]])
-            }
+        if (focusedNode.linked.length<params.maxNodeShow){
+          for (let k in focusedNode.linked) {
+              nodes[focusedNode.linked[k]].show = true;
+              nodes[focusedNode.linked[k]].highlighted = true;
+              //console.log(k, 'show focus')
+              if (params.alwaysShowParent) {
+                  showParents(nodes[focusedNode.linked[k]])
+              }
+          }
+        } else {
+          console.log('too many neighbours to display')
         }
-        for (let k in focusedNode.children) {//disabled for now as it makes too many nodes out
+          //disabled for now as it makes too many nodes out
+        /*for (let k in focusedNode.children) {
             nodes[focusedNode.children[k]].highlighted = true;
-        }
+        }*/
     }
 
     let imgCounter = 0;
@@ -1000,7 +1053,7 @@ function visibleNetwork() {
             let focusedLinked = (visibleSource==focus || visibleTarget==focus)
             if (focusedLinked) {nodes[visibleTarget].highlighted=true;
                                 nodes[visibleSource].highlighted=true}//on illumine la cible du lien si la source est focus
-            console.log("link",links[k],visibleSource,nodes[visibleSource],nodes[visibleSource].highlighted)
+            //console.log("link",links[k],visibleSource,nodes[visibleSource],nodes[visibleSource].highlighted)
             if ((visibleSourceIndex != visibleTargetIndex)) {
 
                 let linkid = visibleSourceIndex + "|" + visibleTargetIndex;//
@@ -1032,6 +1085,19 @@ function visibleNetwork() {
         nodes: displayedNodes
     }
 
+}
+
+function startVis(){
+  focus = params.initialFocus //nodes[1].id
+  prevFocus=focus
+  nodes[focus].deployedInfos=true
+  if (!mobile) {infosFocus(nodes[focus])
+                infoDisp()}
+  console.log("startVis, focus", focus,params.initialFocus)
+//pour la fonction de recherche
+  appendDbInfo('Starting simulation')
+
+  init()
 }
 
 
@@ -1179,13 +1245,16 @@ crsrText.attr("display","none");
 
 
     nodec = node.append("circle")
-        .attr("stroke-width", d => d.isLeave ? d.id == focus ? 10 : "3px" : 5 * (Math.sqrt(d.depth)))
+        .attr("stroke-width", 3)
         .attr("stroke", d => (d.id === focus) ? "red" : 'white')
         //.style("fill-opacity", d => d.expanded ? 0 : 1)
         .attr("r", d => d.radius)
         .attr("cx", 0)
         .attr("cy", 0)
       .attr("fill",d=> d.imgDisp ?  "url(#image"+ (d.id.split(' ').join()) +")" :  d.expanded ? fill(d.id) : fill(nodes[d.parentId].visibleParentId))
+
+    node.append('circle').filter(d=>!d.isLeave).attr('r',d=>d.radius+5+5 * (Math.sqrt(d.depth))/2)
+          .attr("stroke-width",d => 5 * (Math.sqrt(d.depth))).attr('fill','none').attr('stroke','white')
 
 
     /*node.append("svg:image")
@@ -1294,7 +1363,7 @@ crsrText.attr("display","none");
         //.attr("display", d => d.options.type === "Member of" ? "block" : "block")
         .style("stroke-width", d => linksWidth[d.type||'default'])
         .on("click", function(d) {
-            focus = (focus==d.source.id)? focus=d.target.id : focus=d.source.id;
+            focus = (focus==d.source.id)? focus=d.target.id : focus=d.source.id;//pb here?
             //if (largeWidth) {
                 removeInfos();
                 infos = [d, {
@@ -1430,8 +1499,6 @@ function infoDisp()
             .attr("class", "infoblock")
             .attr("transform", "translate(" + (d.off || off) + "," + prevHeight + ")")
 
-            if (counter>params.infoMax){
-              break}
         //rectangle du cadre titre
         info.append("rect")
             .data([d]).attr("fill", d => fill(d.id) || 'lightblue')
@@ -1514,9 +1581,11 @@ function infoDisp()
                 .attr("x", 30)
                 .attr("y", 20)
                 .on("mouseover", function(d) {
-                    d3.select(this).style("cursor", "pointer")
-                    //crsrText.text(name(d.parentId))
-                })
+                      d3.select(this).style("cursor", "pointer")
+                      lightNodeLinks(d, "on")
+                  }).on("mouseout", function(d) {
+                      lightNodeLinks(d, "off")
+                  })
                 .on("click", function(d) {
                     console.log('clictext')
                     //on range l'ancien focus, sauf si on clique sur un noeud déballé
@@ -1590,7 +1659,7 @@ function infoDisp()
                 .append("a")
                 .attr("href", d =>  d.url)
                 .attr("target", "_blank")
-                .text(d => d.url ? " (source " + d.source + ")" :
+                .text(d => d.url ? " (source: " + shorten(d.source||d.url) + ")" :
                     "")
                 .attr("font-size", 10)
                 .attr("stroke", "blue")
@@ -1635,6 +1704,7 @@ function wrapText(){
 }
 
 function collectInfos(d) {
+
     if (d.noInfoDisplay) {
         return [{}]
     }
@@ -1653,7 +1723,7 @@ function collectInfos(d) {
             //maybe problem because linked contains objects now, not just ids
             result.push({
                 'title': word(d, "Links with"),
-                'value': d.linked.map(id => nodes[id].name).join(', '),
+                'value': d.linked.length<=10 ? d.linked.map(id => nodes[id].name).join(', ') : d.linked.slice(0,9).map(id => nodes[id].name).join(', ')+"... + "+(d.linked.length-9)+" "+word({},'others'),
                 'priority': 100
             })
         }
@@ -1674,7 +1744,7 @@ function collectInfos(d) {
             option.title=word(d,e)
             if (typeof(option.value)=='object') {//concat set elements
                 values=[]
-                console.log(d,option)
+                //console.log(d,option)
                 option.value.forEach(function(s){
                   let t=nodes[s]?nodes[s].shortName:word(d,s)||s
                   values.push(t)
@@ -1736,11 +1806,17 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
         })
 
         infoDisp();
-        d.children.forEach(function(c){
-          infos.push(nodes[c])
+        for (let i=0;i<d.children.length;i++){
+          infos.push(nodes[d.children[i]])
+          if (i>params.infoMax) {
+            infos.push({"type":"Contains",
+                        "value":"...+ "+(d.children.length-params.infoMax)+" "+word({},"others"),
+                        "off":0})
+            break
+          }
         }
 
-      )
+
     }
 
 
@@ -1751,8 +1827,16 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
             "off": 10,
             "deployedInfos": true
         })
-
-        infos = infos.concat(d.links)
+        let toConcat
+        if (d.links.length<params.infoMax) {
+          toConcat =d.links }
+          else{
+            toConcat= d.links.slice(0,params.infoMax)
+            toConcat.push({"type":"Contains",
+                          "value":"...+ "+(d.links.length-params.infoMax)+" "+word({},"others"),
+                          "off":0})
+                        }
+        infos = infos.concat(toConcat)
     }
 
     infoDisp();
@@ -1926,5 +2010,6 @@ function word(d, s) {
 }
 
 function shorten(s) {
+//  console.log("shorten",s)
   return s.length>32? s.substring(0,25)+"..." : s
 }
