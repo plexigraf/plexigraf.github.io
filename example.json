@@ -1,0 +1,16 @@
+{ "nodes": {
+        "Europe":{
+            "parentId": "root"
+        },
+        "France":{
+            "parentId": "Europe"
+         },
+        "US":{
+            "parentId": "root"
+         }},
+    "links":[
+        {
+            "source": "France",
+            "target": "US"
+        }]
+}

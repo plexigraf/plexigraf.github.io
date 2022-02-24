@@ -81,11 +81,16 @@ let params = {
         maxNodeShow: 80//max number of nodes when expanding linked of focus
         //initialFocus;undef by default
     },
-    linksWidth= {
+    linkStrength= {
         'Member of': 3,
         'Also member of': 1,
-        'Multiple links': 5,
-        'default':10
+        'Multiple links': 10,
+        'default':5
+    },
+    linksColor={
+          'Member of': 'grey',
+          'Also member of': 'grey',
+          'default':'blue'
     },
     //const filename = "taxo-graph.json"
     focus,
@@ -169,7 +174,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
       //$.getJSON(filename, function(json) {
 
 			d3.json(filename, function(error, json) {//very long to execute...
-
+        console.log(json)
         json.params=json.params || {}
         words=json.words||{}
 				console.log('file params', json.params)
@@ -413,7 +418,14 @@ d3.select(this).classed("dragging", false);
 //return node.firstName + " " + node.lastName;
 
 
+function lStrength(link){
+  return (link.strength||linkStrength[link.type||'default'])
+}
 
+function lWidth(link){
+  let s=link.strength
+  return s/(1+s/params.dr)
+}
 
 //construit nodes et links à partir de données json
 function buildNodesLinks(data) {
@@ -431,8 +443,8 @@ function buildNodesLinks(data) {
           console.log(keys[k],params[keys[k]])
     };
     console.log(params)
-    for (let k in data.linksWidth) {
-        linksWidth[k] = data.linksWidth[k]
+    for (let k in data.linkStrength) {
+        linkStrength[k] = data.linkStrength[k]
     }
     console.log('data', data)
 
@@ -484,6 +496,7 @@ function buildNodesLinks(data) {
     dictNodes={}//transform nodes in dict if needed
     for (let i in data.nodes){
       let n = data.nodes[i]
+      n.id=n.id||i
       if (n.id in dictNodes){
         console.log('error: 2 nodes with id ',n.id,n)
           window.alert('error: 2 nodes with id ',n.id)
@@ -790,7 +803,7 @@ function buildNodesLinks(data) {
         des=nodes[i].descendants
         if (des>0){
         nodes[i].options['Size'] = {
-            'value': nodes[i].children.length+" ("+(des.toString()+1)+" "+word(nodes[i],"descendants")+")"
+            'value': nodes[i].children.length+" ("+(des+1).toString()+" "+word(nodes[i],"descendants")+")"
             ,
             'priority': 100
         };
@@ -1043,11 +1056,12 @@ function visibleNetwork() {
     let metaLinks = {},
         j = 0;
     for (let k = 0; k < links.length; ++k) {
-        numVisibleNodes = (nodes[links[k].source].show ? 1 : 0) + (nodes[links[k].target].show ? 1 : 0)
+        let link=links[k]
+        numVisibleNodes = (nodes[link.source].show ? 1 : 0) + (nodes[link.target].show ? 1 : 0)
         if (numVisibleNodes >= params.inheritLinks) { //on ne visualise le lien que si suffisament de vrais extremités (0, 1 ou 2) sont vraiment visibles (et pas seulement leur parent)
           //on modifie les indices des sources pour qu'elles correspondent aux parents visibles
-            let visibleTarget=nodes[links[k].target].visibleParentId
-            let visibleSource=nodes[links[k].source].visibleParentId
+            let visibleTarget=nodes[link.target].visibleParentId
+            let visibleSource=nodes[link.source].visibleParentId
             let visibleSourceIndex = displayedNodesMap[visibleSource];
             let visibleTargetIndex = displayedNodesMap[visibleTarget];
             let focusedLinked = (visibleSource==focus || visibleTarget==focus)
@@ -1061,12 +1075,17 @@ function visibleNetwork() {
                 //on ajoute a la liste entre ces 2 parents visibles, ou on la créee
                 if (linkid in metaLinks) {
                     metaLinks[linkid].type='Multiple links'
-                    metaLinks[linkid].links.push(links[k]);
+                    metaLinks[linkid].links.push(link);
+                    metaLinks[linkid].types.push(link.type||'default');
+                    metaLinks[linkid].strength+=lStrength(link);
+
                     } else {
                     metaLinks[linkid] = {
                         source: visibleSourceIndex,
                         target: visibleTargetIndex,
-                        links: [links[k]],
+                        links: [link],
+                        types: [link.type||'default'],
+                        strength: lStrength(link),
                         type: links[k].type
                       };
                     //(j,"lien",k,"de",visibleSourceIndex,"vers",visibleTargetIndex,metaLinks[j],links[k])
@@ -1353,7 +1372,7 @@ crsrText.attr("display","none");
 
     linkp = link.append("polygon")
         .attr("class", d => ((d.source.id === focus) || (d.target.id === focus)) ? "focus" : "background")
-        .attr("stroke", d => ((d.source.id === focus) || (d.target.id === focus)) ? "red" : "grey")
+        .attr("stroke", d => ((d.source.id === focus) || (d.target.id === focus)) ? "red" : linksColor[d.types[0]||d.type||'default'])
         .attr("opacity", d => ((d.source.id === focus) || (d.target.id === focus)) ? 1 : 0.2)
         .attr("points", function(d) {
             let dx = d.target.x - d.source.x;
@@ -1361,7 +1380,7 @@ crsrText.attr("display","none");
             return "0 0 " + dx + " " + dy
         })
         //.attr("display", d => d.options.type === "Member of" ? "block" : "block")
-        .style("stroke-width", d => linksWidth[d.type||'default'])
+        .style("stroke-width",  lWidth)
         .on("click", function(d) {
             focus = (focus==d.source.id)? focus=d.target.id : focus=d.source.id;//pb here?
             //if (largeWidth) {
