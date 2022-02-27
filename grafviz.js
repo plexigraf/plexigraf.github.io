@@ -3,6 +3,7 @@
 //ne pas mettre les options au début/fichier séparé?
 
 //TO DO
+//classer enfants par taille
 //adapter taille texte
 //Si deux entités sont liés indirectement (via leurs enfants), elles ne s'allument
 //pas quand l'autre est focused. Réparé?
@@ -480,8 +481,8 @@ function buildNodesLinks(data) {
         n.shortName=n.shortName || shorten(n.name)
         n.name = n.name+(n.feat?' °':'')
         n.children = [];
-        n.x = 100 + width * Math.random();
-        n.y = 300 * Math.random();
+        n.x = 100 + 2*width * Math.random();
+        n.y = 100+2*height* Math.random();
         n.px = n.x
         n.py = n.y;
         n.radius = params.dr;
@@ -1847,15 +1848,23 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
         })
 
         infoDisp();
-        for (let i=0;i<d.children.length;i++){
-          infos.push(nodes[d.children[i]])
-          if (i>params.infoMax) {
-            infos.push({"type":"Contains",
-                        "value":"...+ "+(d.children.length-params.infoMax)+" "+word({},"others"),
-                        "off":0})
-            break
-          }
+        if (!d.ordBigChildren){//sort kids according to nb of desc + nb of links, take [infomax] first
+          console.log('big kids of ',d.id)
+          d.ordBigChildren=d.children.sort((n1,n2)=>-nodes[n1].descendants-nodes[n1].linked.length+nodes[n2].descendants+nodes[n2].linked.length).slice(0,params.infoMax)
+          console.log(d.ordBigChildren)
         }
+        let i
+        for (i=0;i<d.ordBigChildren.length;i++){
+          infos.push(nodes[d.children[i]])
+
+
+        }
+        if (i>=params.infoMax) {
+          infos.push({"type":"Contains",
+                      "value":"...+ "+(d.children.length-params.infoMax)+" "+word({},"others"),
+                      "off":0})
+        }
+        console.log(infos)
 
 
     }
