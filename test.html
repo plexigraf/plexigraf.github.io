@@ -1,24 +1,76 @@
-<!DOCTYPE html>
-<meta charset = "utf-8">
+
 <html>
 <head>
+    <meta charset="utf-8">
 
-  <title>Graph exploration</title>
+    <script src="https://d3js.org/d3.v4.min.js">
+    </script>
 
-  <!--D3v3, textbox, hierarchy
-  <script src="https://d3plus.org/js/d3plus.js"></script>
--->
-   <script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>
+    <style>
+        svg text {
+            fill: green;
+            font: 20px sans-serif;
+            text-anchor: center;
+        }
+
+        rect {
+          pointer-events: all;
+        }
+    </style>
 
 </head>
+
 <body>
+    <center>
+        <h1 style="color: green;">
+            Geeksforgeeks
+        </h1>
 
-<script >
+        <h3>D3.js | zoom.extent() Function</h3>
 
+        <svg></svg>
 
+        <script>
+            var width = 400;
+            var height = 200;
 
-</script>
+            var svg = d3.select("svg")
+              .attr("width", width)
+              .attr("height", height);
 
-</script>
+            // The scale used to display the axis.
+            var scale = d3.scaleLinear()
+              .range([10, width-20])
+              .domain([0, 100]);
+
+            var shadowScale = scale.copy();
+
+            var axis = d3.axisBottom()
+              .scale(scale);
+
+            var g = svg.append("g")
+              .attr("transform", "translate(0, 50)")
+              .call(axis);
+
+            // Standard zoom behavior:
+            var zoom = d3.zoom()
+              .extent([[0, 0], [10,10]])
+              .on("zoom", zoomed);
+
+            // Call the Zoom.
+            var rect = svg.append("rect")
+              .attr("width", width)
+              .attr("height", height)
+              .attr("fill", "none")
+              .call(zoom);
+
+            function zoomed() {
+              var t = d3.event.transform;
+              scale.domain(t.rescaleX(shadowScale).domain());
+              g.call(axis);
+            }
+        </script>
+    </center>
 </body>
+
 </html>

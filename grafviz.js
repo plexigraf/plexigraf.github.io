@@ -3,8 +3,12 @@
 //ne pas mettre les options au début/fichier séparé?
 
 //TO DO
+//adapter taille texte
 //Si deux entités sont liés indirectement (via leurs enfants), elles ne s'allument
-//pas quand l'autre est focused
+//pas quand l'autre est focused. Réparé?
+//Pouvoir cliquer sur les noms d'un lien (dans infog)
+//faire apparaitre les liens des descendants dans infoG?
+//build search index later. Only index featured?
 /*Rewrite infoG with things such as body.append("div")
     .style("position", "absolute")
     .style("visibility", "hidden")
@@ -79,6 +83,7 @@ let params = {
         saveAllData: false,
         infoMax: 50,//max infoblocks to display
         maxNodeShow: 80//max number of nodes when expanding linked of focus
+        //indexOnlyFeatured: true//Do not index non featured nodes in search
         //initialFocus;undef by default
     },
     linkStrength= {
@@ -98,6 +103,7 @@ let params = {
     mobile = window.screen.width<800, //enleve l'affichage d'infos et change le zoom auto
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
     height = width*1.5, // svg height
+    nameMagnif=mobile?1.5:1,
     off = params.dr,
     centerX=width/2,//pour le zoom auto
     centerY=mobile? width/2 : width/4
@@ -231,12 +237,23 @@ function makeIndex(entries) {
             boost: 10
         })
         this.field('strParams')
+        if (Object.keys(entries).length>3000){//abbrev version
+                console.log('abbrev index')
+                  for (id in entries) {
+                      //idealement il  faudrait enlever les keys du json
+                        if (entries[id].feat)
+                        {this.add(entries[id])
+                    }
+                  } //, this)
+        }
+        else {
 
         for (id in entries) {
             //idealement il  faudrait enlever les keys du json
             entries[id].strParams = (entries[id].feat? (entries[id].name+' ').repeat(10) : '')+JSON.stringify(entries[id].options).replace(/[^0-9a-z]/gi, ' ')
             this.add(entries[id])
         } //, this)
+        }
 
     }
 
@@ -791,10 +808,10 @@ function buildNodesLinks(data) {
 
 
     //on calcule la taille de chacun, y compris noeuds nouvellement créés
-
+    let rootDesc=nodes['root'].descendants
     for (let i in nodes) {
         //nodes[i].descendants = size(nodes[i]) - 1
-        nodes[i].radius = params.dr + Math.min((nodes[i].descendants), 100)
+        nodes[i].radius = params.dr + Math.min(100*(nodes[i].descendants)/rootDesc, 100)
         //[nodes[i].depth,nodes[i].depthGuy] = depth(nodes[i])
         nodes[i].isLeave = (nodes[i].children.length == 0) //feuille de l'arbre = pas d'enfants
         if (nodes[i].options['Layer']<=params.expand_first_n_gens){
@@ -1236,7 +1253,7 @@ crsrText.attr("display","none");
             if (focus == d.id && !d.isLeave ) {
               proceed=true
             if (d.children.length>80) {
-              proceed=window.confirm('It is not recommended to expand a node with so many children, do you wish to continue?')
+              proceed=window.confirm('It is not recommended to expand a node with so many children ('+d.children.length+'), do you wish to continue?')
             }
             if (proceed){
                 d.expanded = true;
@@ -1293,17 +1310,22 @@ crsrText.attr("display","none");
         .attr("class", "boxname top")//will contain first name, width is determined later depending on first name
         .attr("rx", 6)
         .attr("ry", 6)
+        .attr('stroke-width',2)
+        .attr('stroke',d=>fill(d.parentId))
 
     nodeTextg.append("rect")
         .attr("class", "boxname middle")//contains last name if any
         .attr('display',d=>d.lastName?'block':'none')
         .attr("rx", 6)
         .attr("ry", 6)
+        .attr('stroke-width',2)
+        .attr('stroke',d=>fill(d.parentId))
 
     nodeTextg.append("text")
         .attr("x", 0)
+        .style("font-size", 18*nameMagnif)
         .style("font-family", "American Typewriter, serif")
-        .attr("y", 0)//d => d.lastName ? d.imgDisp ?  "2em" : "-1.2em" : d.imgDisp ? "3em" : 0)//d.radius  : -0.6*d.radius : d.imgDisp ? 1.5*d.radius:0)//
+        .attr("y", -5*nameMagnif)//d => d.lastName ? d.imgDisp ?  "2em" : "-1.2em" : d.imgDisp ? "3em" : 0)//d.radius  : -0.6*d.radius : d.imgDisp ? 1.5*d.radius:0)//
         .text(d => d.firstName) //+d.visibleDepth)//+(maxGen-d.generation))
         .each(function(d) {//determines width for bounding white square
             let box = this.parentNode.getBBox();
@@ -1314,14 +1336,14 @@ crsrText.attr("display","none");
     nodeTextg.selectAll(".top")
         //.attr("rx",10)
         .attr("x", d => d.bb1x - 2)
-        .attr("y", '-1em')//d => d.imgDisp ? "1em" : "-2em") // -37)
+        .attr("y", -21*nameMagnif)//d => d.imgDisp ? "1em" : "-2em") // -37)
         //.attr("display", d => d.lastName ? "block" : "none")
         .attr("width", d => d.bb1w || 10)
-        .attr("height", 21)
+        .attr("height", 21*nameMagnif)
 
 
     nodeTextg.append("text")
-        .style("font-size", "18px")
+        .style("font-size", 18*nameMagnif)
         .style("font-family", "American Typewriter, serif")
         .attr("x", 0)
         .attr("y", '1em')//d => d.imgDisp ? "3em" : 0)
@@ -1336,14 +1358,14 @@ crsrText.attr("display","none");
         .selectAll(".middle")
         //.attr("rx",6)
         .attr("x", d => d.lastName ? d.bb2x + 2 : d.bb1x + 2)
-        .attr("y", '0em')//d => d.imgDisp ? "2em" : "-1em")
+        .attr("y", 0)//2*nameMagnif)//d => d.imgDisp ? "2em" : "-1em")
         .attr("width", d => d.lastName ? d.bb2w : d.bb1w)
-        .attr("height", 23)
+        .attr("height", 23*nameMagnif)
 
     nodeTextg.append("text")
-        .style("font-size", "10px")
+        .style("font-size", 10*nameMagnif)
         .style("font-family", "American Typewriter, serif")
-        .attr("dy", 30)//d=>d.lastName?'3em':'1.5em')//d => d.imgDisp ? "3.8em" : "1.3em")
+        .attr("dy", d=>d.lastName?33*nameMagnif:10*nameMagnif)//d => d.imgDisp ? "3.8em" : "1.3em")
         .text(d => nodes[d.parentId].shortName)
         //.attr("y", '3em')//d => d.imgDisp ? "3em" : 0)
 
