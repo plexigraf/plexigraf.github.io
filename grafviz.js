@@ -5,6 +5,7 @@
 //TO DO
 //classer enfants par taille
 //adapter taille texte
+//au lieu de mettre une croix pour fermer les infos, on met un "-" pour réduire, et un "+" pour ramener
 //Si deux entités sont liés indirectement (via leurs enfants), elles ne s'allument
 //pas quand l'autre est focused. Réparé?
 //Pouvoir cliquer sur les noms d'un lien (dans infog)
@@ -111,9 +112,10 @@ let params = {
     //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
-let nodes = [];
+let nodes;
 //tous les liens de la DB, y compris parenté, remplacé par metaLinks pour le tracé
-let links = [];
+let links = {};
+let dataLinks=[];
 //liste des infos à afficher, de la forme {key:value}
 let infos = [];
 let infoWidth = 0; //varie en fonction de info/removeInfos
@@ -139,7 +141,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 		console.log('rtu ok')
 		nodes = json.nodes
 		params = json.params
-		links = json.links
+		dataLinks = json.links
 		idx = lunr.Index.load(json.idx)
 		words = json.words || {}
 
@@ -383,7 +385,7 @@ function adaptZoom() {
 
     focusX = nodes[focus].x || 0
     focusY = nodes[focus].y || 0
-    console.log('zoom highlighted?')
+    //console.log('zoom highlighted?')
     //on calcule le zoom en fonction des noeuds highlighted les plus loins du focus
     let maxX = net.nodes.reduce((max, p) => p.highlighted && p.x > max ? p.x : max, nodes[focus].x);
     let maxY = net.nodes.reduce((max, p) => p.highlighted && p.y > max ? p.y : max, nodes[focus].y);
@@ -396,11 +398,11 @@ function adaptZoom() {
     spaceMaxY=(width/4)/(Math.max(400,maxY-focusY))
     scaleFactor=Math.min(spaceMaxX ,  spaceMinX,spaceMinY )
 
-    console.log('zoom char',maxX-focusX,maxY-focusY,focusX - minX,focusY-minY,spaceMaxX ,  spaceMinX,spaceMinY,scaleFactor)
+    //console.log('zoom char',maxX-focusX,maxY-focusY,focusX - minX,focusY-minY,spaceMaxX ,  spaceMinX,spaceMinY,scaleFactor)
 
     //scaleFactor =  prev.k*Math.pow(oldNodesNumber / (newNodesNumber),0.5) //(width - 100) / (200 * (infoWidth / 150 + Math.sqrt(net.nodes.length) + 1)) / params.zoomFactor
 
-    console.log('zoom',newNodesNumber,scaleFactor,nodes[focus],prev,maxX,focusX)
+    //console.log('zoom',newNodesNumber,scaleFactor,nodes[focus],prev,maxX,focusX)
     //console.log('scale',scaleFactor,focusX,focusY,oldFocusX,oldFocusY)
     //on recale le canvas a gauche du texte, le graphe est censé translater tout seul via une force spécifique
     var t = d3.zoomIdentity.translate(-focusX*scaleFactor,-focusY*scaleFactor).scale(scaleFactor);//prev.x,prev.y
@@ -408,7 +410,7 @@ function adaptZoom() {
 
     oldNodesNumber = newNodesNumber
     zoomCounter+=1
-    console.log('zoomcounter',zoomCounter)
+    //console.log('zoomcounter',zoomCounter)
     if (zoomCounter<2){
     setTimeout(adaptZoom,1000)//on fait deux zoom au cas ou ca bouge encore
   }
@@ -488,7 +490,7 @@ function buildNodesLinks(data) {
         n.radius = params.dr;
         n.prevShow = false;
         n.linked = [];
-        n.links = [];
+        //n.links = [];
         n.deployedInfos = false; //détermine si l'info est déployée (non par défaut)
         n.visibleParentId = "root" //nodes.length;
         n.expanded = n.expanded || false; //pas développé par défaut
@@ -500,6 +502,7 @@ function buildNodesLinks(data) {
         n.feat = n.feat || false
         n.hasFeaturedDesc=n.feat
         n.options=n.options||{}
+        n.totalLinkStrength=0
         //n.otherParents=n.otherParents || new Set()
         return n;
     }
@@ -755,13 +758,12 @@ function buildNodesLinks(data) {
         }
 
 
-    for (let i in nodes) {
-        //on ajoute les liens de parenté
-        links.push({
+    for (let i in nodes) { //on ajoute les liens de parenté
+        links[i+'|'+nodes[i].parentId]={
             source: i,
             target: nodes[i].parentId,
             'type': "Member of"
-        });
+        };
         if (params.connectOtherParents && nodes[i].options['Also member of']) {
             let loopOver = nodes[i].options['Also member of'].value.size? nodes[i].options['Also member of'].value : [nodes[i].options['Also member of'].value]
             loopOver.forEach(function(p) {
@@ -780,28 +782,54 @@ function buildNodesLinks(data) {
 
     console.log('links',links)
 
-    for (let i in data.links) {
+    for (let i in data.links) {//idealement il faudrait faire ca avant de calculer les descendances pour calculer totallinkstrength dans les descendances
         //il y a des checks a faire ici...
-        let linki = data.links[i] || {
-            target: ""
-        };
-        //target required
+        let linki = data.links[i] || { target: "" };   //target required
         if (linki.target != "") {
-            linki.infosToDisplay = collectInfos(linki)
-            links.push(linki)
-            //on verifie que parent existe, ou target Parent
-            if (!(linki.target in nodes)) {
-                console.log(i, "target inconnu", linki.parentId);
-                let a = bb;
+
+          if (!(linki.target in nodes)) {
+              console.log(i, "target inconnu", linki.parentId);
+              let a = bb;
+          }
+
+          linki.infosToDisplay = collectInfos(linki)
+          linki.strength=lStrength(linki)
+
+          nodes[linki.source].totalLinkStrength+=linki.strength
+          nodes[linki.target].totalLinkStrength+=linki.strength
+          let linkId= linki.source+'|'+linki.target
+          if (linkId in links){
+                  if (links[linkId].type=="Multiple links"){
+                      links[linkId].types.push(linki.type||'default')
+                      links[linkId].links.push(linki);
+                      links[linkId].strength+=linki.strength;
+                  }
+                  else {
+                    let oldLink=links[linkId]//cloning
+                    links[linkId]={type:"Multiple links",
+                                  source:linki.source,
+                                    target:linki.target,
+                                  types:[oldLink.type,linki.type],
+                                strength:oldLink.strength+linki.strength,
+                              links:[oldLink,linki]}
+
+                  }
+                  //links[linkId].options.Number+=1
+                }else{
+
+                nodes[linki.source].linked.push(linki.target);//used for focus
+                  //nodes[linki.source].links[linkId]=linki;//used for info
+                if (params.biPartiteLinks) {
+                  nodes[linki.target].linked.push(linki.source);
+                  //nodes[linki.target].links[linkId]=linki;
+                }
+                links[linkId]=linki
             }
 
+
             //pour chaque noeud on a la liste "linked", qui contient les noeuds avec lesquels il est lié, et une liste "links", qui contient les liens eux-mêmes
-            nodes[linki.source].linked.push(linki.target);//used for focus
-            nodes[linki.source].links.push(linki);//used for info and lightnode
-            if (params.biPartiteLinks) {
-              nodes[linki.target].linked.push(linki.source);
-              nodes[linki.target].links.push(linki);
-            }
+
+
         }
     }
 
@@ -849,7 +877,7 @@ function buildNodesLinks(data) {
 
     makeIndex(nodes)
 
-    let meta_obj={'nodes':nodes,'links':links,'params':params,'idx':idx,'words': data.words || {}}
+    let meta_obj={'nodes':nodes,'links':data.links,'params':params,'idx':idx,'words': data.words || {}}
 
 
 
@@ -1073,7 +1101,7 @@ function visibleNetwork() {
     //chaque lien meta contient la liste de ses sous liens dans link.links
     let metaLinks = {},
         j = 0;
-    for (let k = 0; k < links.length; ++k) {
+    for (let k in links) {
         let link=links[k]
         numVisibleNodes = (nodes[link.source].show ? 1 : 0) + (nodes[link.target].show ? 1 : 0)
         if (numVisibleNodes >= params.inheritLinks) { //on ne visualise le lien que si suffisament de vrais extremités (0, 1 ou 2) sont vraiment visibles (et pas seulement leur parent)
@@ -1408,13 +1436,14 @@ crsrText.attr("display","none");
             focus = (focus==d.source.id)? focus=d.target.id : focus=d.source.id;//pb here?
             //if (largeWidth) {
                 removeInfos();
-                infos = [d, {
+                /*infos = [d, {
                     type: "Links",
                     value: word(d, "Links"),
                     "off": 10,
                     "deployedInfos": true //sert à savoir si l'info est déployée (non par défaut)
-                }]
-                infosFocus(d)
+                }]*/
+                console.log()
+                infosFocus(links[d.source.id+'|'+d.target.id])
                 infoDisp();
                 init()
             //}
@@ -1596,6 +1625,7 @@ function infoDisp()
         if (d.type === "Links" || d.type === "Contains") {
             displaySubBlocks = d.deployedInfos
 
+            console.log('links',d,d.value,'?')
             info.append("text")
                 .text(word({}, d.value||d))
                 .attr("x", 31)
@@ -1677,7 +1707,7 @@ function infoDisp()
                     d.height = blockHeight;
                     //console.log('ayyyyy', d)
                     //calcul approximatif de la hauteur du texte une fois formatté, en fonction du nombre de lettres
-                    blockHeight = blockHeight + infoTextSize * Math.floor(3 + .55 * d.value.length * infoTextSize / infoWidth*1.2);
+                    blockHeight = blockHeight + infoTextSize * Math.floor(3 + .65 * d.value.length * infoTextSize / infoWidth*1.2);
                     return d.height+15
                 })
                 .text(d => d.value)
@@ -1832,7 +1862,7 @@ function collapseNode(node) {
 
 
 function infosFocus(d) {//adds node/link d and its children/links to 'infos'
-    console.log('infosfocus prime')
+    console.log('infosfocus',d)
     //si l'info du noeud n'est pas déjà affichée, on l'affiche, avec ses enfants et ses liens
     //if (infos[0] != d) {
     removeInfos();
@@ -1842,7 +1872,7 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
     if (d.children?.length > 0) {
         infos.push({
             type: "Contains",
-            value: word(d, "Contains"),
+            value: word(d, "Contains")+" ("+d.children.length+")",
             "off": 10,
             "deployedInfos": true
         })
@@ -1850,7 +1880,7 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
         infoDisp();
         if (!d.ordBigChildren){//sort kids according to nb of desc + nb of links, take [infomax] first
           console.log('big kids of ',d.id)
-          d.ordBigChildren=d.children.sort((n1,n2)=>-nodes[n1].descendants-nodes[n1].linked.length+nodes[n2].descendants+nodes[n2].linked.length).slice(0,params.infoMax)
+          d.ordBigChildren=d.children.sort((n1,n2)=> - nodes[n1].descendants - nodes[n1].totalLinkStrength + nodes[n2].descendants + nodes[n2].totalLinkStrength).slice(0,params.infoMax)
           console.log(d.ordBigChildren)
         }
         let i
@@ -1870,23 +1900,44 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
     }
 
 
-    if ('links' in d && d.links.length > 0) {
+    if ('linked' in d && d.linked.length > 0) {//links of a node
         infos.push({
             type:'Links',
-            value: word(d,"Links"),
+            value: word(d,"Links")+" ("+d.linked.length+")",
             "off": 10,
             "deployedInfos": true
         })
-        let toConcat
-        if (d.links.length<params.infoMax) {
-          toConcat =d.links }
+        for (let i=0;i<d.linked.length;i++){
+        if (i<params.infoMax) {
+          infos.push( links[(d.id+'|'+d.linked[i])] || links[(d.linked[i]+'|'+d.id)] )
+           }
           else{
-            toConcat= d.links.slice(0,params.infoMax)
-            toConcat.push({"type":"Contains",
-                          "value":"...+ "+(d.links.length-params.infoMax)+" "+word({},"others"),
+            infos.push({"type":"Contains",
+                          "value":"...+ "+(d.linked.length-params.infoMax)+" "+word({},"others"),
                           "off":0})
-                        }
-        infos = infos.concat(toConcat)
+            break
+            }
+      }
+      console.log(d,infos)
+    }
+
+    if (d.target && d.links?.length>0){//sublinks of a link
+      infos.push({
+          type:'Links',
+          value: word(d,"Links")+ (    d.links.length>1? " (" +d.links.length+" )" :  ""     ),
+          "off": 10,
+          "deployedInfos": true
+      })
+      for (i=0;i<d.links.length;i++){
+        if (i<params.infoMax){
+          infos.push(d.links[i])//shorter code without for?
+        } else {
+          infos.push({"type":"Contains",
+                        "value":"...+ "+(d.links.length-params.infoMax)+" "+word({},"others"),
+                        "off":0})
+          break
+        }
+      }
     }
 
     infoDisp();

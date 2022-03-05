@@ -54,7 +54,7 @@ for index, row in df.iterrows():
         link['options']={ 'Montant':{'value':str(row['Montant Ttc'])+" €"},#{k:{'value':str(v)} for k,v in row.to_dict().items()
                     #'Détail':{'value':str(row['Date'])},
                     'Date':{'value':str(row['Date'])},
-                    'ID Transparence Santé':{'value':row['Declaration ID'],'source':'Lien','url':'https://www.transparence.sante.gouv.fr/flow/interrogationAvancee?execution=e2s1'
+                    'ID Transparence Santé':{'value':row['Declaration ID'],'source':'Lien','url':'https://www.transparence.sante.gouv.fr/pages/accueil/'
                                                 },
                     'Détail': row['Detail'] if light_version else detail
                     }
