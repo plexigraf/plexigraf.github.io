@@ -104,7 +104,7 @@ let params = {
     prevFocus,
     mobile = window.screen.width<1200, //enleve l'affichage d'infos et change le zoom auto
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
-    height = mobile?  document.body.clientHeight :params.screenRatio*window.screen.height, // svg height
+    height = width//mobile?  document.body.clientHeight :params.screenRatio*window.screen.height, // svg height
     nameMagnif=mobile?1.5:1,
     off = params.dr,
     centerX=width/2,//pour le zoom auto
