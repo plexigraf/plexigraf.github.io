@@ -1,8 +1,8 @@
 
-swal({
+Swal.fire({
   title: "Loading...",
-  content: dbname,
-  buttons: false
+  html: dbname,
+  //buttons: false
 })
 
 
@@ -259,9 +259,9 @@ function appendDbInfo(s){
           var t=document.createTextNode(s);
           document.getElementById("dbname").appendChild(br)
           document.getElementById("dbname").appendChild(t);
-          swal({
+          Swal.fire({
             title: "Instructions",
-            content: dbname,
+            html: dbname,
             buttons: 'OK'
           })
 }

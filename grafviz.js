@@ -104,13 +104,13 @@ let params = {
     prevFocus,
     mobile = window.screen.width<1200, //enleve l'affichage d'infos et change le zoom auto
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
-    height = width*1.5, // svg height
+    height = mobile?  document.body.clientHeight :params.screenRatio*window.screen.height, // svg height
     nameMagnif=mobile?1.5:1,
     off = params.dr,
     centerX=width/2,//pour le zoom auto
     centerY=mobile? width/2 : width/4
     console.log('mobile?',mobile,width,height)
-    alert(mobile+width+' '+height)
+    alert('e'+(mobile?"true":false)+width+' '+height)
     //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
