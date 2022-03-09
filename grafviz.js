@@ -110,7 +110,7 @@ let params = {
     centerX=width/2,//pour le zoom auto
     centerY=mobile? width/2 : width/4
     console.log('mobile?',mobile,width,height)
-    alert('e'+(mobile?"true":false)+width+' '+height)
+    //alert('e'+(mobile?"true":false)+width+' '+height)
     //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
 //liste de toutes entrées de la DB, ce sera également les noeuds du graphe?
@@ -361,7 +361,7 @@ let infoG = zoomInfoG.append("g")
 
 let zoomInfo=mobile? 0.9*width/infoWidth :1
 
-var initialZoomInfo = d3.zoomIdentity.translate(0,0).scale(mobile?3:1);
+var initialZoomInfo = d3.zoomIdentity.translate(0,0)//.scale(mobile?3:1);
 zoomInfoG.transition().duration(650).call(_zoom2.transform, initialZoomInfo);
 
 //largeWidth ? "block" : "none"), //infos
