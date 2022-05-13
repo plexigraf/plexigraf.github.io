@@ -1,6 +1,6 @@
 
 //improve perf:
-//ne pas mettre les options au début/fichier séparé?
+//ne pas mettre les node[options] au début/fichier séparé?
 
 //TO DO
 //classer enfants par taille
@@ -66,7 +66,7 @@
 
 let params = {
         screenRatio: 7/8,
-        zoomFactor: 2, //plus c'est petit plus le graphe apparaitra grand
+        //zoomFactor: 2, //plus c'est petit plus le graphe apparaitra grand
         dr: 44, // default point radius
         alwaysShowParent: false, // dès qu'un noeud sort tous ses ancetres également
                                 //(pour l'instant vrai que pour le focused node)
@@ -359,7 +359,7 @@ let zoomInfoG=canvas.append("svg").call(_zoom2)
 let infoG = zoomInfoG.append("g")
     .attr("id", "infog").attr("display", "block")
 
-let zoomInfo=mobile? 0.9*width/infoWidth :1
+let zoomInfo=1//mobile? 0.9*width/infoWidth :1
 
 var initialZoomInfo = d3.zoomIdentity.translate(0,0)//.scale(mobile?3:1);
 zoomInfoG.transition().duration(650).call(_zoom2.transform, initialZoomInfo);
@@ -475,12 +475,12 @@ function buildNodesLinks(data) {
         if (n.firstName){
           n.lastName=n.lastName||''
           n.name=n.name || (n.firstName+' '+n.lastName)
-          n.lastName=shorten(n.lastName)
+          //n.lastName=shorten(n.lastName)
         } else {
           n.name=n.name || n.id
           names=n.name.split(' ')
-          n.firstName = shorten(n.firstName || names.shift())
-          n.lastName = shorten(n.lastName || names.join(' '))
+          n.firstName = names.shift()//shorten(n.firstName || names.shift())
+          n.lastName = names.join(' ')//shorten(n.lastName || names.join(' '))
         }
         n.shortName=n.shortName || shorten(n.name)
         n.name = n.name+(n.feat?' °':'')
@@ -504,6 +504,10 @@ function buildNodesLinks(data) {
         n.feat = n.feat || false
         n.hasFeaturedDesc=n.feat
         n.options=n.options||{}
+        if (n.name != n.shortName){
+            //alert(n.name)
+            n.options['Complete name']=n.name
+        }
         n.totalLinkStrength=0
         //n.otherParents=n.otherParents || new Set()
         return n;
@@ -603,6 +607,8 @@ function buildNodesLinks(data) {
     }
     //build nodes object
     nodes={}
+
+    console.log('create desc')
 
     function createDesc(p, id) {
         //console.log(counter)
@@ -948,7 +954,7 @@ function handleClick(event) { //pour la fctn de recherche
         } else {
             console.log('no results')
             infos = [{
-                'value': 'no result for '+term,
+                'value': 'recherche desactivee',//'no result for '+term,
                 'children': []
             }]
         }
@@ -1378,7 +1384,7 @@ crsrText.attr("display","none");
         .style("font-family", "American Typewriter, serif")
         .attr("x", 0)
         .attr("y", '1em')//d => d.imgDisp ? "3em" : 0)
-        .text(d => d.lastName || "")
+        .text(d => shorten(d.lastName) || "")
         .each(function(d) {//determines width for bounding white square
             let box = this.getBBox();
             d.bb2x = -box.width / 2 - 5;
@@ -1444,8 +1450,8 @@ crsrText.attr("display","none");
                     "off": 10,
                     "deployedInfos": true //sert à savoir si l'info est déployée (non par défaut)
                 }]*/
-                console.log()
-                infosFocus(links[d.source.id+'|'+d.target.id])
+                //console.log(d.source.id+'|'+d.target.id)
+                infosFocus(d)//net.links[d.source.id+'|'+d.target.id])
                 infoDisp();
                 init()
             //}
@@ -1647,8 +1653,8 @@ function infoDisp()
                     :
                     d.source ? //link
                     d.source.id ? //ca peut etre le noeud (auquel car il a un id) ou juste son nom
-                    nodes[d.source.id].shortName + (" \u21E8 " || " -> ") + nodes[d.target.id].shortName :
-                    nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName :
+                    shorten(nodes[d.source.id].shortName + (" \u21E8 " || " -> ") + nodes[d.target.id].shortName) :
+                    shorten(nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName) :
                     d.value) //texte
                 //.attr("font-family","American Typewriter")
                 .attr("font-size", d.source ? 10 : 15)
