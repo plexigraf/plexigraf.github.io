@@ -242,7 +242,7 @@ function makeIndex(entries) {
             boost: 10
         })
         this.field('strParams')
-        if (Object.keys(entries).length>300000){//abbrev version
+        if (Object.keys(entries).length>3000){//abbrev version
                 console.log('abbrev index')
                   for (id in entries) {
                       //idealement il  faudrait enlever les keys du json
@@ -1450,8 +1450,8 @@ crsrText.attr("display","none");
                     "off": 10,
                     "deployedInfos": true //sert à savoir si l'info est déployée (non par défaut)
                 }]*/
-                //console.log(d.source.id+'|'+d.target.id)
-                infosFocus(d)//net.links[d.source.id+'|'+d.target.id])
+                console.log(d.source.id+'|'+d.target.id)
+                infosFocus(links[d.source.id+'|'+d.target.id])
                 infoDisp();
                 init()
             //}
