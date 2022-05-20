@@ -1,76 +1,228 @@
 <!DOCTYPE html>
-<head><title>Graph viz</title>
+<html lang="en" class="no-js">
+   <head>
+      <!-- Meta -->
+      <title>Home</title>
+      <meta charset="UTF-8">
+      <meta name="description" content="Free HTML template">
+      <meta name="keywords" content="HTML, template, free">
+      <meta name="author" content="Nicola Tolin">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Styles -->
+      <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+      <link href="vendor/animate/animate.css" rel="stylesheet" type="text/css"/>
+      <link href="css/style.css" rel="stylesheet" type="text/css"/>
+   </head>
+   <body>
+      <!-- Navbar -->
+      <div class="navigation container-fluid">
+         <div class="row justify-content-md-center ">
+            <div class="col-md-10 col-sm-12">
+               <nav class="navbar navbar-default">
+                  <a class="navbar-brand" href="index.html">
+                  <img src="img/logo.png" height="60" alt="Logo">
+                  </a>
+                  <div class="button_container" id="toggle" style="display:none">
+                     <span class="black top"></span>
+                     <span class="black middle"></span>
+                     <span class="black bottom"></span>
+                  </div>
+                  <div class="overlay" id="overlay">
+                     <nav class="overlay-menu" >
+                        <ul>
+                           <li> <a href="about.html">About</a></li>
+                           <li> <a href="story.html">Story</a></li>
+                           <li> <a href="services.html">Services</a></li>
+                           <li> <a href="contacts.html">Contacts</a></li>
+                        </ul>
+                     </nav>
+                  </div>
+               </nav>
+            </div>
+         </div>
+      </div>
+      <!-- End Navbar -->
+      <!-- Portfolio-Text -->
+      <div class="container-fluid pb-5 portfolio-text">
+         <div class="row">
+            <div class="col-md-7 offset-md-1 col-sm-12">
+               <h2>Visualisation de données hierarchisées.
+               </h2>
+            </div>
+         </div>
+         <div class="row" style="display:none">
+            <div class="col-md-7 offset-md-1 col-sm-12">
+               <p class="pb-5 pt-5">
+                  Grafviz   </p>
+            </div>
+         </div>
+      </div>
+      <!-- End Portfolio-Text -->
+      <!-- Gallery -->
+      <div class="scrollblock">
+         <div class="container-fluid pt-10">
+            <div class="row justify-content-md-center ">
+               <div class="col-md-10 col-sm-12">
+                  <div class="card-columns">
+                     <div class="card card-hover h-100" >
+                        <div class="card-body">
+                           <a href="graph-v3.html?filename=hatvplobbys/lobbys.json">
+                              <img class="card-img-top" src="img/google-zoom.png" alt="Lobby preview">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p> Lobbys HATVP</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100" >
+                        <div class="card-body">
+                           <a href="graph-v3.html?filename=efd/efd_lille-grafviz.json">
+                              <img class="card-img-top" src="img/santé-chu-lille.png" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>Transparence Santé (Lille)</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100">
+                        <div class="card-body">
+                           <a href="graph-v3.html?filename=efd/efd_paris-grafviz-minimal.json">
+                              <img class="card-img-top" src="img/santé-paris-curie.png" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>Transparence Santé (Paris)</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100" style="display:none">
+                        <div class="card-body">
+                           <a href="index.html">
+                              <img class="card-img-top" src="img/photo-4.jpg" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>Graphe 4</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100">
+                        <div class="card-body">
+                           <a href="graph-v3.html?wdjs=true&wdKey=taxonsMammals">
+                              <img class="card-img-top" src="img/mammals.png" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>Mammals</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100">
+                        <div class="card-body">
+                           <a href="graph-v3.html?filename=political/castex/castex.json&wdKey=Castex">
+                              <img class="card-img-top" src="img/castex-conseil.png" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>Gouvernement Castex</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100">
+                        <div class="card-body">
+                           <a href="graph-v3.html?wdjs=true&wdKey=frMaths">
+                              <img class="card-img-top" src="img/frmaths.png" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>French mathematicians</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100">
+                        <div class="card-body">
+                           <a href="graph-v3.html?wdjs=true&wdKey=taxonsArachnids">
+                              <img class="card-img-top" src="img/arachnids.png" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>Arachnids</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="card card-hover h-100" style='display:none'>
+                        <div class="card-body">
+                           <a href="index.html">
+                              <img class="card-img-top" src="img/photo-9.jpg" alt="Card image cap">
+                              <div class="reveal h-100 p-2 d-flex ">
+                                 <div class="w-100 align-self-center">
+                                    <p>Magna eget rutrum</p>
+                                 </div>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- End Gallery -->
+      <!-- Footer -->
+      <div class="container-fluid footer ">
+         <div class="row">
+            <div class="col-xl-2 col-md-8 offset-md-1 col-sm-12 " style="display:none">
+               <p>
+                  <a href="about.html">About</a><br>
+                  <a href="story.html">Story</a><br>
+                  <a href="services.html">Services</a><br>
+                  <a href="contacts.html">Contacts</a><br>
+               </p>
+            </div>
+            <div class="col-xl-2 col-md-8 offset-md-1 col-sm-12 " style="display:none">
+               <p>
+                  <a href="index.html">Privacy</a><br>
+                  <a href="index.html">Termini di utilizzo </a><br>
+                  <a href="index.html">Note legali </a><br>
+                  <a href="index.html">Credits</a><br>
+               </p>
+            </div>
+            <div class="col-xl-2 col-md-8 offset-md-1 col-sm-12" >
+               <p>
+                  Contact: lrraphael at gmail dot com<br>
+                  <a href="https://github.com/grafviz/grafviz.github.io">github</a>
+               </p>
+            </div>
 
-
-
-</head>
-<body>
-
-	<a href="graph-v3.html?filename=hatvplobbys/lobbys.json">HATVP Lobbys</a><br>
-
-
-<h2> EFD </h2>
-			<a href="graph-v3.html?filename=efd/efd_paris-grafviz-minimal.json">EFD Paris minimal</a><br>
-		<a href="graph-v3.html?filename=efd/efd_lille-grafviz.json">EFD Lille</a>
-		<br>
-			<a href="graph-v3.html?filename=efd/efd_creteil-grafviz.json">EFD Créteil</a>
-			<br>
-	<a href="graph-v3.html?filename=efd/efd_gap-grafviz.json">EFD Gap</a>
-	<br>
-	<a href="graph-v3.html?filename=efd/efd_gap_sample-grafviz.json">EFD test</a>
-	<br>
-
-
-<h2>Politique</h2>
-	<a href="graph-v3.html?filename=political/Philippe-II-2018.json&wdKey=PhilippeII">Gouvernement Philippe II (pb)</a>
-	<br>
-		<a href="graph-v3.html?filename=political/castex/castex.json&wdKey=Castex">Gouvernement Castex</a>
-
-
-<h2>Living beings (ITIS Database)</h2>
-<a href="graph-v3.html?load_from_WD=false&filename=taxo-samples/taxo_complete_params-Arachnids-4K.json">Arachnids</a>
-<a href="graph-v3.html?load_from_WD=false&filename=taxo-samples/taxo_complete_params-mammals-25K.json">Mammifères</a>
-<a href="graph-v3.html?load_from_WD=false&filename=taxo-samples/taxo_complete_params-animals-25K.json">Classification animale</a>
-
-
-
-<h2>WikiData Live</h2>
-
-<a href="graph-v3.html?load_from_WD=true&wdKey=maths">Mathematicians</a><br>
-<a href="graph-v3.html?load_from_WD=true&wdKey=frMaths">French mathematicians</a><br>
-<a href="graph-v3.html?load_from_WD=true&wdKey=grMaths">German mathematicians</a><br>
-<a href="graph-v3.html?load_from_WD=true&wdKey=ukMaths">British mathematicians</a><br>
-<a href="graph-v3.html?load_from_WD=true&wdKey=usMaths">US mathematicians</a><br>
-<a href="graph-v3.html?load_from_WD=true&wdKey=rsMaths">Russian mathematicians</a><br>
-<a href="graph-v3.html?load_from_WD=true&wdKey=taxonsMammals">Mammals (broken)</a><br>
-<a href="graph-v3.html?load_from_WD=true&wdKey=taxonsArachnids">Arachnids (broken)</a><br>
-
-<h2>WikiData offline</h2>
-
-<a href="graph-v3.html?wdjs=true&wdKey=maths">Mathematicians</a><br>
-
-<a href="graph-v3.html?wdjs=true&wdKey=frMaths">French mathematicians</a><br>
-
-<a href="graph-v3.html?wdjs=true&wdKey=grMaths">German mathematicians</a><br>
-
-<a href="graph-v3.html?wdjs=true&wdKey=taxonsMammals">Mammals</a><br>
-
-<a href="graph-v3.html?wdjs=true&wdKey=taxonsArachnids">Arachnids</a><br>
-
-
-<br>
-
-<br>
-
-<br>
-
-<br>
-
-<a href="test.html">test</a>
-<a href="test2.html">test2</a>
-<a href="test3.html">test3</a>
-
-</body>
-
-
+            <div class="col-xl-2 col-md-8 offset-md-1 col-sm-12" style="display:none">
+               <p>
+                  FONDAZIONE SENECA<br>
+                  Via Longhena 116<br>
+                  00060 - Nazzano (ROMA)<br>
+                  TEL. +39 0327 8523827
+               </p>
+            </div>
+         </div>
+      </div>
+      <!-- End Footer -->
+      <!-- Javascript -->
+      <script src="vendor/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+      <script src="vendor/wow/wow.js"></script>
+      <script src="js/script.js"></script>
+      <script>
+         new WOW().init();
+      </script>
+      <!-- End Javascript -->
+   </body>
 </html>
