@@ -138,7 +138,7 @@
         "targetParentId" : "Chasse",
         "options" : {
           "type" : {
-            "value" : "Gérant"
+            "value" : "Poste de gérant"
           }
         },
         "source" : "Fesneau Marc"
@@ -275,7 +275,7 @@
         "targetParentId" : "Médias",
         "options" : {
           "type" : {
-            "value" : "Conjoint(e)"
+            "value" : "Lien via conjoint.e"
           },
           "Info" : {
             "source" : "HATVP",
@@ -552,7 +552,7 @@
             "value" : "274823347939"
           },
           "type" : {
-            "value" : "décideur"
+            "value" : "Poste de décideur"
           },
           "poste" : {
             "value" : "Directrice regionale puis PDG"
@@ -592,7 +592,7 @@
             "value" : "289106"
           },
           "type" : {
-            "value" : "décideur"
+            "value" : "Poste de décideur"
           },
           "Info" : {
             "source" : "HATVP",
@@ -774,7 +774,7 @@
             "source" : "HATVP"
           },
           "type" : {
-            "value" : "décideur"
+            "value" : "Poste de décideur"
           },
           "poste" : {
             "value" : "directrice du développement durable et de la responsabilité sociale d’une de ses filiales, Veolia Water India"
@@ -808,32 +808,6 @@
           "url" : "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
         }
       },
-      "link" : {
-        "target" : "Danone ",
-        "targetParentId" : "Agro- alimentaire",
-        "options" : {
-          "Période" : {
-            "value" : "2015 - Octobre 2018 (Remaniement Philippe II)"
-          },
-          "Montant" : {
-            "value" : "1,113,000€",
-            "url" : "https://www.hatvp.fr/",
-            "source" : "HATVP"
-          },
-          "type" : {
-            "value" : "#REF!"
-          },
-          "poste" : {
-            "value" : "Directrice de la communication et des affaires publiques, c'est-à-dire lobbyiste chargée des relations du groupe agroalimentaire avec les pouvoirs publics et de la « sustainability » "
-          },
-          "Info" : {
-            "value" : "Quand Emmanuelle Wargon (notre nouvelle secrétaire d'Etat à l'Ecologie) expliquait qu'on ne peut pas se passer d'huile de palme pour fabriquer du lait pour bébés (aux Rencontres économiques d'Aix-en-Provence, en juillet 2018)",
-            "source" : "twitter, Le Parisien",
-            "url" : "https://twitter.com/nicolascori/status/1052182924513169413?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1052182924513169413&ref_url=http%3A%2F%2Fwww.leparisien.fr%2Fsociete%2Femmanuelle-wargon-une-lobbyiste-a-l-ecologie-17-10-2018-7921281.php"
-          }
-        },
-        "source" : "Emmanuelle Wargon"
-      },
       "name" : "Emmanuelle Wargon",
       "id" : "Emmanuelle Wargon"
     },
@@ -855,30 +829,6 @@
           "url" : "https://webdoc.france24.com/enquete-lobbies-france-hulot-fabrique-loi-macron/chapitre-3.html"
         }
       },
-      "link" : {
-        "target" : "Air France",
-        "options" : {
-          "Période" : {
-            "value" : "2006-2014"
-          },
-          "Montant" : {
-            "value" : "657 976€ en tout",
-            "url" : "https://www.liberation.fr/france/2017/10/26/combien-a-reellement-touche-florence-parly-a-la-sncf_1605999",
-            "source" : "liberation"
-          },
-          "type" : {
-            "value" : "décideur"
-          },
-          "poste" : {
-            "value" : "devient en juin 2006 directrice de la stratégie des investissements à la direction financière d'Air France, jusqu'à sa nomination comme directrice générale adjointe d'Air France Cargo en janvier 2009. Le 1er janvier 2013, elle devient directrice générale adjointe de l’activité « Passage Point » à Point Orly et Escales France, chargée du redressement du court courrier dans le cadre du plan TransForm 2015. À ce titre, elle est membre du comité exécutif du groupe Air France. Elle est membre des conseils d'administration d'Air France et d'Ingenico Group. Elle quitte ses fonctions chez Air France fin août 2014."
-          },
-          "Info" : {
-            "value" : "en partie via SERVAIR",
-            "url" : "wikipedia.fr"
-          }
-        },
-        "source" : "Florence Parly"
-      },
       "name" : "Florence Parly",
       "id" : "Florence Parly"
     },
@@ -894,27 +844,6 @@
         "Poste" : {
           "value" : "Ministère de l'Économie, des Finances et de la Relance"
         }
-      },
-      "link" : {
-        "target" : "Pauline Doussau de Bazignan",
-        "targetParentId" : "Bruno Le Maire",
-        "options" : {
-          "Période" : {
-            "value" : "2007-2013"
-          },
-          "type" : {
-            "value" : "#REF!"
-          },
-          "poste" : {
-            "value" : "Assistante parlementaire"
-          },
-          "Info" : {
-            "value" : "présentée par Paris Match comme « artiste-peintre, petite-fille et nièce d’agriculteurs du Gers«",
-            "source" : "Paris Match",
-            "url" : "https://fr.wikipedia.org/wiki/Bruno_Le_Maire"
-          }
-        },
-        "source" : "Bruno Le Maire"
       },
       "name" : "Bruno Le Maire",
       "id" : "Bruno Le Maire"
@@ -949,7 +878,7 @@
             "url" : "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes"
           },
           "type" : {
-            "value" : "décideur"
+            "value" : "Poste de décideur"
           },
           "poste" : {
             "value" : "Administrateur + membre puis présidente du Comité d'audit"
@@ -1379,7 +1308,8 @@
         },
         "poste" : {
           "value" : "Pilote et directeur des opérations aériennes"
-        }
+        },
+        "type" : "salarié"
       },
       "source" : "Djebbari Jean-Baptiste"
     },
@@ -1432,7 +1362,7 @@
       "targetParentId" : "Chasse",
       "options" : {
         "type" : {
-          "value" : "Gérant"
+          "value" : "Poste de gérant"
         }
       },
       "source" : "Fesneau Marc"
@@ -1442,7 +1372,7 @@
       "targetParentId" : "Energie",
       "options" : {
         "type" : {
-          "value" : "Gérant"
+          "value" : "Poste de gérant"
         }
       },
       "source" : "Fesneau Marc"
@@ -1506,7 +1436,7 @@
       "targetParentId" : "Médias",
       "options" : {
         "type" : {
-          "value" : "Conjoint(e)"
+          "value" : "Lien via conjoint.e"
         },
         "Info" : {
           "source" : "HATVP",
@@ -1697,7 +1627,7 @@
       "targetParentId" : "Médias",
       "options" : {
         "type" : {
-          "value" : "Conjoint(e)"
+          "value" : "Lien via conjoint.e"
         },
         "Info" : {
           "source" : "HATVP",
@@ -1717,7 +1647,7 @@
           "value" : "274823347939"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Directrice regionale puis PDG"
@@ -1740,7 +1670,7 @@
           "value" : "862721"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "PDG afrique"
@@ -1780,7 +1710,7 @@
           "value" : "289106"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "Info" : {
           "source" : "HATVP",
@@ -1820,7 +1750,7 @@
           "value" : "146442€/an"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "Info" : {
           "source" : "HATVP",
@@ -1836,7 +1766,7 @@
           "value" : "2002-2007"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Directrice Stratégie SNCF"
@@ -1857,7 +1787,7 @@
           "value" : "2008-"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Directrice des concessions"
@@ -1926,7 +1856,7 @@
           "source" : "HATVP"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "directrice du développement durable et de la responsabilité sociale d’une de ses filiales, Veolia Water India"
@@ -1952,7 +1882,7 @@
           "source" : "HATVP"
         },
         "type" : {
-          "value" : "#REF!"
+          "value" : "lobbyiste"
         },
         "poste" : {
           "value" : "Directrice de la communication et des affaires publiques, c'est-à-dire lobbyiste chargée des relations du groupe agroalimentaire avec les pouvoirs publics et de la « sustainability » "
@@ -1977,7 +1907,7 @@
           "source" : "liberation"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "devient en juin 2006 directrice de la stratégie des investissements à la direction financière d'Air France, jusqu'à sa nomination comme directrice générale adjointe d'Air France Cargo en janvier 2009. Le 1er janvier 2013, elle devient directrice générale adjointe de l’activité « Passage Point » à Point Orly et Escales France, chargée du redressement du court courrier dans le cadre du plan TransForm 2015. À ce titre, elle est membre du comité exécutif du groupe Air France. Elle est membre des conseils d'administration d'Air France et d'Ingenico Group. Elle quitte ses fonctions chez Air France fin août 2014."
@@ -2001,7 +1931,7 @@
           "source" : "liberation"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "directrice générale déléguée, puis directrice générale"
@@ -2027,7 +1957,7 @@
           "source" : "HATVP"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Administratrice indépendante et présidente du Comité des nominations et des rémunérations"
@@ -2048,7 +1978,7 @@
           "source" : "HATVP"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Membre du conseil d'administration"
@@ -2064,7 +1994,7 @@
           "value" : "2007-2013"
         },
         "type" : {
-          "value" : "#REF!"
+          "value" : "lien familial"
         },
         "poste" : {
           "value" : "Assistante parlementaire"
@@ -2089,7 +2019,7 @@
           "url" : "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Administrateur + membre puis présidente du Comité d'audit"
@@ -2109,7 +2039,7 @@
           "url" : "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Directrice générale déléguée"
@@ -2129,7 +2059,7 @@
           "url" : "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         }
       },
       "source" : "Agnès Pannier-Runnacher"
@@ -2146,7 +2076,7 @@
           "url" : "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Administrateur et présidente du Comité d'audit"
@@ -2166,7 +2096,7 @@
           "url" : "https://www.hatvp.fr//fiche-nominative/?declarant=pannier-runacher-agnes"
         },
         "type" : {
-          "value" : "décideur"
+          "value" : "Poste de décideur"
         },
         "poste" : {
           "value" : "Administrateur de MAF + Financière Eiffarie, Eiffarie, Adelac"
@@ -2179,7 +2109,7 @@
       "targetParentId" : "Energie",
       "options" : {
         "type" : {
-          "value" : "époux/épouse"
+          "value" : "Lien via conjoint.e"
         },
         "poste" : {
           "value" : "femme de Marc Pannier, directeur des opérations de Global Energy Management, entité du groupe ENGIE"

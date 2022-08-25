@@ -87,9 +87,8 @@ let params = {
         maxNodeShow: 80,//max number of nodes when expanding linked of focus
         //indexOnlyFeatured: true//Do not index non featured nodes in search
         //initialFocus;undef by default
-        dispLinksWithWithoutType: true,//display "links with ..." in infobox for links who don't have a type
+        dispLinksWithWithoutType: true//display "links with ..." in infobox for links who don't have a type
                                         //(links who have type xxx are displayed as "xxx:...")
-        lang: "Fr"//"Eng"
     },
     linkStrength= {
         'Member of': 3,
@@ -193,11 +192,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
         words=json.words||{}
 				console.log('file params', json.params)
 				if (json.params.description) {
-          document.getElementById("description").innerHTML = json.params.description  }
-            document.getElementById("descrFr").style.display =  "none"
-            document.getElementById("descr"+params.lang).style.display =  "block"
-
-          ;
+          document.getElementById("description").innerHTML = json.params.description  };
 				//if (error) throw error;
 				meta_obj = buildNodesLinks(json)
 
@@ -355,7 +350,7 @@ var _zoom2 = d3.zoom()
   .on("zoom", function() {
     e=d3.event.transform
     //_zoom2.translate([e.x,e.y])
-    infoG.attr("transform", "translate(" + [Math.max(0,e.x), Math.max(e.y)] + ") scale(" + e.k + ")");
+    infoG.attr("transform", "translate(" + [Math.max(0,e.x), Math.max(0,e.y)] + ") scale(" + e.k + ")");
 
     //infoG.attr("transform", d3.event.transform);
     prev=e
@@ -1571,11 +1566,9 @@ return u<v ? u+"|"+v : v+"|"+u;
 }*/
 
 
-
 function infoDisp()
 {
     //lit l'info de d et affiche les infos correspondantes
-    //idealement il faudrait tout recoder pour afficher de manière nested-hierarchique
     infoWidth = 300;
     //on enleve tout
     infoG.selectAll(".infoblock").remove()
@@ -1585,9 +1578,10 @@ function infoDisp()
     //sert à savoir si on affiche le prochain subblock
     let displaySubBlocks = true;
 
-    //nestedDisp(infos,x,y)//displays infos starting at (x,y)
+    let counter=0
     for (let i in infos)
     {
+      counter++
 
       //TODO:infos contient plusieurs éléments, chaque élément représente un bloc qui peut éventuellement se déployer
         let d = infos[i] //node or link or custom
@@ -1597,10 +1591,8 @@ function infoDisp()
         let info = infoG.append("g")
             .data([d])
             .attr("class", "infoblock")
-            .attr('id','infoblock'+i)
             .attr("transform", "translate(" + (d.off || off) + "," + prevHeight + ")")
 
-        let infoBlock=document.getElementById('infoblock'+i) //automatic?
         //rectangle du cadre titre
         info.append("rect")
             .data([d]).attr("fill", d => fill(d.id) || 'lightblue')
@@ -1612,22 +1604,20 @@ function infoDisp()
             .attr("rx", 5)
 
         //flèche de deploiement
-        if (!d.value ||  !d.value.startsWith('...+')){
         info.append("text")
             .attr("fill", "lightblue")
             .attr("x", 5)
             .attr("y", 20)
             .attr("font-size", 15)
             .text(d.deployedInfos ? "\u25bc" || "V" : "\u25b6" || ">")
-            .on("mouseover", function(dd) {
+            .on("mouseover", function(d) {
                 d3.select(this).style("cursor", "pointer")
                 //crsrText.text(name(d.parentId))
             })
-            .on("click", function(dd) {
+            .on("click", function(d) {
                 d.deployedInfos = !d.deployedInfos;
                 infoDisp()
             })
-          }
 
         if (firstBlock) {
             //croix de fermeture
@@ -1660,7 +1650,6 @@ function infoDisp()
 
             console.log('links',d,d.value,'?')
             info.append("text")
-                .style('font-family','Gill Sans')
                 .text(word({}, d.value||d))
                 .attr("x", 31)
                 .attr("y", 20)
@@ -1679,11 +1668,10 @@ function infoDisp()
                     :
                     d.source ? //link
                     d.source.id ? //ca peut etre le noeud (auquel car il a un id) ou juste son nom
-                    nodes[d.source.id].shortName + (" \u21E8 " || " -> ") + nodes[d.target.id].shortName:
-                    nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName:
+                    shorten(nodes[d.source.id].shortName + (" \u21E8 " || " -> ") + nodes[d.target.id].shortName) :
+                    shorten(nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName) :
                     d.value) //texte
                 //.attr("font-family","American Typewriter")
-                .style('font-family','Gill Sans')
                 .attr("font-size", d.source ? 10 : 15)
                 .attr("x", 30)
                 .attr("y", 20)
@@ -1703,7 +1691,6 @@ function infoDisp()
                     }
                 })
 
-
             let bckgrdRect = info.append("rect")
                 .attr("fill", d => fill(d.id) || 'lightblue')
                 .attr("y", 30)
@@ -1711,6 +1698,14 @@ function infoDisp()
                 .attr("width", infoWidth)
                 .style("opacity", .9)
 
+
+            let infoSubBlock = info.append("text")
+                .attr("display", d.deployedInfos ? "block" : "none")
+                //.attr("y",100)
+                .attr("transform", d => "translate(0," + (d.img ? params.imgHeights : 0) + ")")
+                .selectAll(".smalltext")
+                .data(result)
+                .enter()
 
 
             //img eventuelle
@@ -1724,111 +1719,8 @@ function infoDisp()
                 //.attr("preserveAspectRatio", "xMidYMid slice");
             //.attr("width",100);
 
-
             //on met a jour la hauteur du bloc au fur et a mesure
-            let blockHeight = 68+(d.img ? params.imgHeights : 0);
-            console.log(result)
-            if (d.deployedInfos){
-
-
-                //info.append('text').text('ttt').attr("transform", d => "translate(0," + blockHeight + ")")
-            for (let i in result){
-
-                let d=result[i]
-
-
-                info.append('text').attr("transform", d => "translate(0," + (blockHeight+20) + ")")
-                .text(d.title)
-                .style('font-family','Gill Sans')
-                .attr("stroke", "green")
-                .attr("stroke-width", .5)
-                .attr("font-size", 16)
-                .append("a")
-                .attr("href",  d.url)
-                .attr("target", "_blank")
-                .text(  d.url ? " (source: " + shorten(d.source||d.url) + ")" :
-                    "")
-                .attr("font-size", 10)
-                .attr("stroke", "blue")
-                .on("mouseover", function(d) {
-                    d3.select(this).style("cursor", "pointer")
-                })
-                .append('text').attr("transform", "translate(0," + (blockHeight+20) + ")").text('...')
-
-                blockHeight=infoBlock.getBBox().height
-
-
-                for (let j in d.value){//should do a .data() but i can't make it
-                let prevBlockHeight=blockHeight
-
-
-                blockRect=info.append("rect")
-                .attr('y',blockHeight)
-                .attr('x',2)
-                .attr("fill",   d.id)
-                .attr("height",18)
-                .attr('rx',5)
-                //.attr('stroke','black')
-                .attr("width", infoWidth-3)
-                .style("opacity", .2)
-                .on('click',removeInfos)
-
-
-
-                info.append('text').attr('id','text'+i+'-'+j)
-                .attr("transform",  "translate(5," + (blockHeight) + ")")
-                .style('font-family','Gill Sans')
-                .on("mouseover", function(dd) {
-                    //console.log(d.value[j])//,nodes[d.value[j]])
-                    if (nodes[d.value[j]]){
-                    d3.select(this).style("cursor", "pointer")
-                    }
-                })
-                .on("click", function(dd) {
-                    if (nodes[d.value[j]]){
-                    infosFocus(nodes[d.value[j]]);//marche pas si id different de nom? je ne sais plus
-                    if (nodes[d.value[j]].hasFeaturedDesc || !params.cleanNonFeatured) {
-                      focus = d.value[j];
-                      init();
-                    }}
-                })
-                .append('tspan').attr('y','1em')
-                .attr("stroke-width", .5)
-                .attr("stroke", "black")
-                .text(d.value[j])
-                .each(wrapText)
-
-                let infoBlockText=document.getElementById('text'+i+'-'+j) //automatic?
-
-
-                blockHeight=infoBlock.getBBox().height
-
-                blockRect.attr('height',blockHeight-prevBlockHeight)
-                blockRect.attr('width',infoBlockText.getBBox().width+5)
-                }
-
-
-                //info.append('text').attr("transform", d => "translate(0," + (blockHeight+20) + ")").text('_')
-                blockHeight=infoBlock.getBBox().height
-
-
-             }
-             blockHeight+=10
-
-            }
-            if (1==123){//delete
-            let infoSubBlock = info.append("text")
-                .attr("display", d.deployedInfos ? "block" : "none")
-                //.attr("y",100)
-                .attr("transform", d => "translate(0," + (d.img ? params.imgHeights : 0) + ")")
-                .selectAll(".smalltext")
-                .data(result)
-                .enter()
-
-
-
-
-
+            let blockHeight = 68;
             //on met les textes avant les titres pour calculer la hauteur du bloc au passage
             infoSubBlock
                 .append("tspan")
@@ -1868,9 +1760,8 @@ function infoDisp()
                 .attr("stroke", "blue")
 
 
-            }
             //on calcule la nouvelle hauteur pour placer le prochain bloc
-            let newHeight = blockHeight - 25 - prevHeight;
+            let newHeight = infog.getBBox().height - 25 - prevHeight;
             bckgrdRect.attr("height", newHeight)
 
         } else {
@@ -1918,17 +1809,18 @@ function collectInfos(d) {
     if (d.type) {
         result.push({
             'title': 'type',
-            'value': [word(d, d.type)],
+            'value': word(d, d.type),
             'priority': 0.1
         })
     } else {//node
         if (params.dispLinksWithWithoutType){
             if (d.linked && d.linked.length > 0) {
                 //maybe problem because linked contains objects now, not just ids
-                d.options[word(d, "Links with")]={
-                    'value': d.linked,//.length<=10 ? d.linked.map(id => nodes[id].name) : d.linked.slice(0,9).map(id => nodes[id].name)+["... + "+(d.linked.length-params.infoMax)+" "+word({},'others')],
+                result.push({
+                    'title': word(d, "Links with"),
+                    'value': d.linked.length<=10 ? d.linked.map(id => nodes[id].name).join(', ') : d.linked.slice(0,9).map(id => nodes[id].name).join(', ')+"... + "+(d.linked.length-9)+" "+word({},'others'),
                     'priority': 1000
-                }
+                })
             }
         }
 
@@ -1939,14 +1831,14 @@ function collectInfos(d) {
 
             option = d.options[e]
             if (!option.value){
-              if (option.source){//it"s a link
-                option.value=[option.source]
-              }else{//option is a simple text
-                option={'value':[option]}
+              if (option.source){
+                option.value=option.source
+              }else{
+                option={'value':option}
             }
             }
             option.title=word(d,e)
-            if (typeof(option.value)=='object') {//it's a set or array. Concat set elements in the limit of infomax
+            if (typeof(option.value)=='object') {//concat set elements in the limit of infomax
                 values=[]
                 //console.log(d,option)
                 let l=option.value.length
@@ -1963,9 +1855,7 @@ function collectInfos(d) {
                   })
             }
 
-                option.value=values//.join(', ')
-            } else {
-                option.value=[option.value]//transform as array for display
+                option.value=values.join(', ')
             }
             if (option.value) {
               result.push(option) //{'title':word(d,d.options[e].title),'value':word(d,d.options[e].value),'priority':d.options[e].priority})
@@ -2042,7 +1932,7 @@ function infosFocus(d) {//adds node/link d and its children/links to 'infos'
 
     }
 
-    console.log(d)
+
     if ('linked' in d && d.linked.length > 0) {//links of a node
         infos.push({
             type:'Links',

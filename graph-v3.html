@@ -32,7 +32,16 @@
   	font-family:American Typewriter, serif;
   }
 
-
+  .butt {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
 
 
   #canvas {
@@ -53,11 +62,13 @@
     <input name="Submit"  type="submit" value="Search" class='swal-button'>
 </form>
 
-<div  id="dbname"style='text-align: left' ><p id='description'>The circles represent entities and might themselves contain other entities.
+<div  id="dbname"style='text-align: left' >
+
+  <p id='description'>
+    <div id="descrEng" style="display:none">The circles represent entities and might themselves contain other entities.
                     On the left, the info panel gives you information on the currently selected node.
                     </p>
                     <h3>Instructions: </h3>
-
                   <ul><li><strong>One click</strong>: select a node</li>
                       <li><strong>Two clicks</strong>: select and expand a node by showing the nodes it contains</li>
                       <li><strong>Scroll up/down</strong>: Zoom in/out on the graph</li>
@@ -66,6 +77,19 @@
 
                       <p>It is advised to look on the Chrome browser</p>
                   <p>Loading...</p>
+                </div>
+
+                  <div id="descrFr" style="display:block">Les cercles représentent des entités qui peuvent contenir d'autres entités.
+                                  </p>
+                                  <h3>Instructions: </h3>
+                                <ul><li><strong>Clic</strong>: Sélectionnez un cercle</li>
+                                    <li><strong>Double clic</strong>: Ouvrez un cercle pour faire apparaître les entités qu'il contient</li>
+                                    <li><strong>Descendre/Monter</strong>: Zoom sur la visualisation</li>
+                                    </ul>
+
+                                    <p>Il est recommandé d'utiliser le navigateur Chrome pour une meilleure utilisation.</p>
+                                <p>Chargement...</p>
+                              </div>
                     </div>
 
 
