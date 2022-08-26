@@ -1,0 +1,14 @@
+fenêtre trop haute
+
+resize frame si fenêtre change
+
+déselectionne sur click out
+
+Plus opacifier les liens inactifs
+
+cohérence des couleurs
+ - faire par Camaïeu
+
+signification couleurs des liens
+
+charger typo localement

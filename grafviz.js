@@ -109,7 +109,7 @@ let params = {
     prevFocus,
     mobile = window.screen.width<1200, //enleve l'affichage d'infos et change le zoom auto
     width = mobile?  document.body.clientWidth : params.screenRatio*window.screen.width, // svg width
-    height = width//mobile?  document.body.clientHeight :params.screenRatio*window.screen.height, // svg height
+    height = mobile?  document.body.clientHeight :3/4*window.screen.height, // svg height
     nameMagnif=mobile?1.5:1,
     off = params.dr,
     centerX=width/2,//pour le zoom auto
@@ -1371,21 +1371,21 @@ crsrText.attr("display","none");
         .attr("class", "boxname top")//will contain first name, width is determined later depending on first name
         .attr("rx", 6)
         .attr("ry", 6)
-        .attr('stroke-width',2)
-        .attr('stroke',d=>fill(d.parentId))
+        .attr('stroke-width',3)
+        .attr('stroke','white')//d=>fill(d.parentId))
 
     nodeTextg.append("rect")
         .attr("class", "boxname middle")//contains last name if any
         .attr('display',d=>d.lastName?'block':'none')
         .attr("rx", 6)
         .attr("ry", 6)
-        .attr('stroke-width',2)
-        .attr('stroke',d=>fill(d.parentId))
+        .attr('stroke-width',3)
+        .attr('stroke','white')//d=>fill(d.parentId))
 
     nodeTextg.append("text")
         .attr("x", 0)
         .style("font-size", 18*nameMagnif)
-        .style("font-family", "American Typewriter, serif")
+        .style("font-family", "Gill Sans")
         .attr("y", -5*nameMagnif)//d => d.lastName ? d.imgDisp ?  "2em" : "-1.2em" : d.imgDisp ? "3em" : 0)//d.radius  : -0.6*d.radius : d.imgDisp ? 1.5*d.radius:0)//
         .text(d => d.firstName) //+d.visibleDepth)//+(maxGen-d.generation))
         .each(function(d) {//determines width for bounding white square
@@ -1400,12 +1400,12 @@ crsrText.attr("display","none");
         .attr("y", -21*nameMagnif)//d => d.imgDisp ? "1em" : "-2em") // -37)
         //.attr("display", d => d.lastName ? "block" : "none")
         .attr("width", d => d.bb1w || 10)
-        .attr("height", 21*nameMagnif)
+        .attr("height", 22*nameMagnif)
 
 
     nodeTextg.append("text")
         .style("font-size", 18*nameMagnif)
-        .style("font-family", "American Typewriter, serif")
+        .style("font-family", "Gill Sans")
         .attr("x", 0)
         .attr("y", '1em')//d => d.imgDisp ? "3em" : 0)
         .text(d => shorten(d.lastName) || "")
@@ -1426,7 +1426,7 @@ crsrText.attr("display","none");
     nodeTextg.append("text")
         .style('display','none')
         .style("font-size", 10*nameMagnif)
-        .style("font-family", "American Typewriter, serif")
+        .style("font-family", "Gill Sans")
         .attr("dy", d=>d.lastName?33*nameMagnif:10*nameMagnif)//d => d.imgDisp ? "3.8em" : "1.3em")
         .text(d => nodes[d.parentId].shortName)
         //.attr("y", '3em')//d => d.imgDisp ? "3em" : 0)
@@ -1665,7 +1665,7 @@ function infoDisp()
 
             console.log('links',d,d.value,'?')
             info.append("text")
-                .style('font-family','Roboto')
+                .style('font-family','Gill Sans')
                 .text(word({}, d.value||d))
                 .attr("x", 31)
                 .attr("y", 20)
