@@ -40,7 +40,7 @@ function setUp(s){
       return {'rootName':s,'rootId':s=='Mammals'?'Qxxx':s=='Arachnids'?'QXXX':'root'}
     }
     else {
-      return {}
+      return {'rootName':'Impressionistes','title':'Impressionistes','rootId':'root'}
     }
 }
 
@@ -150,6 +150,7 @@ function treatWDDB(result) {
                       "name": entries[r].continentLabel?entries[r].continentLabel.value : continentName[continentId],
                       "parentId": 'root', // == "Q7377" ? "root" : parentUri,
                       "options": {},
+                      "expanded": true,
                       "words":{'Member of':'Member of'}
                     }
           } else if ('country' in entries[r])
@@ -169,6 +170,8 @@ function treatWDDB(result) {
         //debug_print(id,entries[r],entries[r].occupation)
         //console.log(entries[r])
         node.isMath= (wdKey=='maths') || ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q170790') )//math
+        if ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q1028181') )//impress
+        node.feat='optionWikipedia_article' in entries[r]
         node.feat=('optionItis_TSN' in entries[r])
                               ||
                             ('optionAward' in entries[r] && entries[r].optionAward.value.includes('Q28835') )//Fields medal
@@ -188,12 +191,13 @@ function treatWDDB(result) {
         nodesWD[node.id]=mergeNodes(nodesWD[node.id],node)
         //console.log(r,id,nodesWD[r],isMath,entries[r],entries[r].occupation.value,entries[r].occupation.value.split('/').slice(-1)[0]=='Q1622272')
     }
-    json_WD = {'params': {'cleanNonFeatured': (wdKey!='countriesWD'),
+    json_WD = {'params': {'cleanNonFeatured': (wdKey!='countriesWD' && wdKey!='impressionism'),
                           'inheritPicFromChild':(wdKey.includes('taxons')),
                             'simultImg':150,
                             'inheritLinks': (wdKey=='maths')?2:1,//1 node suffices to inherit link
                             'connectOtherParents':(wdKey.endsWith('aths')),
-                           'biPartiteLinks': false
+                           'biPartiteLinks': false,
+                           'initExpandAll': (wdKey=="impressionism")//expand all nodes at the beginning
                          },
                 'linksWidth':{'Member of':5,'Also member of':2,'Multiple links':10},
                 'nodes': nodesWD,
@@ -268,7 +272,42 @@ function appendDbInfo(s){
 
 function wdQuery(s) {
   console.log('wdquery',s)
+        if (s=="impressionism"){
+          return ` SELECT ?id ?idLabel ?parentId  ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?occupation ?influencer (SAMPLE(?student) AS ?student) (SAMPLE(?img) AS ?img) WHERE {
+            {
+              ?id wdt:P106 wd:Q1028181;
+                wdt:P135 wd:Q40415.
+              VALUES ?occupation {
+                wd:Q1028181
+              }
+              OPTIONAL {
+                ?optionWikipedia_article schema:about ?id;
+                  schema:isPartOf <https://en.wikipedia.org/>.
+              }
+              OPTIONAL { ?id wdt:P18 ?img. }
 
+                ?id p:P800 _:b102.
+                _:b102 ps:P800 ?optionNotable_work.
+                
+              OPTIONAL {
+                ?id (wdt:P802|wdt:P185) ?student.
+                ?student wdt:P106 wd:Q170790.
+              }
+            }
+            OPTIONAL {
+              ?id (p:P1066|p:P184) _:b103.
+              _:b103 (ps:P1066|ps:P184) ?parentId.
+              ?parentId wdt:P106 wd:Q1028181.
+            }
+            OPTIONAL {
+              ?id wdt:P737 ?influencer
+              }
+
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+          }
+          GROUP BY ?id ?idLabel ?occupation ?parentId ?optionAward ?optionAwardLabel ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?influencer
+`
+        }
        if (s.endsWith('Maths')){
           countryDict={'fr':'Q142','gr':'Q183','us':'Q30','uk':'Q145','rs':'Q159'}
           countryCode=countryDict[s.substring(0,2)]

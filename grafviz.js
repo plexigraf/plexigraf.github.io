@@ -89,7 +89,9 @@ let params = {
         //initialFocus;undef by default
         dispLinksWithWithoutType: true,//display "links with ..." in infobox for links who don't have a type
                                         //(links who have type xxx are displayed as "xxx:...")
-        lang: "Fr"//"Eng"
+        lang: "Fr",//"Eng",
+        initExpandAll: false,
+        subtextParent: false
     },
     linkStrength= {
         'Member of': 3,
@@ -165,7 +167,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 
 			}
 			const endpointUrl = 'https://query.wikidata.org/sparql';
-			const sparqlQuery = wdQuery(wdKey);
+			const sparqlQuery = wdQuery(wdKey);//fetch query in prepare.js
 			console.log(sparqlQuery)
 			console.log('querying...' + wdKey)
 			appendDbInfo("Query from WikiData.org, please wait...");
@@ -502,7 +504,7 @@ function buildNodesLinks(data) {
         //n.links = [];
         n.deployedInfos = false; //détermine si l'info est déployée (non par défaut)
         n.visibleParentId = "root" //nodes.length;
-        n.expanded = n.expanded || false; //pas développé par défaut
+        n.expanded = n.expanded || params.initExpandAll || false; //pas développé par défaut
         n.isLeave = false //feuilles de l'arbre = pas d'enfant
         n.visibleDepth = 0
         n.descendants = 0
@@ -694,6 +696,7 @@ function buildNodesLinks(data) {
 
     console.log(nodes, links)
     nodes['root'].expanded = true;
+    nodes['root'].show = true;
 
 
     //build children lists and links
@@ -974,7 +977,7 @@ function handleClick(event) { //pour la fctn de recherche
         } else {
             console.log('no results')
             infos = [{
-                'value': 'recherche desactivee',//'no result for '+term,
+                'value': 'pas de résultats / recherche desactivée',//'no result for '+term,
                 'children': []
             }]
         }
@@ -1069,6 +1072,7 @@ function visibleNetwork() {
     //on determine le parent visible de chacun, même les noeuds cachés, pour faire les méta-liens
     //et pour déterminer les coodronnées initiales
     for (let k in nodes) {
+        console.log(k,k.id)
         let nodek = nodes[k];
         //avant tout, si le noeud vient de popper, on tire la position initiale proche de l'ancien visibleparent
         if (nodek.show && !nodek.prevShow) {
@@ -1080,7 +1084,7 @@ function visibleNetwork() {
             nodek.px = nodek.x;
             nodek.py = nodek.y;
         }
-        if (nodek.show) {
+        if (nodek.show ) {
             nodes[k].visibleParentId = k
             if (nodek.isLeave || !nodek.expanded) { //si c'est une feuille ou un noeud fermé, marche pas pour focus parent
                 updateVisibleDepth(nodek) //on maj toute la hierarchie au dessus
@@ -1420,6 +1424,7 @@ crsrText.attr("display","none");
         .attr("height", 23*nameMagnif)
 
     nodeTextg.append("text")
+        .style('display','none')
         .style("font-size", 10*nameMagnif)
         .style("font-family", "American Typewriter, serif")
         .attr("dy", d=>d.lastName?33*nameMagnif:10*nameMagnif)//d => d.imgDisp ? "3.8em" : "1.3em")
@@ -1660,7 +1665,7 @@ function infoDisp()
 
             console.log('links',d,d.value,'?')
             info.append("text")
-                .style('font-family','Gill Sans')
+                .style('font-family','Roboto')
                 .text(word({}, d.value||d))
                 .attr("x", 31)
                 .attr("y", 20)
