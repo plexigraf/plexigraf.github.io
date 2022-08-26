@@ -1,7 +1,17 @@
 <!DOCTYPE html>
-<meta charset = "utf-8">
-<html>
-<head>
+<html lang="en" class="no-js">
+   <head>
+      <!-- Meta -->
+      <meta charset="UTF-8">
+      <meta name="description" content="Free HTML template">
+      <meta name="keywords" content="HTML, template, free">
+      <meta name="author" content="Nicola Tolin">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Styles -->
+      <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+      <link href="vendor/animate/animate.css" rel="stylesheet" type="text/css"/>
+      <link href="css/style.css" rel="stylesheet" type="text/css"/>
+ 
 
   <title>Graph exploration</title>
 
@@ -56,6 +66,40 @@
 
 </head>
 <body>
+
+    <!-- Navbar -->
+    <div class="navigation container-fluid">
+      <div class="row justify-content-md-center ">
+         <div class="col-md-10 col-sm-12">
+            <nav class="navbar navbar-default">
+               <a class="navbar-brand" href="index.html">
+               <img src="img/logo.png" height="60" alt="Logo">
+               </a> 
+               <div class="button_container" id="toggle"  >
+                  <span class="black top"></span>
+                  <span class="black middle"></span>
+                  <span class="black bottom"></span>
+               </div>
+               <div class="overlay" id="overlay">
+                  <nav class="overlay-menu" >
+                     <ul>
+                        <li> <a href="about.html">About</a></li>
+                        <li> <a href="story.html">Story</a></li>
+                        <li> <a href="services.html">Services</a></li>
+                        <li> <a href="contacts.html">Contacts</a></li>
+                     </ul>
+                  </nav>
+               </div>
+            </nav>
+
+         </div>
+      </div>
+   </div>
+   <!-- End Navbar -->
+   <!-- Portfolio-Text -->
+   <div class="container-fluid pb-5 >
+      
+   <!-- End Portfolio-Text -->
 
 <form id='searchForm' name="myform" onSubmit="return handleClick()" style="display:block; color:blue">
     <input type="text" id="myVal" placeholder="Text..." >
