@@ -12,3 +12,7 @@ cohérence des couleurs
 signification couleurs des liens
 
 charger typo localement
+
+pas de zoom de l'info
+
+Mettre un loader
