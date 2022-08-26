@@ -1266,7 +1266,7 @@ crsrText.attr("display","none");
         .style("opacity", d => d.parentId == "root" ? 0.1 : d.parentId=='focus'? 1 : Math.min(0.8 , Math.max(0.1, 1 - (nodes[d.parentId].visibleDepth) / 3)))
         .style("fill-opacity", d => d.parentId == "root" ? 0.1 : d.parentId=='focus'? 1 : Math.min(0.8 , Math.max(0.1, 1 - (nodes[d.parentId].visibleDepth) / 3)))
         //.attr("d", drawCluster)
-        .style("stroke-width", "8px")
+        .style("stroke-width",d=> d.parentId=='focus'? "8px" : "1px")
         .style("stroke", "blue") //d => fill(nodeById(d.parentId).visibleParentId))
         .on("mouseover", function(d) {
             d3.select(this).style("cursor", d=>(focus==d.parentId)?"crosshair":'help')
@@ -1385,7 +1385,7 @@ crsrText.attr("display","none");
     nodeTextg.append("text")
         .attr("x", 0)
         .style("font-size", 18*nameMagnif)
-        .style("font-family", "Gill Sans")
+        .style("font-family", "Gill Sans, Roboto, Arial")
         .attr("y", -5*nameMagnif)//d => d.lastName ? d.imgDisp ?  "2em" : "-1.2em" : d.imgDisp ? "3em" : 0)//d.radius  : -0.6*d.radius : d.imgDisp ? 1.5*d.radius:0)//
         .text(d => d.firstName) //+d.visibleDepth)//+(maxGen-d.generation))
         .each(function(d) {//determines width for bounding white square
@@ -1405,7 +1405,7 @@ crsrText.attr("display","none");
 
     nodeTextg.append("text")
         .style("font-size", 18*nameMagnif)
-        .style("font-family", "Gill Sans")
+        .style("font-family", "Gill Sans, Roboto, Arial")
         .attr("x", 0)
         .attr("y", '1em')//d => d.imgDisp ? "3em" : 0)
         .text(d => shorten(d.lastName) || "")
@@ -1426,7 +1426,7 @@ crsrText.attr("display","none");
     nodeTextg.append("text")
         .style('display','none')
         .style("font-size", 10*nameMagnif)
-        .style("font-family", "Gill Sans")
+        .style("font-family", "Gill Sans, Roboto, Arial")
         .attr("dy", d=>d.lastName?33*nameMagnif:10*nameMagnif)//d => d.imgDisp ? "3.8em" : "1.3em")
         .text(d => nodes[d.parentId].shortName)
         //.attr("y", '3em')//d => d.imgDisp ? "3em" : 0)
@@ -1665,7 +1665,7 @@ function infoDisp()
 
             console.log('links',d,d.value,'?')
             info.append("text")
-                .style('font-family','Gill Sans')
+                .style('font-family','Gill Sans, Roboto, Arial')
                 .text(word({}, d.value||d))
                 .attr("x", 31)
                 .attr("y", 20)
@@ -1688,7 +1688,7 @@ function infoDisp()
                     nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName:
                     d.value) //texte
                 //.attr("font-family","American Typewriter")
-                .style('font-family','Gill Sans')
+                .style('font-family','Gill Sans, Roboto, Arial')
                 .attr("font-size", d.source ? 10 : 15)
                 .attr("x", 30)
                 .attr("y", 20)
@@ -1744,7 +1744,7 @@ function infoDisp()
 
                 info.append('text').attr("transform", d => "translate(0," + (blockHeight+20) + ")")
                 .text(d.title)
-                .style('font-family','Gill Sans')
+                .style('font-family','Gill Sans, Roboto, Arial')
                 .attr("stroke", "green")
                 .attr("stroke-width", .5)
                 .attr("font-size", 16)
@@ -1782,7 +1782,7 @@ function infoDisp()
 
                 info.append('text').attr('id','text'+i+'-'+j)
                 .attr("transform",  "translate(5," + (blockHeight) + ")")
-                .style('font-family','Gill Sans')
+                .style('font-family','Gill Sans, Roboto, Arial')
                 .on("mouseover", function(dd) {
                     //console.log(d.value[j])//,nodes[d.value[j]])
                     if (nodes[d.value[j]]){
