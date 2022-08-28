@@ -109,12 +109,13 @@ let params = {
     prevFocus,
     mobile = window.screen.width<1200, //enleve l'affichage d'infos et change le zoom auto
     width =  document.body.clientWidth //: params.screenRatio*window.screen.width, // svg width
-    height = mobile?  document.body.clientHeight :3/4*window.screen.height, // svg height
+    height = params.infoMax*50//
+    virtualHeight=mobile?  document.body.clientHeight :3/4*window.screen.height, // svg height
     nameMagnif=mobile?1.5:1,
     off = params.dr,
     centerX=width/2,//pour le zoom auto
     centerY=mobile? width/2 : width/4
-    console.log('mobile?',mobile,width,height)
+    console.log('mobile?',mobile,width,virtualHeight)
     //alert('e'+(mobile?"true":false)+width+' '+height)
     //transCorrect={'x':width *0, 'y':0}//why these values??
 console.log("mobile",mobile)
@@ -142,6 +143,7 @@ let meta_obj
 //loading data
 console.log('load data')
 console.time('load')
+
 //load prepared data if any
 d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 	if (!error) {
@@ -323,6 +325,12 @@ zoomCanvas.append('rect').attr('width',width).attr("height",height)//decoration
                             .on("mouseover", function() {
                                     d3.select(this).style("cursor", "all-scroll")
                                 })
+                            .on("click",function(){
+                                focus="root"
+                                //window.scrollBy(0,-1000);
+                                //scrolldelay = setTimeout(pageScroll,1000);
+                                init()
+                            })
 
 
 
@@ -353,7 +361,7 @@ let hullg = vis.append("g").attr("id", "hullg"), //env. convexes
 
 
 var _zoom2 = d3.zoom()
-  .scaleExtent([.1,10])
+  .scaleExtent([1,1])
   .on("zoom", function() {
     e=d3.event.transform
     //_zoom2.translate([e.x,e.y])
@@ -364,14 +372,15 @@ var _zoom2 = d3.zoom()
   //console.log("prev",prev)
   })//;;
 //infoG est une selection D3, infog est un element html
-let zoomInfoG=canvas.append("svg").call(_zoom2)
+let zoomInfoG=canvas.append("svg")//.call(_zoom2)
 let infoG = zoomInfoG.append("g")
     .attr("id", "infog").attr("display", "block")
 
-let zoomInfo=1//mobile? 0.9*width/infoWidth :1
+/*let zoomInfo=1//mobile? 0.9*width/infoWidth :1
 
 var initialZoomInfo = d3.zoomIdentity.translate(0,0)//.scale(mobile?3:1);
 zoomInfoG.transition().duration(650).call(_zoom2.transform, initialZoomInfo);
+*/
 
 //largeWidth ? "block" : "none"), //infos
 
@@ -495,7 +504,7 @@ function buildNodesLinks(data) {
         n.name = n.name+(n.feat?' °':'')
         n.children = [];
         n.x = 100 + 2*width * Math.random();
-        n.y = 100+2*height* Math.random();
+        n.y = 100+2*virtualHeight* Math.random();
         n.px = n.x
         n.py = n.y;
         n.radius = params.dr;
@@ -938,6 +947,7 @@ function buildNodesLinks(data) {
 
 
 function handleClick(event) { //pour la fctn de recherche
+    console.log('handle')
     try {
         let term = document.getElementById("myVal").value;
         console.log('go', term)
@@ -1072,7 +1082,6 @@ function visibleNetwork() {
     //on determine le parent visible de chacun, même les noeuds cachés, pour faire les méta-liens
     //et pour déterminer les coodronnées initiales
     for (let k in nodes) {
-        console.log(k,k.id)
         let nodek = nodes[k];
         //avant tout, si le noeud vient de popper, on tire la position initiale proche de l'ancien visibleparent
         if (nodek.show && !nodek.prevShow) {
@@ -1200,6 +1209,7 @@ function startVis(){
 
 function init() {
 
+    $('body,html').animate({scrollTop: 156}, 800); 
     if (force) force.stop(); //useful?
     console.log('init', nodes)
     zoomCounter=0
@@ -1221,7 +1231,7 @@ function init() {
             .nodes(net.nodes)
                 .force("link", d3.forceLink(net.links).distance(function(l){
                     //console.log(l.source.id,l.type,l.target.id)
-                  return (l.type=='Member of' && !l.source.expanded? 150 : focus==l.source.id || focus==l.target.id ? 200 : height/2 )
+                  return (l.type=='Member of' && !l.source.expanded? 150 : focus==l.source.id || focus==l.target.id ? 200 : virtualHeight/2 )
                 }) .strength(.3))
                   /*.force('cluster', d3.forceCluster().centers(function(d){
                     return d.expanded? d : nodes[d.parentId]
@@ -1230,7 +1240,7 @@ function init() {
                   return n.expanded? n.radius*2 : n.radius*1.3
                 }).strength(.8).iterations(16) )
                 //.force("charge", d3.forceManyBody(function(n){ return -100}))
-                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("center", d3.forceCenter(width / 2, virtualHeight / 2))
 
     //A noter: force transforme links: il remplace link.source.id par l'objet source, etc...
 
@@ -1266,8 +1276,8 @@ crsrText.attr("display","none");
         .style("opacity", d => d.parentId == "root" ? 0.1 : d.parentId=='focus'? 1 : Math.min(0.8 , Math.max(0.1, 1 - (nodes[d.parentId].visibleDepth) / 3)))
         .style("fill-opacity", d => d.parentId == "root" ? 0.1 : d.parentId=='focus'? 1 : Math.min(0.8 , Math.max(0.1, 1 - (nodes[d.parentId].visibleDepth) / 3)))
         //.attr("d", drawCluster)
-        .style("stroke-width",d=> d.parentId=='focus'? "8px" : "1px")
-        .style("stroke", "blue") //d => fill(nodeById(d.parentId).visibleParentId))
+        .style("stroke-width","8px")//d=> d.parentId=='focus'? "8px" : "1px")
+        .style("stroke", d => fill(nodes[d.parentId].visibleParentId))
         .on("mouseover", function(d) {
             d3.select(this).style("cursor", d=>(focus==d.parentId)?"crosshair":'help')
             //crsrText.text(name(d.parentId))
@@ -1457,7 +1467,7 @@ crsrText.attr("display","none");
     linkp = link.append("polygon")
         .attr("class", d => ((d.source.id === focus) || (d.target.id === focus)) ? "focus" : "background")
         .attr("stroke", d => ((d.source.id === focus) || (d.target.id === focus)) ? "red" : linksColor[d.types[0]||d.type||'default'])
-        .attr("opacity", d => ((d.source.id === focus) || (d.target.id === focus)) ? 1 : 0.2)
+        .attr("opacity", d => ((d.source.id === focus) || (d.target.id === focus)) ? 1 : 0.01)
         .attr("points", function(d) {
             let dx = d.target.x - d.source.x;
             let dy = d.target.y - d.source.y;
@@ -1608,7 +1618,7 @@ function infoDisp()
         let infoBlock=document.getElementById('infoblock'+i) //automatic?
         //rectangle du cadre titre
         info.append("rect")
-            .data([d]).attr("fill", d => fill(d.id) || 'lightblue')
+            .data([d]).attr("fill", d => fill(d.parentId) || 'lightblue')
             .attr("height", 30)
             .attr("width", infoWidth)
             //.attr("stroke-width",2)
@@ -1732,7 +1742,6 @@ function infoDisp()
 
             //on met a jour la hauteur du bloc au fur et a mesure
             let blockHeight = 68+(d.img ? params.imgHeights : 0);
-            console.log(result)
             if (d.deployedInfos){
 
 
@@ -1876,7 +1885,7 @@ function infoDisp()
             }
             //on calcule la nouvelle hauteur pour placer le prochain bloc
             let newHeight = blockHeight - 25 - prevHeight;
-            bckgrdRect.attr("height", newHeight)
+            //bckgrdRect.attr("height", newHeight)
 
         } else {
             info.style("display", "none")
@@ -1995,6 +2004,7 @@ function removeInfos() {
     for (let i in infos) {
         infos[i].deployedInfos = false;
     }
+    init()
     infos = [];
     //adaptZoom()
 }

@@ -1,11 +1,9 @@
 
 swal({
-  title: "Loading...",
-  content: dbname,
+  title: "Patience...",
+  content: spinner,
   buttons: false
 })
-
-
 
 const url=window.location.href
 if (url.startsWith('https://grafviz')){//disable live output
@@ -19,11 +17,15 @@ const filename = urlParams.get('filename')
 const load_from_WD = urlParams.get('load_from_WD')=='true'? true:false
 const wdjs = urlParams.get('wdjs')=='true'? true:false
 var wdKey=urlParams.get('wdKey')
+
+console.log(wdKey)
+document.getElementById('spinnerp').innerHTML=wdKey=='taxonsArachnids'? 'Loading over 114k specimens' : 'Can take several minutes for large DBs'
+
 if (filename == null && !load_from_WD && !wdjs){
     filename='political/Philippe-II-2018.json'
 }
 //document.getElementById("dbname").innerHTML=load_from_WD? 'Querying DB' : 'Processing DB '+filename;
-console.log(queryString,load_from_WD,wdjs,filename)
+console.log(queryString,load_from_WD,wdjs,filename)          
 
 
 

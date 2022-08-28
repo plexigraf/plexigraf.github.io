@@ -60,7 +60,25 @@
     #searchForm {
       margin-left:3em !important;
     }
+    .loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.center-div {
+     margin: 0 auto;
+     width: 100px;
+     height: 100px
+}
 
   </style>
 
@@ -97,7 +115,7 @@
    </div>
    <!-- End Navbar -->
    <!-- Portfolio-Text -->
-   <div class="container-fluid pb-5 >
+   <div class="container-fluid pb-5" >
       
    <!-- End Portfolio-Text -->
 
@@ -106,7 +124,13 @@
     <input name="Submit"  type="submit" value="Search" class='swal-button'>
 </form>
 
+
+<div id="spinner"><p id='spinnerp'></p><div text-align="center" class="loader center-div"></div>
+
+
 <div  id="dbname"style='text-align: left' >
+
+  
 
   <p id='description'>
     <div id="descrEng" style="display:none">The circles represent entities and might themselves contain other entities.
@@ -121,6 +145,7 @@
 
                       <p>It is advised to look on the Chrome browser</p>
                   <p>Loading...</p>
+   
                 </div>
 
                   <div id="descrFr" style="display:block">Les cercles représentent des entités qui peuvent contenir d'autres entités.
@@ -136,7 +161,7 @@
                               </div>
                     </div>
 
-
+                  </div>
 
 <script type="text/javascript" src="prepare.js"></script>
 

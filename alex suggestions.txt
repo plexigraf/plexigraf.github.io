@@ -1,8 +1,4 @@
-fenêtre trop haute
-
-resize frame si fenêtre change
-
-déselectionne sur click out
+preload index
 
 Plus opacifier les liens inactifs
 
@@ -13,6 +9,4 @@ signification couleurs des liens
 
 charger typo localement
 
-pas de zoom de l'info
-
-Mettre un loader
+http://line.xtrafr.cc:8080/get.php?
