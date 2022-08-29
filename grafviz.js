@@ -82,7 +82,8 @@ let params = {
         addOrphansToRoot: true, //les noeuds dont le parent n'est pas dans data est rattaché à root
         displayFiliation: true,
         biPartiteLinks: true,
-        saveAllData: false,
+        saveAllData: false,//true,//saves prepared data on a file xxx-rtu-data.json to gain time next time
+        saveIdx: true,//only save search index
         infoMax: 50,//max infoblocks to display
         maxNodeShow: 80,//max number of nodes when expanding linked of focus
         //indexOnlyFeatured: true//Do not index non featured nodes in search
@@ -91,7 +92,8 @@ let params = {
                                         //(links who have type xxx are displayed as "xxx:...")
         lang: "Fr",//"Eng",
         initExpandAll: false,
-        subtextParent: false
+        subtextParent: false,
+        LinkOffOpac: 0.03,
     },
     linkStrength= {
         'Member of': 3,
@@ -247,6 +249,15 @@ function makeIndex(entries) {
     console.timeEnd('build')
     console.log('entries', entries)
     console.time('search index')
+    //load prepared data if any
+    
+    d3.json('rtu-data/' + wdKey + '-rtu-idx.json', function(error, json) {
+	if (!error) {
+		console.log('rtu idx found')
+		
+		idx = lunr.Index.load(json)
+	} else {
+        console.log('no rtu idx found')
     idx = lunr(function() {
         this.ref('id')
         this.field('name', {
@@ -270,11 +281,40 @@ function makeIndex(entries) {
             this.add(entries[id])
         } //, this)
         }
+        
 
+    })
+    if (params.saveIdx) {
+        var savedIndex = idx.toJSON();
+        //var workingLoad = lunr.Index.load(savedIndex);
+        //console.log(savedIndex);
+    
+        // Put the object into storage
+        //localStorage.setItem('savedIndex', JSON.stringify(savedIndex));
+    
+        //var data = localStorage.getItem('savedIndex');
+        //var nonWorkingLoad = lunr.Index.load(JSON.parse(data)); //Error here
+    
+        console.time('save')
+        console.log("saving index")
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(savedIndex, null, 2)], {
+          type: "text/plain"
+        }));
+        console.log('name', wdKey, name)
+        a.setAttribute("download", wdKey + "-rtu-idx.json");
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    
+          console.timeEnd('save')
+        //on calcule les liens visibles et on lance la simulation
+      } else {
+          console.log('not saving idx')
+      }
     }
-
-
-  )
+})
+  
 
 
   console.timeEnd('search index')
@@ -1466,8 +1506,8 @@ crsrText.attr("display","none");
 
     linkp = link.append("polygon")
         .attr("class", d => ((d.source.id === focus) || (d.target.id === focus)) ? "focus" : "background")
-        .attr("stroke", d => ((d.source.id === focus) || (d.target.id === focus)) ? "red" : linksColor[d.types[0]||d.type||'default'])
-        .attr("opacity", d => ((d.source.id === focus) || (d.target.id === focus)) ? 1 : 0.01)
+        .attr("stroke", d => linksColor[d.types[0]||d.type||'default'])//((d.source.id === focus) || (d.target.id === focus)) ? "red" : linksColor[d.types[0]||d.type||'default'])
+        .attr("opacity", d => ((d.source.id === focus) || (d.target.id === focus)) ? 1 : params.LinkOffOpac)
         .attr("points", function(d) {
             let dx = d.target.x - d.source.x;
             let dy = d.target.y - d.source.y;
@@ -2120,8 +2160,8 @@ function lightLink(id1, id2, p) {
     linkp.filter(
             d =>
             (d.source.id === id1 && d.target.id === id2))
-        .attr("stroke", d => p === "on" ? "orange" : ((d.source.id === focus) || (d.target.id === focus)) ? "red" : "grey")
-        .attr("opacity", d => p === "on" ? 1 : ((d.source.id === focus) || (d.target.id === focus)) ? 1 : 0.2)
+        .attr("stroke", d => p === "on" ? "orange" : linksColor[d.types[0]||d.type||'default'])// ((d.source.id === focus) ||  (d.target.id === focus)) ? "red" : "grey")
+        .attr("opacity", d => p === "on" ? 1 : ((d.source.id === focus) || (d.target.id === focus)) ? 1 : params.LinkOffOpac)
     lightNode(id1, p)
     lightNode(id2, p)
 }
