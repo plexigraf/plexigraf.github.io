@@ -354,13 +354,23 @@ const canvas = body.append("svg").attr("id", "canvas")
     .attr("width", width)
     .attr("height", height)
 
+canvas.append("svg:image")
+.attr('id','loadingImg')
+.attr("xlink:href", "img/"+wdKey+".png")
+.attr('x',0)
+.attr('y',-height/3)
+.attr("width",width)
+.attr("height",height);
+
+
+
 const zoomCanvas = canvas.append("svg").attr("id", "zcanvas")
         .style("border", "5px solid #ccc")
         .attr("width", width)
         .attr("height", height)
     .call(_zoom)
 
-zoomCanvas.append('rect').attr('width',width).attr("height",height)//decoration
+rzc=zoomCanvas.append('rect').attr('width',width).attr("height",height)//decoration
                             .attr('opacity',.1)
                             .on("mouseover", function() {
                                     d3.select(this).style("cursor", "all-scroll")
@@ -979,7 +989,8 @@ function buildNodesLinks(data) {
         console.timeEnd('save')
       //on calcule les liens visibles et on lance la simulation
     }
-
+    
+    document.getElementById("loadingImg").style.display = 'none';
     startVis()
 
 }
@@ -1631,7 +1642,7 @@ function infoDisp()
 {
     //lit l'info de d et affiche les infos correspondantes
     //idealement il faudrait tout recoder pour afficher de manière nested-hierarchique
-    infoWidth = 300;
+    infoWidth = Math.min(300,document.body.clientWidth-20);
     //on enleve tout
     infoG.selectAll(".infoblock").remove()
     let off = 10;
