@@ -83,7 +83,7 @@ let params = {
         displayFiliation: true,
         biPartiteLinks: true,
         saveAllData: false,//true,//saves prepared data on a file xxx-rtu-data.json to gain time next time
-        saveIdx: true,//only save search index
+        saveIdx: true,//false,//only save search index
         infoMax: 50,//max infoblocks to display
         maxNodeShow: 80,//max number of nodes when expanding linked of focus
         //indexOnlyFeatured: true//Do not index non featured nodes in search
@@ -250,12 +250,13 @@ function makeIndex(entries) {
     console.log('entries', entries)
     console.time('search index')
     //load prepared data if any
-    
+
     d3.json('rtu-data/' + wdKey + '-rtu-idx.json', function(error, json) {
 	if (!error) {
 		console.log('rtu idx found')
-		
+
 		idx = lunr.Index.load(json)
+        console.log('done loading')
 	} else {
         console.log('no rtu idx found')
     idx = lunr(function() {
@@ -272,6 +273,7 @@ function makeIndex(entries) {
                         {this.add(entries[id])
                     }
                   } //, this)
+
         }
         else {
 
@@ -281,20 +283,20 @@ function makeIndex(entries) {
             this.add(entries[id])
         } //, this)
         }
-        
+
 
     })
     if (params.saveIdx) {
         var savedIndex = idx.toJSON();
         //var workingLoad = lunr.Index.load(savedIndex);
         //console.log(savedIndex);
-    
+
         // Put the object into storage
         //localStorage.setItem('savedIndex', JSON.stringify(savedIndex));
-    
+
         //var data = localStorage.getItem('savedIndex');
         //var nonWorkingLoad = lunr.Index.load(JSON.parse(data)); //Error here
-    
+
         console.time('save')
         console.log("saving index")
         const a = document.createElement("a");
@@ -306,15 +308,18 @@ function makeIndex(entries) {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-    
+
           console.timeEnd('save')
         //on calcule les liens visibles et on lance la simulation
       } else {
           console.log('not saving idx')
       }
     }
+
+    document.getElementById("searchText").value="Search";
+    document.getElementById("searchText").disabled=false;
 })
-  
+
 
 
   console.timeEnd('search index')
@@ -376,7 +381,8 @@ rzc=zoomCanvas.append('rect').attr('width',width).attr("height",height)//decorat
                                     d3.select(this).style("cursor", "all-scroll")
                                 })
                             .on("click",function(){
-                                focus="root"
+                                removeInfos()
+                                //focus="root"
                                 //window.scrollBy(0,-1000);
                                 //scrolldelay = setTimeout(pageScroll,1000);
                                 init()
@@ -552,6 +558,7 @@ function buildNodesLinks(data) {
         }
         n.shortName=n.shortName || shorten(n.name)
         n.name = n.name+(n.feat?' °':'')
+        n.shortName = n.shortName+(n.feat?' °':'')
         n.children = [];
         n.x = 100 + 2*width * Math.random();
         n.y = 100+2*virtualHeight* Math.random();
@@ -764,7 +771,7 @@ function buildNodesLinks(data) {
         parent = nodes[nodei.parentId]
         nodei.show = parent.expanded;
         nodei.options['Member of'] = {
-            'value': parent.name || nodei.parentId,
+            'value': nodei.parentId,//parent.name || nodei.parentId,
             'priority': 1
         }
         if (i != "root") {
@@ -781,7 +788,7 @@ function buildNodesLinks(data) {
 
     function computeDesc(id) {
         let n = nodes[id]
-        currentFiliation.push(n.name)
+        currentFiliation.push(id)
         let max = 0,
             guy = null,
             img = n.img,
@@ -989,7 +996,7 @@ function buildNodesLinks(data) {
         console.timeEnd('save')
       //on calcule les liens visibles et on lance la simulation
     }
-    
+
     document.getElementById("loadingImg").style.display = 'none';
     startVis()
 
@@ -1120,7 +1127,7 @@ function visibleNetwork() {
 
     let imgCounter = 0;
     for (let id in nodes) {
-        if (!nodes[id].hasFeaturedDesc && params.cleanNonFeatured) {
+        if (!nodes[id].hasFeaturedDesc && params.cleanNonFeatured && id != "root") {
             nodes[id].show = false
         }
         if ((nodes[id].img != undefined) && (nodes[id].show) && imgCounter < params.simultImg) {
@@ -1260,7 +1267,7 @@ function startVis(){
 
 function init() {
 
-    $('body,html').animate({scrollTop: 156}, 800); 
+    $('body,html').animate({scrollTop: 156}, 800);
     if (force) force.stop(); //useful?
     console.log('init', nodes)
     zoomCounter=0
@@ -1282,7 +1289,10 @@ function init() {
             .nodes(net.nodes)
                 .force("link", d3.forceLink(net.links).distance(function(l){
                     //console.log(l.source.id,l.type,l.target.id)
-                  return (l.type=='Member of' && !l.source.expanded? 150 : focus==l.source.id || focus==l.target.id ? 200 : virtualHeight/2 )
+                    let x=((l.type=='Member of' && !l.source.expanded)? 150 : 300)//focus==l.source.id || focus==l.target.id ? 200 : virtualHeight/2 )
+                    //console.log(x,l,l.source.name,"tttt",l.source.expanded,l.type=='Member of' && !l.source.expanded)
+                    //if (x!=150){console.log(x)}
+                  return x
                 }) .strength(.3))
                   /*.force('cluster', d3.forceCluster().centers(function(d){
                     return d.expanded? d : nodes[d.parentId]
@@ -1387,6 +1397,8 @@ crsrText.attr("display","none");
                 focus = d.id;
             }
             init();
+            setTimeout(init,2000)
+            console.log('kllklk')
         })
 
       node.append('pattern')//affichage images
@@ -1653,7 +1665,7 @@ function infoDisp()
 
     //nestedDisp(infos,x,y)//displays infos starting at (x,y)
     for (let i in infos)
-    {
+    {//un bloc par itération
 
       //TODO:infos contient plusieurs éléments, chaque élément représente un bloc qui peut éventuellement se déployer
         let d = infos[i] //node or link or custom
@@ -1666,7 +1678,7 @@ function infoDisp()
             .attr('id','infoblock'+i)
             .attr("transform", "translate(" + (d.off || off) + "," + prevHeight + ")")
 
-        let infoBlock=document.getElementById('infoblock'+i) //automatic?
+        let infoBlock=document.getElementById('infoblock'+i)
         //rectangle du cadre titre
         info.append("rect")
             .data([d]).attr("fill", d => fill(d.parentId) || 'lightblue')
@@ -1705,6 +1717,7 @@ function infoDisp()
                     d3.select(this).style("cursor", "pointer")
                     //crsrText.text(name(d.parentId))
                 })
+
             closeBox.append("circle")
                 .attr("cx", -28)
                 .attr("radius", 28)
@@ -1715,8 +1728,8 @@ function infoDisp()
             closeBox.append("text")
                 .attr("x", -27)
                 .attr("y", 23)
-                .attr("font-size", 26)
-                .text("\u2716" || "Y")
+                .attr("font-size", 15)
+                .text("\u2716" || "x")
         }
         firstBlock = false;
 
@@ -1741,13 +1754,15 @@ function infoDisp()
             //titre
             info.append("text")
                 .text(d.id ?
-                    nodes[d.id].shortName //node
-                    :
-                    d.source ? //link
-                    d.source.id ? //ca peut etre le noeud (auquel car il a un id) ou juste son nom
-                    nodes[d.source.id].shortName + (" \u21E8 " || " -> ") + nodes[d.target.id].shortName:
-                    nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName:
-                    d.value) //texte
+                        nodes[d.id].shortName //node
+                        :
+                        d.source ? //link
+                            d.source.id ? //ca peut etre le noeud (auquel car il a un id) ou juste son nom
+                                nodes[d.source.id].shortName + (" \u21E8 " || " -> ") + nodes[d.target.id].shortName
+                                :
+                                nodes[d.source].shortName + (" \u21E8 " || " -> ") + nodes[d.target].shortName
+                            :
+                            d.value) //texte
                 //.attr("font-family","American Typewriter")
                 .style('font-family','Gill Sans, Roboto, Arial')
                 .attr("font-size", d.source ? 10 : 15)
@@ -1771,7 +1786,7 @@ function infoDisp()
 
 
             let bckgrdRect = info.append("rect")
-                .attr("fill", d => fill(d.id) || 'lightblue')
+                .attr("fill", d => fill(d.parentId) || 'lightblue')
                 .attr("y", 30)
                 .attr("height", 0)
                 .attr("width", infoWidth)
@@ -1780,7 +1795,7 @@ function infoDisp()
 
 
             //img eventuelle
-            let imgInfo = info.append("svg:image")
+            info.append("svg:image")
                 .attr("display", d => (d.img && d.deployedInfos) ? "block" : "none")
                 .attr("xlink:href", d => d.img) //?d.img:"") //function(d) { return d.img;})
                 .attr("x", 30) //infoWidth/2-50)//d=>-d.radius)// function(d) { return -25;})
@@ -1793,6 +1808,7 @@ function infoDisp()
 
             //on met a jour la hauteur du bloc au fur et a mesure
             let blockHeight = 68+(d.img ? params.imgHeights : 0);
+            let newHeight=0
             if (d.deployedInfos){
 
 
@@ -1800,7 +1816,7 @@ function infoDisp()
             for (let i in result){
 
                 let d=result[i]
-
+                if (typeof(d.value)=='object' && d.value.length==0){continue}//liste vide
 
                 info.append('text').attr("transform", d => "translate(0," + (blockHeight+20) + ")")
                 .text(d.title)
@@ -1820,11 +1836,12 @@ function infoDisp()
                 })
                 .append('text').attr("transform", "translate(0," + (blockHeight+20) + ")").text('...')
 
+
+
                 blockHeight=infoBlock.getBBox().height
 
-
                 for (let j in d.value){//should do a .data() but i can't make it
-                let prevBlockHeight=blockHeight
+                      let prevBlockHeight=blockHeight
 
 
                 blockRect=info.append("rect")
@@ -1838,8 +1855,18 @@ function infoDisp()
                 .style("opacity", .2)
                 .on('click',removeInfos)
 
+                if (d.value[j].img){
 
+                        info.append("svg:image").attr('id','text'+i+'-'+j)
+                            .attr("xlink:href", d.value[j].url)
+                            .attr("x", 30) //infoWidth/2-50)//d=>-d.radius)// function(d) { return -25;})
+                            .attr("transform",  "translate(0," + (blockHeight) + ")")//.attr("y", params.imgHeights+160) //d=>-d.radius)//function(d) { return -25;})
+                            .attr("height", params.imgHeights)
+                            .attr("width", 230)//params.imgHeights+"px")
 
+                }
+                else
+                {
                 info.append('text').attr('id','text'+i+'-'+j)
                 .attr("transform",  "translate(5," + (blockHeight) + ")")
                 .style('font-family','Gill Sans, Roboto, Arial')
@@ -1860,10 +1887,11 @@ function infoDisp()
                 .append('tspan').attr('y','1em')
                 .attr("stroke-width", .5)
                 .attr("stroke", "black")
-                .text(d.value[j])
+                .text(nodes[d.value[j]]? nodes[d.value[j]].shortName : d.value[j])
                 .each(wrapText)
+                }
 
-                let infoBlockText=document.getElementById('text'+i+'-'+j) //automatic?
+                let infoBlockText=document.getElementById('text'+i+'-'+j)
 
 
                 blockHeight=infoBlock.getBBox().height
@@ -1880,6 +1908,9 @@ function infoDisp()
              }
              blockHeight+=10
 
+            //on calcule la nouvelle hauteur pour placer le prochain bloc
+            console.log('recttt')
+            newHeight = blockHeight - 25;// - prevHeight;
             }
             if (1==123){//delete
             let infoSubBlock = info.append("text")
@@ -1934,9 +1965,7 @@ function infoDisp()
 
 
             }
-            //on calcule la nouvelle hauteur pour placer le prochain bloc
-            let newHeight = blockHeight - 25 - prevHeight;
-            //bckgrdRect.attr("height", newHeight)
+            bckgrdRect.attr("height", newHeight)
 
         } else {
             info.style("display", "none")
@@ -1980,6 +2009,8 @@ function collectInfos(d) {
     //returns array [['info','value'],['info':'value'],...]
     //textwrap bug et n'affiche pas la 1re info donc je mets une info vide pour contrer ça
     let result = [{}];
+
+
     if (d.type) {
         result.push({
             'title': 'type',
@@ -1998,32 +2029,46 @@ function collectInfos(d) {
         }
 
     }
+
+
+
     if (d.options) {
-        //entries=Object.entries(d.options)
+        //on a d.options={'titre1':value,'titre2':value,...} (sauf pour les links)
+        //avec value soit un texte "valeur1", soit une liste ['valeur1','valeur2',...] , soit un dict {img:"http://..."}
+        //on va l'adapter et la rentrer dans "result" qui est une liste d'objets du type {'title':'title1','value':[value1,value2,...]}
+        //pour les img, on a value={img:true,url:"http://..."}
         for (let e in d.options) {
 
             option = d.options[e]
             if (!option.value){
               if (option.source){//it"s a link
                 option.value=[option.source]
-              }else{//option is a simple text
+              }else if (option.img){
+                option={'value':[{img:true,
+                        url:option.img
+                    }]}}
+              else{//option is a simple text
                 option={'value':[option]}
             }
             }
             option.title=word(d,e)
+
+            if (!option.value[0]?.img){
+
             if (typeof(option.value)=='object') {//it's a set or array. Concat set elements in the limit of infomax
+
                 values=[]
                 //console.log(d,option)
                 let l=option.value.length
                 if (l>params.infoMax){
                     option.value.slice(0,params.infoMax).forEach(function(s){
-                        let t=nodes[s]?nodes[s].shortName:word(d,s)||s
+                        let t=nodes[s]?s:word(d,s)||s
                         values.push(t)
                       })
                 values.push('...+'+(l-params.infoMax))
             } else {
                 option.value.forEach(function(s){
-                    let t=nodes[s]?nodes[s].shortName:word(d,s)||s
+                    let t=nodes[s]?s:word(d,s)||s
                     values.push(t)
                   })
             }
@@ -2032,11 +2077,13 @@ function collectInfos(d) {
             } else {
                 option.value=[option.value]//transform as array for display
             }
+          }
             if (option.value) {
-              result.push(option) //{'title':word(d,d.options[e].title),'value':word(d,d.options[e].value),'priority':d.options[e].priority})
+              result.push(option)
         }
       }
     }
+
     result.sort(prioSort)//problem with undef priorities
     return result
 }
