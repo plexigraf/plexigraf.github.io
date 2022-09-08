@@ -6,7 +6,7 @@ swal({
 })
 
 const url=window.location.href
-if (1==1){//(url.startsWith('https://grafviz')){//disable live output
+if (url.startsWith('https://grafviz')){//disable live output
   console.log=function(s){
 
   }
