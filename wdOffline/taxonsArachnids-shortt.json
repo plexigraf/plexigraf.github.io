@@ -1,0 +1,3841 @@
+{
+  "head" : {
+    "vars" : [
+      "id",
+      "idLabel",
+      "parentId",
+      "optionGBIFId",
+      "optionEnglish_article",
+      "optionRangeMap",
+      "img"
+    ]
+  },
+  "results" : {
+    "bindings" : [
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98884"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Plesiothele fentoni"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145053"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Plesiothele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q18093673"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Plesiothele%20fentoni%20%28Family%20Hexathelidae%29%20%2850162301188%29.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98890"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Porrhothele"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145041"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Porrhothele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q53573149"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/BlackTunnelweb%20head%20%28edit%29.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q100889"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Actinopus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2179712"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Actinopus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q5845"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Male%20Actinopus%20sp.%20from%20San%20Luis%20Province%20top%20view.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q100898"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Missulena"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2179697"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Missulena"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q5845"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Mouse%20spider.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q100908"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Plesiolena"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2179709"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Plesiolena"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q5845"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q100952"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Hexura"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2161147"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Hexura"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10630"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Hexura%20picea.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q100964"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Hexurella"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2161142"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Hexurella"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q97444037"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q116846"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Plexippini"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Plexippini"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q101234"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Jumping.spider.japan.-.opencage.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117413"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Aelurillus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2168651"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Aelurillus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Aelurillus%20fg02.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117432"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Asianellus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2175663"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Asianellus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Asianellus.festivus.1.opencage.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117470"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Langelurillus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2175209"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Langelurillus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Langelurillus%20namibicus%20108591922.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117505"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Langona"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2176989"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Langona"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Langona%20tartarica%201592.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117536"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Microheros termitophagus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2172939"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Microheros"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q14643193"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117557"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Phlegra"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2168468"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Phlegra_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Phlegra%20fasciata%202%20cropped.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117589"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Prozynskiana"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2172252"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Proszynskiana"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117642"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Rafalus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2170176"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Rafalus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Rafalus%20variegatus%2035250553%20cropped.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117674"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Stenaelurillus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2173781"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Stenaelurillus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Spider%28Stenaelurillus%20Sp%29%2005947.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117705"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Afraflacilla"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174012"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Afraflacilla"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Afraflacilla-sp-nov-whyte-A-Field-Guide-to-Spiders-of-Australia.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q117734"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Flacillula"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2169473"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Flacillula"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138490"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Gasteracantha cancriformis"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2158546"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Gasteracantha_cancriformis"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2175752"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Gasteracantha%20cancriformis%20in%20Miami.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138516"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Podoctidae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4661392"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Podoctidae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q21061037"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Lomanius%20sp.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138751"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pterinochilus chordatus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153908"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pterinochilus_chordatus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q309597"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/P%20chordatus.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138847"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Sironidae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "3253444"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Sironidae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1953074"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Opiliones%2C%20Cyphophthalmi%2C%20Sironidae%2C%20Siro%20%282404167613%29.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138879"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Leiobunum"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4553469"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Leiobunum"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q3179711"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Leiobunum.rotundum.female.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138932"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Sondra"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2169280"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Sondra_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138995"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Heterometrus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4656476"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Heterometrus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q19608088"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Herbst%20plate1.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138995"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Heterometrus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4656476"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Heterometrus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q133410"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Herbst%20plate1.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139105"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Brachypelma albopilosum"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153442"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Tliltocatl_albopilosus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q134977"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Brachypelma.albopilosum.female.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139185"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Euscorpius"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4407900"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Euscorpius"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q18330848"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/E.c.balearicus%20Malorca%202002.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139185"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Euscorpius"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4407900"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Euscorpius"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q135121"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/E.c.balearicus%20Malorca%202002.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139192"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Parabuthus transvaalicus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "6894340"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Parabuthus_transvaalicus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q146377"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Parabuthus%20transvaalicus%20%28male%29.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139240"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Grammostola"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153707"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Grammostola"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q135553"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Grammostola%20cf.%20porteri%20adult%20male.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139256"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "King baboon spider"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "8000389"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/King_baboon_spider"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q7161468"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Pelinobius%20muticus%20adult.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139270"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Avicularia purpurea"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5170474"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Avicularia_purpurea"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q292098"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Avicularia%20purpurea%20male%20southern%20form%20ZK171.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139668"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Alopecosa"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2147307"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Alopecosa"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10627"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Alopecosa%20fabrilis%20female%201.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238381"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Furculattus maxillosus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2171553"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Furculattus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q14628197"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238404"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Lystrocteisa"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2177313"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Lystrocteisa"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238433"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Ohilimia"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2177700"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Ohilimia"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/2008PNG-1367%20Ohilimia%20male.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238468"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Tarodes lineatus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2176562"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Tarodes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q14751183"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238507"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Bristowia"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2176911"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Bristowia"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/SWK12-4982%20Bristowia%20male.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238590"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pilia"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174388"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pilia"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238660"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Efate"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2173270"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Efate_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238758"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Leptathamas paradoxus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174613"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Leptathamas"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q14636740"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238860"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Rarahu nitida"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2170022"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Rarahu"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q14712282"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238903"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Acragas"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2171417"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Acragas_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/ECU11-6153%20Acragas%20longimanus%20female.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q244301"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Theridiosoma gemmosum"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2163546"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Theridiosoma_gemmosum"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q3523820"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Theridiosoma%20gemmosum.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q246028"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Heterolinyphia"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2135796"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Heterolinyphia"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q246083"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Tibiaster"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2135924"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Tibiaster"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q288140"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Eresus moravicus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4553015"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Eresus_moravicus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2183560"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Eresus%20moravicus%20male%2C%20D%C3%BCrnstein%2C%20Austria.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q288564"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Ebrechtella tricuspidata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2166830"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Ebrechtella_tricuspidata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q3046876"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Thomisidae%20-%20Ebrechtella%20tricuspidata%20%28female%29.JPG"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q289663"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Dolomedes tenebrosus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2150903"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Dolomedes_tenebrosus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2068864"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Dolomedes%20tenebrosus%201%20PEM.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q290290"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Passiena"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2146478"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Passiena"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10627"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q290886"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Philodromus cespitum"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5169587"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Philodromus_cespitum"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2700627"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Philodromus%20cespitum%20090801.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q291138"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Eusclera"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4665980"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Eusclera"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q3179711"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q291618"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Asemonea cuprea"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174430"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Asemonea_cuprea"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1440036"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q291947"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Platycryptus undatus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2171189"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Platycryptus_undatus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1442263"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/PlatycryptusUndatusFemale.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q292098"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Avicularia"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2154174"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Avicularia"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q790910"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Caribena%20versicolor%202.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q292181"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pandinus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4656470"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pandinus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q19608088"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Emporer%20scorpion.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q292181"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pandinus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4656470"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pandinus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q133410"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Emporer%20scorpion.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q292229"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Alaskozetes antarcticus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2189752"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Alaskozetes_antarcticus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q4643033"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q292297"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Demodex"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2131817"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Demodex"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10468502"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Haarbalgmilbe.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q93812"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Diploplecta"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2134344"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Diploplecta"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Drapetisca%20australis%20male.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q94124"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Latrodectus variolus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2157950"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Latrodectus_variolus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q385932"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Northern%20Black%20Widow%20-%20Latrodectus%20variolus%2C%20Julie%20Metz%20Wetlands%2C%20Woodbridge%2C%20Virginia%20-%2015471199337.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98648"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Andethele"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153193"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Andethele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q54947"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98655"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Indothele"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153070"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Indothele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q54947"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98664"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Ischnothele"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153197"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Ischnothele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q54947"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Ischnothele%20caudata.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98673"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Lathrothele"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153130"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Lathrothele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q54947"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98683"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Thelechoris"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153080"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Thelechoris"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q54947"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98695"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Chilehexops"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153066"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Chilehexops"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q54946"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98704"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Masteria"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153135"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Masteria"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10057"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Masteria.barona.male.eyepattern.svg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98712"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Striamea"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153165"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Striamea"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10057"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98771"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Atypus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2167233"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Atypus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q5895"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Atypus%20karschi.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98786"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Calommata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2167271"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Calommata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q5895"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Calommata%20species.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98796"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Sphodros"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2167263"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Sphodros"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q5895"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Sphodros%20rufipes%20non-crossing%20chel.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98817"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Bymainiella"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145056"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Bymainiella"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10558"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98826"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Hadronyche"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145025"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Hadronyche"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q52687525"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Victorian%20funnelweb02.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98834"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Hexathele"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145089"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Hexathele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10558"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Hexathele%20hochstetteri%2C%20banded%20tunnelweb%20spider.JPG"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98843"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Illawarra wisharti"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "7353220"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Illawarra_wisharti"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q19593791"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98857"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Paraembolides"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145113"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Paraembolides"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10558"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/AustralianMuseum%20spider%20specimen%2032.JPG"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98864"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Scotinoecus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145049"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Scotinoecus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10558"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98870"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Teranodes"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145110"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Teranodes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10558"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q98876"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Macrothele"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2145061"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Macrothele"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q53536229"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Macrothele.gigas.female.frontal.-.tanikawa.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137159"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Cerbalus aravaensis"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2161472"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Cerbalus_aravaensis"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2711475"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Cerbalus%20aravaensis.JPG"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137194"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Grammostola pulchripes"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "6718385"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Grammostola_pulchripes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139240"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Grammostola%20pulchripes%20top%20view.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137284"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Phidippus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2176168"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Phidippus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Phidippus%20wikipedia.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137388"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Caraboctonidae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "6880282"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Caraboctonidae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q47471994"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Skorpion%20fg01.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137388"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Caraboctonidae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "6880282"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Caraboctonidae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q19125"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Skorpion%20fg01.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137504"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Aphonopelma chalcodes"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153629"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Aphonopelma_chalcodes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137594"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Aphonopelma%20chalcodes.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137594"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Aphonopelma"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153559"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Aphonopelma"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q135553"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Aphonopelma%20chalcodes.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137734"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Grammostola pulchra"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153716"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Grammostola_pulchra"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q139240"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Grammostola%20pulchra%20%28aka%29.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137843"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Ornithoctoninae"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Ornithoctoninae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q213383"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Haplopelma%20lividum1.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137895"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Chilean recluse spider"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5170659"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Chilean_recluse_spider"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1950866"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Loxosceles.laeta.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137929"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Prostigmata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "372"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Prostigmata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q19961751"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tetranychus%20urticae%2020080601%20031.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q137929"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Prostigmata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "372"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Prostigmata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q686325"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tetranychus%20urticae%2020080601%20031.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138259"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Entelegynae"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Entelegynae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q12084"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Common%20Funnel%20web%20spider%20%28Hippasa%20agelenoides%29%20W%20IMG%202780.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q138440"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Argiope argentata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5170999"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Argiope_argentata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q862644"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/A.argentata02.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q197474"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Fusciphantes"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2138317"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Fusciphantes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q203090"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Zilla diodia"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5170966"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Zilla_diodia"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1172479"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Zilla%20diodia%20female.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q205160"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Philaeus chrysops"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2176858"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Philaeus_chrysops"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140614"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Salticidae%20-%20Philaeus%20chrysops%20%28female%29-002.JPG"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q205920"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Zygiella x-notata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2159658"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Zygiella_x-notata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1313599"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Zygiella%20x-notata.jpg"
+        },
+        "optionRangeMap" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Distribution.zygiella.x-notata.1.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q213383"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Theraphosidae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5650"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Tarantula"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q54477"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Brachypelma%20edit.jpg"
+        },
+        "optionRangeMap" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Distribution.theraphosidae.1.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q237943"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Kalcerrytus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174505"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Kalcerrytus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q237969"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Nycerella"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174996"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Nycerella"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Nycerella%20delecta%20%283367727%29.JPG"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238000"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pachomius"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2173971"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pachomius_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Kaldari%20Pachomius%20male%2002.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238040"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Phiale"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174617"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Phiale_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Phiale%20formosa%20cropped.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238104"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Sumampattus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2177873"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Sumampattus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238138"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Trydarssus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2176720"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Trydarssus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Trydarssus%20nobilitatus%20cropped.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238169"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Tullgrenella"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2177422"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Tullgrenella"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tullgrenella%20yungae%20male%2001.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238210"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Wedoquella"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2177126"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Wedoquella"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Wedoquella%20apnnea%20male.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238258"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Siler"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2176808"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Siler_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Siler%20cupreus.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238294"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Agorius"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2171506"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Agorius"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Agorius.constrictus.simon.svg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238320"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Chalcolecta"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2170402"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Chalcolecta"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q238345"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Diolenius"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2173987"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Diolenius"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Guido%20Bohne%20Diolenius%2002.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q281335"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Megaphobema"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153928"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Megaphobema"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q213383"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Megaphobema%20robustum%20female.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q282415"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Orfeo"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2136113"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Orfeo_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q283907"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Heliophanoides"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2173832"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Heliophanoides"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q284352"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "brown recluse spider"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5170704"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Brown_recluse_spider"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1950866"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Brown-recluse-2.jpg"
+        },
+        "optionRangeMap" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Loxosceles%20reclusa%20range.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q284699"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Trombidium"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2129544"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Trombidium"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q853453"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Trombidium%20holosericeum%20LC0127.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q285304"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Darwin's bark spider"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "7709350"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Darwin%27s_bark_spider"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2932847"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Caerostris%20darwini%20web.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q286128"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Nephila pilipes"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2149490"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Nephila_pilipes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q261092"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Nephila%20pilipes%2C%20Bangunjiwo%2C%20Bantul%202015-09-19%2004.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q286240"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Malthonica ferruginea"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2139594"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Tegenaria_ferruginea"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2714500"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Tegenaria.ferruginea.male.jpg"
+        },
+        "optionRangeMap" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Distribution.tegenaria.ferruginea.1.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q286720"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Laminacauda cognata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2138815"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Laminacauda_cognata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1907954"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q287927"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Monocentropus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2153650"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Monocentropus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q213383"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Monocentropus%20balfouri%20Pocock%2C%201897.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q101234"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Salticinae"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Salticinae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Kaldari%20Naphrys%20pulex%2002.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q101260"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Spartaeinae"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Spartaeinae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Portia.fimbriata.female.-.tanikawa.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q101300"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Synemosyninae"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Simonellini"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Edwards%20Sarinda%20hentzi%2001.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q101445"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Amycini"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Amycini"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q101031"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Amycus.pertyi.simon.svg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q110152"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Athamas"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2174986"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Athamas_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11687"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q110208"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Euophryini"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Euophryini"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q101095"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Pseudeuophrys%20erratica%20w%20080512.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q126186"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Dunedinia"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2137963"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Dunedinia"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/LINYPHIIDAE%20sp.%20NZ1.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q128546"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Angka hexops"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2140715"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Angka_hexops"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q14593153"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q130072"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Cupiennius"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2152785"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Cupiennius"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q8708"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Cupiennius%20salei%20second%20instar%20-%201742-9994-8-15-19f.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q132129"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Buthidae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5848"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Buthidae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q20015431"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Black%20scorpion.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q132195"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Bagheera kiplingi"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4656999"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Bagheera_kiplingi"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q295008"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Bagheera%20kiplingi%20%28cropped%29.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q132756"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Parasitiformes"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Parasitiformes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q19137"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Ixodes%20hexagonus%20%28aka%29.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q133410"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Scorpionidae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "4303016"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Scorpionidae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q20015431"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Indian%20Black%20Scorpion%20%28Heterometrus%20bengalensis%29%2002.JPG"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140629"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Evarcha arcuata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2172846"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Evarcha_arcuata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q579424"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Evarcha%20arcuata%20male%20Bytom.jpg"
+        },
+        "optionRangeMap" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Distribution.evarcha.arcuata.1.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140633"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pisaura"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2150756"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pisaura"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q11681"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Pisaura%20mirabilis.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140636"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Drassodes"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2132149"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Drassodes"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10545"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Drassodes.saccatus.mosaic.-.emerton.svg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140678"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pirata piraticus"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2146739"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pirata_piraticus"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140711"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Pirata.piraticus.female.with.egg.sac.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140687"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Iuridae"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "3253211"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Iuridae"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q20015431"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140698"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pardosa lugubris"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2146140"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pardosa_lugubris"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1755072"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Pardosa%20lugubris%20fg01.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q140711"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Pirata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2146718"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Pirata_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10627"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Pirata.piraticus.male.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q141264"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Segestria florentina"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "5169968"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Segestria_florentina"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q2524440"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Spider%20cutted.jpg"
+        },
+        "optionRangeMap" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Distribution.segestria.florentina.1.png"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q141339"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Araniella displicata"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2158381"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Araniella_displicata"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q781429"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Araniella%20displicata%20female%201.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q141740"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Uahuka"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2137927"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Uahuka"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q141843"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Steatoda capensis"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2157303"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Steatoda_capensis"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q1409317"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Steatoda%20capensis.jpg"
+        }
+      },
+      {
+        "id" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q142412"
+        },
+        "idLabel" : {
+          "xml:lang" : "en",
+          "type" : "literal",
+          "value" : "Erigone"
+        },
+        "optionGBIFId" : {
+          "type" : "literal",
+          "value" : "2137613"
+        },
+        "optionEnglish_article" : {
+          "type" : "uri",
+          "value" : "https://en.wikipedia.org/wiki/Erigone_(spider)"
+        },
+        "parentId" : {
+          "type" : "uri",
+          "value" : "http://www.wikidata.org/entity/Q10589"
+        },
+        "img" : {
+          "type" : "uri",
+          "value" : "http://commons.wikimedia.org/wiki/Special:FilePath/Erigone%20atra%20male.jpg"
+        }
+      }
+    ]
+  }
+}
