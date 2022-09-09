@@ -1,7 +1,0 @@
-TO DO
-
-prebuild index
-Problème Zoom (cf maths.json)
-Faire Doc
-optimise perf
-Namespace etc...
