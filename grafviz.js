@@ -251,7 +251,7 @@ function makeIndex(entries) {
     console.time('search index')
     //load prepared data if any
 
-    d3.json('rtu-data/' + wdKey + '-rtu-idx.json', function(error, json) {
+    d3.json('rtu-data/' + wdKey + '-rtu-idx-removeme.json', function(error, json) {
 	if (!error) {
 		console.log('rtu idx found')
 
