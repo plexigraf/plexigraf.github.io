@@ -6,7 +6,7 @@ swal({
 })
 
 const url=window.location.href
-if (1==2){//(url.startsWith('https://grafviz')){//disable live output
+if (url.startsWith('https://grafviz')){//disable live output
   console.log=function(s){
 
   }
@@ -25,7 +25,7 @@ if (filename == null && !load_from_WD && !wdjs){
     filename='political/Philippe-II-2018.json'
 }
 //document.getElementById("dbname").innerHTML=load_from_WD? 'Querying DB' : 'Processing DB '+filename;
-console.log(queryString,load_from_WD,wdjs,filename)          
+console.log(queryString,load_from_WD,wdjs,filename)
 
 
 
@@ -117,15 +117,40 @@ function treatWDDB(result) {
             labelKey=key.endsWith('Label')?key:key+'Label'
             //console.log(key,entries[r][key],entries[r])
             value=entries[r][labelKey]?.value||entries[r][key].value
+            let url=entries[r][key.replace('Label','')].value||uri
+            source='Wikidata'
             if (title=='Date of birth'){
               title='Year of birth';
               firstChar=value.substring(0,1)//in case of negative year
               rest=value.substring(1)
               value=parseInt(firstChar+rest.split('-')[0]).toString()
             }
+
+            if (title=='RangeMap'){
+              title="Is it in my country?"
+              source='Wikidata'
+              url=value
+              value=[{'img':true,'url':value}]
+
+          }
+
+          if (title=='English article'){
+            title='Wikipedia page'
+            source='Wikipedia'
+            url=value
+            value=['']
+          }
+
+          if (title=='GBIFId'){
+            title="GBIF Page"
+            url='https://www.gbif.org/fr/species/'+value
+            value=['Is it in my backyard']
+            source='GBIF'
+          }
+
             node.options[title]={'value':value,
-                                      'source':'WikiData',
-                                      'url':entries[r][key.replace('Label','')].value||uri,
+                                      'source':source,
+                                      'url':url,
                                       'priority':(title=='Notable_work')? 2 : 3
                                     }
             if (title=='Itis_TSN'){
@@ -172,9 +197,11 @@ function treatWDDB(result) {
         //debug_print(id,entries[r],entries[r].occupation)
         //console.log(entries[r])
         node.isMath= (wdKey=='maths') || ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q170790') )//math
-        if ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q1028181') )//impress
-        node.feat='optionWikipedia_article' in entries[r]
-        node.feat=('optionItis_TSN' in entries[r])
+
+        if ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q1028181') )//impressionism
+        {node.feat='optionWikipedia_article' in entries[r]}
+        else if (wdKey.startsWith('taxons')){node.feat='optionEnglish_article' in entries[r] && 'optionRangeMap' in entries[r]}
+        else {node.feat=('optionItis_TSN' in entries[r])
                               ||
                             ('optionAward' in entries[r] && entries[r].optionAward.value.includes('Q28835') )//Fields medal
                               ||
@@ -187,13 +214,14 @@ function treatWDDB(result) {
                                 ('optionAward' in entries[r]   &&  'student' in entries[r])
                               )
                             )
+                          }
 
         //if ('optionNotable_work' in entries[r]) {console.log('feat',node.feat,node,node.isMath,entries[r],Object.keys(entries[r]))}
 
         nodesWD[node.id]=mergeNodes(nodesWD[node.id],node)
         //console.log(r,id,nodesWD[r],isMath,entries[r],entries[r].occupation.value,entries[r].occupation.value.split('/').slice(-1)[0]=='Q1622272')
     }
-    json_WD = {'params': {'cleanNonFeatured': (wdKey!='countriesWD' && wdKey!='impressionism'),
+    json_WD = {'params': {'cleanNonFeatured': (wdKey!='countriesWD' && wdKey!='impressionism' && wdKey!='taxonsArachnids'),// && (wdKey!='taxonsArachnids'),
                           'inheritPicFromChild':(wdKey.includes('taxons')),
                             'simultImg':150,
                             'inheritLinks': (wdKey=='maths')?2:1,//1 node suffices to inherit link
@@ -290,7 +318,7 @@ function wdQuery(s) {
 
                 ?id p:P800 _:b102.
                 _:b102 ps:P800 ?optionNotable_work.
-                
+
               OPTIONAL {
                 ?id (wdt:P802|wdt:P185) ?student.
                 ?student wdt:P106 wd:Q170790.
@@ -400,7 +428,7 @@ GROUP BY ?id ?idLabel ?country ?optionDate_of_birth ?occupation ?parentId ?optio
         SELECT ?id ?idLabel ?optionItis_TSN ?parentId ?optionFrench_article ?optionEnglish_article (SAMPLE(?img) as ?img)#random pic
         WHERE
         {
-          ?id wdt:P171+ wd:`+taxonCode+`.  #id en dessous de mammifères
+          ?id wdt:P171+ wd:`+taxonCode+`.  #id en dessous de [taxonCode]
           OPTIONAL{?id wdt:P815 ?optionItis_TSN}
           OPTIONAL { ?id wdt:P171 ?parentId.}
                    #too slow ?parent wdt:P171* wd:Q7377.}#lien de filiation a un parent lui meme descendant de mammifères
