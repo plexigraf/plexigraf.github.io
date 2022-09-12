@@ -283,8 +283,7 @@ function makeIndex(entries) {
 		idx = lunr.Index.load(json)
         console.log('done loading')
 	} else {
-    console.log(error)
-        console.log('rtu-data/' + wdKey + '-rtu-idx.json'+' not found')
+        console.log('rtu-data/' + wdKey + '-rtu-idx.json'+' not found',error)
     idx = lunr(function() {
         this.ref('id')
         this.field('name', {
