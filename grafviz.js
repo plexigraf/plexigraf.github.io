@@ -83,7 +83,7 @@ let params = {
         displayFiliation: true,
         biPartiteLinks: true,
         saveAllData: false,//true,//saves prepared data on a file xxx-rtu-data.json to gain time next time
-        saveIdx: true,//only save search index
+        saveIdx: false,//only save search index
         infoMax: 50,//max infoblocks to display
         maxNodeShow: 80,//max number of nodes when expanding linked of focus
         //indexOnlyFeatured: true//Do not index non featured nodes in search
@@ -252,7 +252,7 @@ function makeIndex(entries) {
     console.time('search index')
     //load prepared data if any
 
-    d3.json('rtu-data/' + wdKey + '-rtu-idx.json', function(error, json) {
+    d3.json('rtu-data/' + wdKey + 'test-rtu-idx.json', function(error, json) {
 	if (!error) {
 		console.log('rtu idx found')
 
