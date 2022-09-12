@@ -6,7 +6,7 @@ swal({
 })
 
 const url=window.location.href
-if (url.startsWith('https://grafviz')){//disable live output
+if (1==2){//}(url.startsWith('https://grafviz')){//disable live output
   console.log=function(s){
 
   }
@@ -98,8 +98,8 @@ function treatWDDB(result) {
     for (let r in entries) {
         let uri = entries[r].id.value;
         let id=uri.split('/').slice(-1)[0];
-     
-        
+
+
         let node={id : id,//QXXXX
                   name:entries[r].idLabel? entries[r].idLabel.value :  id,
                   img : entries[r].img ? entries[r].img.value : undefined,
@@ -111,7 +111,7 @@ function treatWDDB(result) {
                           }
                         },
         }
-        
+
 
 
         for (let key in entries[r]){
@@ -231,7 +231,7 @@ function treatWDDB(result) {
           node.noInfoDisplay=false//  (wdKey.endsWith("aths"))
                           //'words': {'Contains' : 'Mentored'}
                         //}
-          
+
         }
 
         nodesWD[node.id]=mergeNodes(nodesWD[node.id],node)
