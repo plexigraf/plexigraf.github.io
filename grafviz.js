@@ -91,7 +91,7 @@ let params = {
         dispLinksWithWithoutType: true,//display "links with ..." in infobox for links who don't have a type
                                         //(links who have type xxx are displayed as "xxx:...")
         lang: "Fr",//"Eng",
-        initExpandAll: false,
+        initExpandAll: true,
         subtextParent: false,
         LinkOffOpac: 0.03,
     },
@@ -199,9 +199,9 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
         words=json.words||{}
 				console.log('file params', json.params)
 				if (json.params.description) {
-          document.getElementById("description").innerHTML = json.params.description  }
-            document.getElementById("descrFr").style.display =  "none"
-            document.getElementById("descr"+params.lang).style.display =  "block"
+          document.getElementById("description").innerHTML = json.params.description
+        }
+
 
           ;
 				//if (error) throw error;
@@ -221,6 +221,7 @@ d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
 
 	}
 })
+
 
 
 
@@ -251,7 +252,7 @@ function makeIndex(entries) {
     console.time('search index')
     //load prepared data if any
 
-    d3.json('rtu-data/' + wdKey + '-rtu-idx-removeme.json', function(error, json) {
+    d3.json('rtu-data/' + wdKey + '-rtu-idx.json', function(error, json) {
 	if (!error) {
 		console.log('rtu idx found')
 
@@ -560,8 +561,8 @@ function buildNodesLinks(data) {
         n.name = n.name+(n.feat?' °':'')
         n.shortName = n.shortName+(n.feat?' °':'')
         n.children = [];
-        n.x = 100 + 2*width * Math.random();
-        n.y = 100+2*virtualHeight* Math.random();
+        n.x = 100 + 5*width * Math.random();
+        n.y = 100+5*virtualHeight* Math.random();
         n.px = n.x
         n.py = n.y;
         n.radius = params.dr;
@@ -570,7 +571,7 @@ function buildNodesLinks(data) {
         //n.links = [];
         n.deployedInfos = false; //détermine si l'info est déployée (non par défaut)
         n.visibleParentId = "root" //nodes.length;
-        n.expanded = n.expanded || params.initExpandAll || false; //pas développé par défaut
+        n.expanded = n.expanded || params.initExpandAll //|| false; //pas développé par défaut
         n.isLeave = false //feuilles de l'arbre = pas d'enfant
         n.visibleDepth = 0
         n.descendants = 0
@@ -770,9 +771,9 @@ function buildNodesLinks(data) {
         let nodei = nodes[i];
         parent = nodes[nodei.parentId]
         nodei.show = parent.expanded;
-        nodei.options['Member of'] = {
+        if (i!='root') {nodei.options['Member of'] = {
             'value': nodei.parentId,//parent.name || nodei.parentId,
-            'priority': 1
+            'priority': 1}
         }
         if (i != "root") {
             parent.children.push(i);
@@ -1252,6 +1253,7 @@ function visibleNetwork() {
 }
 
 function startVis(){
+
   focus = params.initialFocus //nodes[1].id
   prevFocus=focus
   nodes[focus].deployedInfos=true
@@ -1417,7 +1419,7 @@ crsrText.attr("display","none");
     nodec = node.append("circle")
         .attr("stroke-width", 3)
         .attr("stroke", d => (d.id === focus) ? "red" : 'white')
-        //.style("fill-opacity", d => d.expanded ? 0 : 1)
+        //.style("fill-opacity", d=>d.inheritedPic?.5:1)
         .attr("r", d => d.radius)
         .attr("cx", 0)
         .attr("cy", 0)
@@ -1673,10 +1675,11 @@ function infoDisp()
 
         //cadre titre
         let info = infoG.append("g")
+
             .data([d])
             .attr("class", "infoblock")
             .attr('id','infoblock'+i)
-            .attr("transform", "translate(" + (d.off || off) + "," + prevHeight + ")")
+            .attr("transform", "translate(" + (d.off || off) + "," + ((mobile?200:0)+prevHeight) + ")")
 
         let infoBlock=document.getElementById('infoblock'+i)
         //rectangle du cadre titre

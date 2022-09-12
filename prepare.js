@@ -19,7 +19,7 @@ const wdjs = urlParams.get('wdjs')=='true'? true:false
 var wdKey=urlParams.get('wdKey')
 
 console.log(wdKey)
-document.getElementById('spinnerp').innerHTML=wdKey=='taxonsArachnids'? 'Loading over 114k specimens' : 'Can take several minutes for large DBs'
+document.getElementById('spinnerp').innerHTML=wdKey=='taxonsArachnids'? 'Loading over 121k specimens' : 'Can take several minutes for large DBs'
 
 if (filename == null && !load_from_WD && !wdjs){
     filename='political/Philippe-II-2018.json'
@@ -39,7 +39,7 @@ function setUp(s){
             }
     else if( s.includes('taxons')){
       s=s.replace('taxons','')
-      return {'rootName':s,'rootId':s=='Mammals'?'Qxxx':s=='Arachnids'?'QXXX':'root'}
+      return {'rootName':s,'rootId':s=='Mammals'?'Qxxx':s=='Arachnids'?'Q1358':'root'}
     }
     else {
       return {'rootName':'Impressionistes','title':'Impressionistes','rootId':'root'}
@@ -87,7 +87,7 @@ function treatWDDB(result) {
                           'parentId': 'root',
                           'hasFeaturedDesc':true,
                           'options': {},
-                          'noInfoDisplay':  true,//(wdKey.endsWith("aths")),
+                          //'noInfoDisplay':  (wdKey.endsWith("aths")),
                           //'words': {'Contains' : 'Mentored'}
                         }};
     if (wdKey=='maths'){
@@ -98,6 +98,8 @@ function treatWDDB(result) {
     for (let r in entries) {
         let uri = entries[r].id.value;
         let id=uri.split('/').slice(-1)[0];
+     
+        
         let node={id : id,//QXXXX
                   name:entries[r].idLabel? entries[r].idLabel.value :  id,
                   img : entries[r].img ? entries[r].img.value : undefined,
@@ -109,6 +111,7 @@ function treatWDDB(result) {
                           }
                         },
         }
+        
 
 
         for (let key in entries[r]){
@@ -144,7 +147,7 @@ function treatWDDB(result) {
           if (title=='GBIFId'){
             title="GBIF Page"
             url='https://www.gbif.org/fr/species/'+value
-            value=['Is it in my backyard']
+            value=['(Is it in my backyard?)']
             source='GBIF'
           }
 
@@ -160,6 +163,8 @@ function treatWDDB(result) {
 
           }
         }
+
+
 
         if ('parentId' in entries[r]) {
             pId=entries[r].parentId.value.split('/').slice(-1)[0]
@@ -200,7 +205,7 @@ function treatWDDB(result) {
 
         if ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q1028181') )//impressionism
         {node.feat='optionWikipedia_article' in entries[r]}
-        else if (wdKey.startsWith('taxons')){node.feat='optionEnglish_article' in entries[r] && 'optionRangeMap' in entries[r]}
+        else if (wdKey.startsWith('taxons')){node.feat='optionEnglish_article' in entries[r] && 'img' in entries[r]}
         else {node.feat=('optionItis_TSN' in entries[r])
                               ||
                             ('optionAward' in entries[r] && entries[r].optionAward.value.includes('Q28835') )//Fields medal
@@ -217,17 +222,29 @@ function treatWDDB(result) {
                           }
 
         //if ('optionNotable_work' in entries[r]) {console.log('feat',node.feat,node,node.isMath,entries[r],Object.keys(entries[r]))}
+        if (id=='rootId' || id=='root' || uri=='wdKey'){
+          console.log('id yep',id)
+          node.id=='root'
+          node.parentId= 'root'
+          node.options={"truc":{"value":["machin"]}}
+          //node.hasFeaturedDesc=true
+          node.noInfoDisplay=false//  (wdKey.endsWith("aths"))
+                          //'words': {'Contains' : 'Mentored'}
+                        //}
+          
+        }
 
         nodesWD[node.id]=mergeNodes(nodesWD[node.id],node)
         //console.log(r,id,nodesWD[r],isMath,entries[r],entries[r].occupation.value,entries[r].occupation.value.split('/').slice(-1)[0]=='Q1622272')
     }
-    json_WD = {'params': {'cleanNonFeatured': (wdKey!='countriesWD' && wdKey!='impressionism' && wdKey!='taxonsArachnids'),// && (wdKey!='taxonsArachnids'),
+    json_WD = {'params': {'cleanNonFeatured': (wdKey!='countriesWD' && wdKey!='impressionism'),// && (wdKey!='taxonsArachnids'),
                           'inheritPicFromChild':(wdKey.includes('taxons')),
                             'simultImg':150,
                             'inheritLinks': (wdKey=='maths')?2:1,//1 node suffices to inherit link
                             'connectOtherParents':(wdKey.endsWith('aths')),
                            'biPartiteLinks': false,
-                           'initExpandAll': (wdKey=="impressionism")//expand all nodes at the beginning
+                           'initExpandAll': (wdKey=="impressionism")||(wdKey=="frMaths"),//expand all nodes at the beginning
+                           "lang": wdKey=="frMaths"? "Fr" : "Eng"
                          },
                 'linksWidth':{'Member of':5,'Also member of':2,'Multiple links':10},
                 'nodes': nodesWD,
@@ -424,7 +441,24 @@ GROUP BY ?id ?idLabel ?country ?optionDate_of_birth ?occupation ?parentId ?optio
     else if (s.includes('taxons')){
       taxonDict={'mammals':'Q7377','Arachnids':'Q1358'}
       taxonCode=taxonDict[s.replace('taxons','')]
-      return `
+      return `SELECT ?id ?idLabel    ?parentId ?optionRangeMap ?optionGBIFId ?optionEnglish_article (SAMPLE(?img) as ?img)#random pic
+      WHERE
+      {
+        ?id wdt:P171+ wd:`+taxonCode+`.  #descendants de ...
+        OPTIONAL{?id wdt:P846 ?optionGBIFId}
+        OPTIONAL{?id wdt:P181 ?optionRangeMap}
+        OPTIONAL { ?id wdt:P171 ?parentId.}
+                 #too slow ?parent wdt:P171* wd:Q7377.}#lien de filiation a un parent lui meme descendant de mammifères
+        OPTIONAL { ?id wdt:P18 ?img }#on prend une image
+
+        OPTIONAL{   ?optionEnglish_article schema:about ?id .
+                  ?optionEnglish_article schema:isPartOf <https://en.wikipedia.org/>}
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }#en anglais
+      }
+      GROUP BY ?id ?idLabel  ?optionEnglish_article ?optionRangeMap ?optionGBIFId ?parentId #pour results qui ont la meme image
+      `
+
+      oldQuery= `
         SELECT ?id ?idLabel ?optionItis_TSN ?parentId ?optionFrench_article ?optionEnglish_article (SAMPLE(?img) as ?img)#random pic
         WHERE
         {
