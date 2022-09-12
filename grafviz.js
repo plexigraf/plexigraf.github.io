@@ -1,3 +1,27 @@
+console.log('aaa')
+d3.json('rtu-data/taxonsArachnids-rtu-idx.json', function(error, json) {
+	if (!error) {
+		console.log('1 rtu idx found')
+
+		idx = lunr.Index.load(json)
+        console.log('done loading')
+	} else {console.log('1 fails')
+        d3.json("https://github.com/grafviz/grafviz.github.io/raw/main/rtu-data/taxonsArachnids-rtu-idx.json", function(error, json) 
+        {
+            if (!error) {
+                console.log('rtu idx found')
+        
+                idx = lunr.Index.load(json)
+                console.log('done loading')
+            } else {
+              
+                console.log('error',error)
+            }
+        })
+    }
+}
+)
+
 
 //improve perf:
 //ne pas mettre les node[options] au début/fichier séparé?
@@ -259,6 +283,7 @@ function makeIndex(entries) {
 		idx = lunr.Index.load(json)
         console.log('done loading')
 	} else {
+    console.log(error)
         console.log('rtu-data/' + wdKey + '-rtu-idx.json'+' not found')
     idx = lunr(function() {
         this.ref('id')
@@ -941,6 +966,8 @@ function buildNodesLinks(data) {
         nodes[i].radius = params.dr + Math.min(100*(nodes[i].descendants)/rootDesc, 100)
         //[nodes[i].depth,nodes[i].depthGuy] = depth(nodes[i])
         nodes[i].isLeave = (nodes[i].children.length == 0) //feuille de l'arbre = pas d'enfants
+        nodes[i].x+=nodes[i].x*nodes[i].options['Layer']
+        nodes[i].y=nodes[i].y*nodes[i].options['Layer']
         if (nodes[i].options['Layer']<=params.expand_first_n_gens){
           nodes[i].show=true
         }
