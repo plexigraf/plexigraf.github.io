@@ -1,27 +1,14 @@
-console.log('aaa')
-d3.json('rtu-data/taxonsArachnids-rtu-idx.json', function(error, json) {
-	if (!error) {
-		console.log('1 rtu idx found')
+x="https://helios2.mi.parisdescartes.fr/~rlachiez/taxonsArachnids-rtu-idx.json"
+d3.json(x, function(error, json) {
+if (!error) {
+console.log('rtu idx found')
 
-		idx = lunr.Index.load(json)
-        console.log('done loading')
-	} else {console.log('1 fails')
-        d3.json("https://github.com/grafviz/grafviz.github.io/raw/main/rtu-data/taxonsArachnids-rtu-idx.json", function(error, json) 
-        {
-            if (!error) {
-                console.log('rtu idx found')
-        
-                idx = lunr.Index.load(json)
-                console.log('done loading')
-            } else {
-              
-                console.log('error',error)
-            }
-        })
-    }
+idx = lunr.Index.load(json)
+    console.log('done loading')
+} else {
+    console.log(x+' not found',error)
 }
-)
-
+})
 
 //improve perf:
 //ne pas mettre les node[options] au début/fichier séparé?
