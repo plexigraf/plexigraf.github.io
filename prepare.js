@@ -220,6 +220,7 @@ function treatWDDB(result) {
                               )
                             )
                           }
+        if ('optionRangeMap' in entries[r] && 'optionGBIFId' in entries[r] && node.feat){console.log('super feat',node.name,node)}
 
         //if ('optionNotable_work' in entries[r]) {console.log('feat',node.feat,node,node.isMath,entries[r],Object.keys(entries[r]))}
         if (id=='rootId' || id=='root' || uri=='wdKey'){
@@ -439,7 +440,7 @@ GROUP BY ?id ?idLabel ?country ?optionDate_of_birth ?occupation ?parentId ?optio
 `
     }
     else if (s.includes('taxons')){
-      taxonDict={'mammals':'Q7377','Arachnids':'Q1358'}
+      taxonDict={'mammals':'Q7377','Arachnids':'Q1358','Spiders':'Q1357'}
       taxonCode=taxonDict[s.replace('taxons','')]
       return `SELECT ?id ?idLabel    ?parentId ?optionRangeMap ?optionGBIFId ?optionEnglish_article (SAMPLE(?img) as ?img)#random pic
       WHERE
@@ -502,4 +503,8 @@ WHERE {
 }
 GROUP BY ?id ?idLabel ?continent ?capitalLabel ?continentLabel  ?country ?countryLabel`
       }
+}
+
+configs={
+  'taxonsArachnids':"nodes['Q12072'].expanded=true; nodes['Q12081'].expanded=true;nodes['Q1357'].expanded=true;nodes['Q9207682'].expanded=true;nodes['Q20015431'].expanded=true;focus=Math.random()<.5?'Q12081':'Q20015431'"
 }
