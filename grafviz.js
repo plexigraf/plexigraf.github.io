@@ -83,7 +83,7 @@ let params = {
         displayFiliation: true,
         biPartiteLinks: true,
         saveAllData: false,//true,//saves prepared data on a file xxx-rtu-data.json to gain time next time
-        saveIdx: true,//only save search index
+        saveIdx: false,//only save search index
         infoMax: 50,//max infoblocks to display
         maxNodeShow: 80,//max number of nodes when expanding linked of focus
         //indexOnlyFeatured: true//Do not index non featured nodes in search
@@ -145,6 +145,16 @@ let meta_obj
 //loading data
 console.log('load data')
 console.time('load')
+
+
+if (wdKey=="taxonsArachnids"){
+  document.getElementById("title").innerHTML="Visualisation of all arachnids specimen"
+  document.getElementById("subtitle").innerHTML="According to WikiData users"
+}
+if (filename=="political/castex/castex.json"){
+
+    document.getElementById("title").innerHTML="Conflicts of interest of the French Government"
+}
 
 //load prepared data if any
 d3.json('rtu-data/' + wdKey + '-rtu-data.json', function(error, json) {
@@ -564,8 +574,8 @@ function buildNodesLinks(data) {
         n.name = n.name+(n.feat?' °':'')
         n.shortName = n.shortName+(n.feat?' °':'')
         n.children = [];
-        n.x = 100 + 5*width * Math.random();
-        n.y = 100+5*virtualHeight* Math.random();
+        n.x = 100 + width * Math.random();
+        n.y = 100+virtualHeight* Math.random();
         n.px = n.x
         n.py = n.y;
         n.radius = params.dr;
@@ -944,8 +954,8 @@ function buildNodesLinks(data) {
         nodes[i].radius = params.dr + Math.min(100*(nodes[i].descendants)/rootDesc, 100)
         //[nodes[i].depth,nodes[i].depthGuy] = depth(nodes[i])
         nodes[i].isLeave = (nodes[i].children.length == 0) //feuille de l'arbre = pas d'enfants
-        nodes[i].x+=nodes[i].x*nodes[i].options['Layer']
-        nodes[i].y=nodes[i].y*nodes[i].options['Layer']
+        //nodes[i].x+=nodes[i].x*nodes[i].options['Layer']
+        //nodes[i].y=nodes[i].y*nodes[i].options['Layer']
         if (nodes[i].options['Layer']<=params.expand_first_n_gens){
           nodes[i].show=true
         }
@@ -1151,8 +1161,8 @@ function visibleNetwork() {
         if (nodek.show && !nodek.prevShow) {
             //just popped
             //on les fait apparaitre pres de leur visibleParentId
-            nodek.x = nodes[nodek.visibleParentId].x + 350 * (Math.random() - 0.5); //eventuellement allonger si bcp d'enfants
-            nodek.y = nodes[nodek.visibleParentId].y + 350 * (Math.random() - 0.5);
+            nodek.x = nodes[nodek.visibleParentId].x + 200 * (Math.random() - 0.5); //eventuellement allonger si bcp d'enfants
+            nodek.y = nodes[nodek.visibleParentId].y + 200 * (Math.random() - 0.5);
             //to put speed at 0: (px=previous x)
             nodek.px = nodek.x;
             nodek.py = nodek.y;
@@ -1359,6 +1369,7 @@ crsrText.attr("display","none");
         })
         .on("click", function(d) {
             if (focus != d.parentId) {
+              console.log('not collapse')
                 focus = d.parentId;
                 infosFocus(nodes[d.parentId])
                 infoDisp();
@@ -2127,7 +2138,7 @@ function collapseNode(node) {
     //on peut simplifier avec des auto-appels récursifs
     node.expanded = false;
     for (let i in node.children) {
-        collapseNode(node.children[i])
+        collapseNode(nodes[node.children[i]])
     }
 }
 

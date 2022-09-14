@@ -1,9 +1,10 @@
 
 swal({
-  title: "Patience...",
-  content: spinner,
+  //title: "Visuali",
+  content: swalContent,
   buttons: false
 })
+
 
 const url=window.location.href
 if (1==2){//}(url.startsWith('https://grafviz')){//disable live output
@@ -18,8 +19,11 @@ const load_from_WD = urlParams.get('load_from_WD')=='true'? true:false
 const wdjs = urlParams.get('wdjs')=='true'? true:false
 var wdKey=urlParams.get('wdKey')
 
-console.log(wdKey)
+console.log(filename)
 document.getElementById('spinnerp').innerHTML=wdKey=='taxonsArachnids'? 'Loading over 121k specimens' : 'Can take several minutes for large DBs'
+
+
+
 
 if (filename == null && !load_from_WD && !wdjs){
     filename='political/Philippe-II-2018.json'
@@ -41,8 +45,12 @@ function setUp(s){
       s=s.replace('taxons','')
       return {'rootName':s,'rootId':s=='Mammals'?'Qxxx':s=='Arachnids'?'Q1358':'root'}
     }
-    else {
+    else if (s=="impressionism"){
       return {'rootName':'Impressionistes','title':'Impressionistes','rootId':'root'}
+    }
+
+    else if (s.endsWith("ainters")){
+      return {'rootName':'Painters','title':'Painters','rootId':'root'}
     }
 }
 
@@ -203,11 +211,17 @@ function treatWDDB(result) {
         //console.log(entries[r])
         node.isMath= (wdKey=='maths') || ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q170790') )//math
 
-        if ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q1028181') )//impressionism
-        {node.feat='optionWikipedia_article' in entries[r]}
-        else if (wdKey.startsWith('taxons')){node.feat='optionEnglish_article' in entries[r] && 'img' in entries[r]}
-        else {node.feat=('optionItis_TSN' in entries[r])
-                              ||
+        if (wdKey=="impressionism"){
+          //if ( entries[r].occupation && (entries[r].occupation.value.split('/').slice(-1)[0]=='Q1028181') )//impressionism
+{node.feat='optionWikipedia_article' in entries[r]}
+      }
+
+      if (wdKey=="frPainters"){
+        node.feat=('optionNotable_work' in entries[r] && 'optionWikipedia_article' in entries[r])
+    }
+
+        if (wdKey.startsWith('taxons')){node.feat='optionEnglish_article' in entries[r] && 'img' in entries[r]}
+        else if (wdKey=="frMaths") {
                             ('optionAward' in entries[r] && entries[r].optionAward.value.includes('Q28835') )//Fields medal
                               ||
                             ('optionWikipedia_article' in entries[r]//un matheux est celebre s'il a un article WP et un Notable_work ou (un award et un student mathematician)
@@ -306,55 +320,60 @@ function addOptionValue(node, key, obj) { //add value to  nodes[id].options[key]
 }
 
 function appendDbInfo(s){
+  document.getElementById('spinner').style.display="none"//=wdKey=='taxonsArachnids'? 'Loading over 121k specimens' : 'Can take several minutes for large DBs'
 
+          if (wdKey!="taxonsArachnids" && filename != "political/castex/castex.json"){
           var br = document.createElement("br");
           var t=document.createTextNode(s);
           document.getElementById("dbname").appendChild(br)
           document.getElementById("dbname").appendChild(t);
+        }
           swal({
-            title: "Instructions",
-            content: dbname,
+            //title: "Information",
+            content: swalContent,
             buttons: 'OK'
           })
 }
 
 function wdQuery(s) {
   console.log('wdquery',s)
-        if (s=="impressionism"){
-          return ` SELECT ?id ?idLabel ?parentId  ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?occupation ?influencer (SAMPLE(?student) AS ?student) (SAMPLE(?img) AS ?img) WHERE {
-            {
-              ?id wdt:P106 wd:Q1028181;
-                wdt:P135 wd:Q40415.
-              VALUES ?occupation {
-                wd:Q1028181
-              }
-              OPTIONAL {
-                ?optionWikipedia_article schema:about ?id;
-                  schema:isPartOf <https://en.wikipedia.org/>.
-              }
-              OPTIONAL { ?id wdt:P18 ?img. }
+        if (s=="frPainters"){
+          return `SELECT ?id ?idLabel ?parentId    ?optionNotable_work ?optionDate_of_birth ?optionNotable_workLabel ?optionWikipedia_article   (SAMPLE(?student) AS ?student) (SAMPLE(?img) AS ?img) WHERE {
+                  {
+                    ?id wdt:P106 wd:Q1028181;
+                      wdt:P27 wd:Q142.
 
-                ?id p:P800 _:b102.
-                _:b102 ps:P800 ?optionNotable_work.
+                    #?id (ps:P135/(wdt:P279*)) wd:Q40415. #impressionism
 
-              OPTIONAL {
-                ?id (wdt:P802|wdt:P185) ?student.
-                ?student wdt:P106 wd:Q170790.
-              }
-            }
-            OPTIONAL {
-              ?id (p:P1066|p:P184) _:b103.
-              _:b103 (ps:P1066|ps:P184) ?parentId.
-              ?parentId wdt:P106 wd:Q1028181.
-            }
-            OPTIONAL {
-              ?id wdt:P737 ?influencer
-              }
+                    OPTIONAL { ?id wdt:P569 ?optionDate_of_birth. }
 
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-          }
-          GROUP BY ?id ?idLabel ?occupation ?parentId ?optionAward ?optionAwardLabel ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article ?influencer
-`
+                    OPTIONAL {
+                      ?optionWikipedia_article schema:about ?id;
+                        schema:isPartOf <https://en.wikipedia.org/>.
+                    }
+                    OPTIONAL { ?id wdt:P18 ?img. }
+
+                    OPTIONAL {
+                      ?id p:P800 _:b102.
+                      _:b102 ps:P800 ?optionNotable_work.
+                    }
+
+                    OPTIONAL {
+                      ?id (wdt:P802|wdt:P185) ?student.
+                      ?student wdt:P106 wd:Q1028181.
+                    }
+                  }
+                  OPTIONAL {
+                    ?id (p:P1066|p:P184) _:b103.
+                    _:b103 (ps:P1066|ps:P184|wdt:P737) ?parentId.
+                    ?parentId wdt:P106 wd:Q1028181.
+                  }
+
+                  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+                }
+                GROUP BY ?id ?idLabel ?occupation ?parentId  ?optionDate_of_birth ?optionNotable_work ?optionNotable_workLabel ?optionWikipedia_article
+
+  `
         }
        if (s.endsWith('Maths')){
           countryDict={'fr':'Q142','gr':'Q183','us':'Q30','uk':'Q145','rs':'Q159'}

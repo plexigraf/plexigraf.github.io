@@ -1168,14 +1168,6 @@
       "name" : "Transport",
       "id" : "Transport"
     },
-    "Danone" : {
-      "Unnamed: 0" : "Danone ",
-      "firstName" : "Danone",
-      "parentId" : "Agro- alimentaire",
-      "lastName" : "",
-      "name" : "Danone",
-      "id" : "Danone"
-    },
     "Havas/ Euro RSCG" : {
       "Unnamed: 0" : "Havas/ Euro RSCG",
       "firstName" : "Havas/",
@@ -1223,14 +1215,6 @@
       "parentId" : "Secteur privé",
       "name" : "Banques/Finance/ Assurances",
       "id" : "Banques/Finance/ Assurances"
-    },
-    "SNCF" : {
-      "Unnamed: 0" : "SNCF ",
-      "firstName" : "SNCF",
-      "parentId" : "Entreprises publiques",
-      "lastName" : "",
-      "name" : "SNCF",
-      "id" : "SNCF"
     },
     "Energie" : {
       "Unnamed: 0" : "Energie ",
@@ -2229,7 +2213,7 @@
       "source" : "Thierry Solère"
     }
   ],
-  "words" : {
+  "words-old" : {
     "Size" : "Taille",
     "Member of" : "Membre de",
     "Contains" : "Contient",
@@ -2243,6 +2227,7 @@
     "inheritPicFromChild" : false,
     "initialFocus" : "Ministres",
     "oldNodesNumber" : 10,
-    "description" : "Ceci est une visualisation des liens entres les membres actuels du gouvernement et d'autres entités privées ou publiques"
+    "description-old" : "Ceci est une visualisation des liens entres les membres actuels du gouvernement et d'autres entités privées ou publiques",
+    "description" : "This is a visualisation of the links existing between the members of the French Government and private companies."
   }
 }
