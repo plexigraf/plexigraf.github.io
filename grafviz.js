@@ -91,7 +91,7 @@ let params = {
         dispLinksWithWithoutType: true,//display "links with ..." in infobox for links who don't have a type
                                         //(links who have type xxx are displayed as "xxx:...")
         lang: "Fr",//"Eng",
-        initExpandAll: true,
+        initExpandAll: false,
         subtextParent: false,
         LinkOffOpac: 0.03,
     },
