@@ -153,7 +153,7 @@ if (wdKey=="taxonsArachnids"){
 }
 if (filename=="political/castex/castex.json"){
 
-    document.getElementById("title").innerHTML="Conflicts of interest of the French Government"
+    document.getElementById("title").innerHTML="French Government Conflicts of interest"
 }
 
 //load prepared data if any
@@ -487,6 +487,7 @@ function adaptZoom() {
     spaceMinY=(width/4)/(Math.max(400,focusY-minY))
     spaceMaxY=(width/4)/(Math.max(400,maxY-focusY))
     scaleFactor=Math.min(spaceMaxX ,  spaceMinX,spaceMinY )
+    if (mobile){scaleFactor=2*scaleFactor}
 
     //console.log('zoom char',maxX-focusX,maxY-focusY,focusX - minX,focusY-minY,spaceMaxX ,  spaceMinX,spaceMinY,scaleFactor)
 

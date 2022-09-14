@@ -1,4 +1,3 @@
-
 swal({
   //title: "Visuali",
   content: swalContent,
@@ -22,6 +21,7 @@ var wdKey=urlParams.get('wdKey')
 console.log(filename)
 document.getElementById('spinnerp').innerHTML=wdKey=='taxonsArachnids'? 'Loading over 121k specimens' : 'Can take several minutes for large DBs'
 
+document.getElementsByName('placeh')[0].placeholder=(wdKey=="taxonsArachnids"? "Tarentula, Scorpio, ...":wdKey=='Castex'?"Macron, Media, ...":"Text...")
 
 
 
