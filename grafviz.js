@@ -148,7 +148,7 @@ console.time('load')
 
 
 if (wdKey=="taxonsArachnids"){
-  document.getElementById("title").innerHTML="Visualisation of all arachnids specimen"
+  document.getElementById("title").innerHTML="Exploration of Arachnids phylogenetic tree"
   document.getElementById("subtitle").innerHTML="According to WikiData users"
 }
 if (filename=="political/castex/castex.json"){
@@ -1703,7 +1703,7 @@ function infoDisp()
             .data([d])
             .attr("class", "infoblock")
             .attr('id','infoblock'+i)
-            .attr("transform", "translate(" + (d.off || off) + "," + ((mobile?200:0)+prevHeight) + ")")
+            .attr("transform", "translate(" + (d.off || off) + "," + ((mobile?300:0)+prevHeight) + ")")
 
         let infoBlock=document.getElementById('infoblock'+i)
         //rectangle du cadre titre
