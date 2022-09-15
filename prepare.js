@@ -321,7 +321,8 @@ function addOptionValue(node, key, obj) { //add value to  nodes[id].options[key]
 
 function appendDbInfo(s){
   document.getElementById('spinner').style.display="none"//=wdKey=='taxonsArachnids'? 'Loading over 121k specimens' : 'Can take several minutes for large DBs'
-
+  document.getElementById('loadingp').style.display="none"
+  
           if (wdKey!="taxonsArachnids" && filename != "political/castex/castex.json"){
           var br = document.createElement("br");
           var t=document.createTextNode(s);
