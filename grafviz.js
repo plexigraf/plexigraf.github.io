@@ -148,7 +148,7 @@ console.time('load')
 
 
 if (wdKey=="taxonsArachnids"){
-  document.getElementById("title").innerHTML="Exploration of Arachnids phylogenetic tree"
+  document.getElementById("title").innerHTML="Explore the Arachnids phylogenetic tree"
   document.getElementById("subtitle").innerHTML="According to WikiData users"
 }
 if (filename=="political/castex/castex.json"){
