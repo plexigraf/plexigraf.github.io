@@ -1019,7 +1019,21 @@ function buildNodesLinks(data) {
 
 }
 
-
+function about(event){
+  s=wdKey.endsWith('Castex')?
+        "In this highly interactive visualisation, the user can select members of the French government, and see what companies they are related to, whether it is because they are a former employer, member of the board, or because their spouse is a high ranking employee.\n\n It is possible to change point of view and explore the conflicts by industrial sector, or by company. To select relevant information, the user can either expand or collapse some sectors of the industry, or a whole entity of the government.\n \n    Most of the information is declared by the concerned personality on the French dedicated website hatvp.fr. Other sources are indicated explicitly, on the left info panel. Most of the pictures are provided by Wikipedia."
+      :(wdKey.endsWith('rachnids'))?"This work is a highly interactive exploration of the class of arachnids, based on the Data retrieved from the collaborative generalist database WikiData.org.\n\n The user can expand genders and sub-genders (spiders, scorpios, etc...) and browse through all specimen, obtaining information about the location of the species, and links to pages with more furnished information.\n\n The search functionality also allows to access directly to a particular species.\n\n Wikidata is a collaborative work, based on the aggregation of several famous taxonomic databases (GBIF, TSN, etc...). If the user notices a mistake in the provided information, he is welcome to perform the change on Wikidata.org!"
+      :"no",
+  //console.log('sss',filename,wdkey)
+  //let s=document.getElementById("valAbout").value
+  swal({
+    title: "About",
+    text: s,
+    content:dbname,
+    buttons: 'OK'
+  })
+  return false
+}
 
 function handleClick(event) { //pour la fctn de recherche
     console.log('handle')
@@ -1924,7 +1938,9 @@ function infoDisp()
                 blockHeight=infoBlock.getBBox().height
 
                 blockRect.attr('height',blockHeight-prevBlockHeight)
-                blockRect.attr('width',infoBlockText.getBBox().width+5)
+                blockRect
+                .style("display",nodes[d.value[j]]?"block":"none")
+                .attr('width',infoBlockText.getBBox().width+5)
                 }
 
 

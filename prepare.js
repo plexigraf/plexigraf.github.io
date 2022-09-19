@@ -6,7 +6,7 @@ swal({
 
 
 const url=window.location.href
-if (1==2){//}(url.startsWith('https://grafviz')){//disable live output
+if (url.startsWith('https://grafviz')){//disable live output
   console.log=function(s){
 
   }
@@ -138,7 +138,7 @@ function treatWDDB(result) {
             }
 
             if (title=='RangeMap'){
-              title="Is it in my country?"
+              //title="Is it in my country?"
               source='Wikidata'
               url=value
               value=[{'img':true,'url':value}]
@@ -319,10 +319,29 @@ function addOptionValue(node, key, obj) { //add value to  nodes[id].options[key]
     return node
 }
 
+
+
+function about(){
+  s=filename.endsWith('Castex')?
+        "In this highly interactive visualisation, the user can select members of the French government, and see what companies they are related to, whether it is because they are a former employer, member of the board, or because their spouse is a high ranking employee. It is possible to change point of view and explore the conflicts by industrial sector, or by company. To select relevant information, the user can either expand or collapse some sectors of the industry, or a whole entity of the government.\n \n    Most of the information is declared by the concerned personality on the French dedicated website hatvp.fr. Other sources are indicated explicitly, on the left info panel."
+      :
+      filename.ensWith('rachnids')?
+        "arachnids":
+        "wd",
+  console.log('sss',filename)
+  swal({
+    title: "Information",
+    text: s,
+    buttons: 'OK'
+  })
+  return false
+}
+
+
 function appendDbInfo(s){
   document.getElementById('spinner').style.display="none"//=wdKey=='taxonsArachnids'? 'Loading over 121k specimens' : 'Can take several minutes for large DBs'
   document.getElementById('loadingp').style.display="none"
-  
+
           if (wdKey!="taxonsArachnids" && filename != "political/castex/castex.json"){
           var br = document.createElement("br");
           var t=document.createTextNode(s);
