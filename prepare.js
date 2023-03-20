@@ -221,7 +221,7 @@ function treatWDDB(result) {
     }
 
         if (wdKey.startsWith('taxons')){node.feat='optionEnglish_article' in entries[r] && 'img' in entries[r]}
-        else if (wdKey=="frMaths") {
+        else if (wdKey=="frMaths") {node.feat=
                             ('optionAward' in entries[r] && entries[r].optionAward.value.includes('Q28835') )//Fields medal
                               ||
                             ('optionWikipedia_article' in entries[r]//un matheux est celebre s'il a un article WP et un Notable_work ou (un award et un student mathematician)

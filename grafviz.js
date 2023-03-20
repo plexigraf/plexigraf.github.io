@@ -596,7 +596,7 @@ function buildNodesLinks(data) {
         n.options=n.options||{}
         if (n.name != n.shortName){
             //alert(n.name)
-            n.options['Complete name']=n.name
+            n.options['Complete name']={'value':n.name, 'priority':.1}
         }
         n.totalLinkStrength=0
         //n.otherParents=n.otherParents || new Set()
@@ -893,7 +893,6 @@ function buildNodesLinks(data) {
 
           linki.infosToDisplay = collectInfos(linki)
           linki.strength=lStrength(linki)
-
           nodes[linki.source].totalLinkStrength+=linki.strength
           nodes[linki.target].totalLinkStrength+=linki.strength
 
@@ -1023,7 +1022,7 @@ function about(event){
   s=wdKey.endsWith('Castex')?
         "In this highly interactive visualisation, the user can select members of the French government, and see what companies they are related to, whether it is because they are a former employer, member of the board, or because their spouse is a high ranking employee.\n\n It is possible to change point of view and explore the conflicts by industrial sector, or by company. To select relevant information, the user can either expand or collapse some sectors of the industry, or a whole entity of the government.\n \n    Most of the information is declared by the concerned personality on the French dedicated website hatvp.fr. Other sources are indicated explicitly, on the left info panel. Most of the pictures are provided by Wikipedia."
       :(wdKey.endsWith('rachnids'))?"This work is a highly interactive exploration of the class of arachnids, based on the Data retrieved from the collaborative generalist database WikiData.org.\n\n The user can expand genders and sub-genders (spiders, scorpios, etc...) and browse through all specimen, obtaining information about the location of the species, and links to pages with more furnished information.\n\n The search functionality also allows to access directly to a particular species.\n\n Wikidata is a collaborative work, based on the aggregation of several famous taxonomic databases (GBIF, TSN, etc...). If the user notices a mistake in the provided information, he is welcome to perform the change on Wikidata.org!"
-      :"no",
+      :"-",
   //console.log('sss',filename,wdkey)
   //let s=document.getElementById("valAbout").value
   swal({
@@ -1537,7 +1536,7 @@ crsrText.attr("display","none");
         .attr("height", 23*nameMagnif)
 
     nodeTextg.append("text")
-        .style('display','none')
+        .style('display','block')
         .style("font-size", 10*nameMagnif)
         .style("font-family", "Gill Sans, Roboto, Arial")
         .attr("dy", d=>d.lastName?33*nameMagnif:10*nameMagnif)//d => d.imgDisp ? "3.8em" : "1.3em")
@@ -1713,7 +1712,6 @@ function infoDisp()
 
         //cadre titre
         let info = infoG.append("g")
-
             .data([d])
             .attr("class", "infoblock")
             .attr('id','infoblock'+i)
@@ -1928,7 +1926,7 @@ function infoDisp()
                 .append('tspan').attr('y','1em')
                 .attr("stroke-width", .5)
                 .attr("stroke", "black")
-                .text(nodes[d.value[j]]? nodes[d.value[j]].shortName : d.value[j])
+                .text(nodes[d.value[j]]? d.title=="Complete name"? nodes[d.value[j]].name : nodes[d.value[j]].shortName : d.value[j])
                 .each(wrapText)
                 }
 
@@ -2054,6 +2052,13 @@ function collectInfos(d) {
     let result = [{}];
 
 
+    if (d.source && ((nodes[d.source].name != nodes[d.source].shortName) || (nodes[d.target].name != nodes[d.target].shortName)))
+      {console.log('shortlink',d)
+      console.log('before',result[0])
+        result.push({'title':'Complete name' , 'value':[nodes[d.source].name+" "+(" \u21E8 " || " -> ")+nodes[d.target].name], "priority":.1})
+        console.log('after',result[1])
+      }
+
     if (d.type) {
         result.push({
             'title': 'type',
@@ -2115,7 +2120,6 @@ function collectInfos(d) {
                     values.push(t)
                   })
             }
-
                 option.value=values//.join(', ')
             } else {
                 option.value=[option.value]//transform as array for display
